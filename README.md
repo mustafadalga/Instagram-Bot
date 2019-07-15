@@ -39,7 +39,7 @@
   
   
 ### Kurulum
- * Script web driver olarak firefox kullanıyor.Bu yüzden firefox kurulu olması gerekiyor.
+ * Script web driver olarak Firefox tarayıcısını kullanmaktadır.Bu yüzden Firefox kurulu olması gerekmektedir.
  * Firefox'un kullanılabilmesi için [bu linkteki](https://github.com/mozilla/geckodriver/releases)  motoru indirip yolunu script'te belirtmeniz gerekmektedir.
 
 * Windows için kurulum
