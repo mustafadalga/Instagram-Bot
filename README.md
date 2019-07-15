@@ -18,6 +18,10 @@
 * Script kodlama aşamasında 2 adımlı doğrulama kodu sadece telefona gönderildiği için , doğrulama kodunun telefon numarasına gönderildiği olasılığına göre kodladım.
 
 
+### Amaç
+* Selenium framework'ü ile neler yapılabileceğini bir uygulama üzerinden öğrenmek ve göstermek.
+
+
 ### Özellikler
 
   :heavy_check_mark: **Bir kulllanıcının tüm paylaşımlarını indirme**  
