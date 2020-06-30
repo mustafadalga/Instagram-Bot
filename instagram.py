@@ -133,7 +133,7 @@ class Instagram():
 
     def tarayiciBaslat(self):
         print(self.uyariRenk("[*] Tarayıcı Başlatılıyor...",1))
-        self.driver = webdriver.Firefox(firefox_profile=self.dilDegistir(),executable_path="C:\\Users\\Liduma\\Desktop\\geckodriver.exe")
+        self.driver = webdriver.Firefox(firefox_profile=self.dilDegistir(),executable_path="C:\\Users\\Mustafa\\Desktop\\geckodriver.exe")
         self.driver.get('https://www.instagram.com/accounts/login/')
 
     def dilDegistir(self):
