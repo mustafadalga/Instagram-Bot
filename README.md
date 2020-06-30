@@ -66,16 +66,16 @@ python instagram.py
 
 
 * **Giriş Ekranı**
-![1](https://user-images.githubusercontent.com/25087769/61192742-5fef6680-a6bf-11e9-8ee6-51ac1b48c493.PNG)
+![Giriş Ekranı](https://raw.githubusercontent.com/mustafadalga/Instagram-Bot/master/goruntuler/giris.png)
 
 * **Paylaşım İndirme**
-![Paylaşım indirme](https://user-images.githubusercontent.com/25087769/61192766-8ca37e00-a6bf-11e9-98f7-c3f63560353f.PNG)
+![Paylaşım indirme](https://raw.githubusercontent.com/mustafadalga/Instagram-Bot/master/goruntuler/paylasim-indirme.png)
 
 * **Paylaşım Beğenme**
-![paylasimBegenme2](https://user-images.githubusercontent.com/25087769/61192778-a6dd5c00-a6bf-11e9-8098-d55c643732f6.PNG)
+![paylasimBegenme2](https://raw.githubusercontent.com/mustafadalga/Instagram-Bot/master/goruntuler/paylasim-begenme-2.png)
 
 * **Bir kullanıcıyı takip etme**
-![Takip etme](https://user-images.githubusercontent.com/25087769/61192792-bb215900-a6bf-11e9-9652-fffd36732e74.PNG)
+![Takip etme](https://raw.githubusercontent.com/mustafadalga/Instagram-Bot/master/goruntuler/kullanici-takip-etme.png)
 
 
 
