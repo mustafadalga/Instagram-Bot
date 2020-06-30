@@ -96,11 +96,11 @@ class Instagram():
     def secilenIslem(self,secim):
         print("")
         if secim==1:
-            print(self.uyariRenk(" Seçilen İşlem >>> Bir kulllanıcının tüm paylaşımlarını indirme", 1))
+            print(self.uyariRenk(" Seçilen İşlem >>> Bir kullanıcının tüm paylaşımlarını indirme", 1))
         elif secim==2:
-            print(self.uyariRenk(" Seçilen İşlem >>> Bir kulllanıcının tüm paylaşımlarını beğenme", 1))
+            print(self.uyariRenk(" Seçilen İşlem >>> Bir kullanıcının tüm paylaşımlarını beğenme", 1))
         elif secim==3:
-            print(self.uyariRenk(" Seçilen İşlem >>> Bir kulllanıcının tüm paylaşımlarını beğenmekten vazgeçme", 1))
+            print(self.uyariRenk(" Seçilen İşlem >>> Bir kullanıcının tüm paylaşımlarını beğenmekten vazgeçme", 1))
         elif secim==4:
             print(self.uyariRenk(" Seçilen İşlem >>> Bir fotoğrafı indirme", 1))
         elif secim==5:
