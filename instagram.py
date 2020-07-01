@@ -9,16 +9,19 @@ import getpass
 from termcolor import colored
 from colorama import init
 import threading
+import random
 
 class Instagram():
     def __init__(self):
         init(convert=True)
-        self.script()
+        self.kullaniciListesiSec(14)
+        """self.script()
         self.threadOlustur()
         self.girisYapildimi=False
         self.tarayiciAcildimi=False
         self.aktifKullanici=""
         self.girisYap()
+        """
 
     def script(self):
         print("")
@@ -67,7 +70,7 @@ class Instagram():
         if secim:
             try:
                 secim=int(secim)
-                if 0<secim<14:
+                if 0<secim<15:
                     self.secilenIslem(secim)
                     if secim==1 or secim==2 or secim==3  or secim==8 or secim==9 or secim==10 or secim==11:
                         self.profilSec(secim)
@@ -83,6 +86,8 @@ class Instagram():
                         self.cikisYap()
                     elif secim==13:
                         self.quit()
+                    elif secim==14:
+                        self.kullaniciListesiSec(secim)
                 else:
                     print(self.uyariRenk("[-] Lütfen geçerli bir seçim yapınız!",2))
                     self.islemSec()
@@ -92,6 +97,39 @@ class Instagram():
                 self.islemSec()
         else:
             self.islemSec()
+    
+    def kullaniciListesiSec(self,secim):
+        dosyaAdi=self.dosyaSec(secim)
+        print(dosyaAdi)
+        kullaniciListesi = []
+        try:
+            with open(dosyaAdi,"r",encoding="utf-8") as kullanicilar:
+                for kullanici in kullanicilar:
+                    kullaniciListesi.append(kullanici)
+        except Exception as error:
+            print(self.uyariRenk("[-] Seçilen dosyanın yüklenme işlemi sırasında bir hata oluştu:"+str(error),2))
+            self.kullaniciListesiSec(secim)
+
+    def dosyaSec(self,secim):
+        try:
+            dosyaAdi=input("Kullanıcı listesinin bulunduğu dosya yolunu giriniz:").strip()
+            if self.dosyaMi(dosyaAdi):
+                #print(str(dosyaAdi))
+                return str(dosyaAdi)
+            else:
+                print(self.uyariRenk("[-] Lütfen geçerli  bir dosya yolu belirtin!",2))
+                self.dosyaSec(secim)
+        except Exception as error:
+            print(self.uyariRenk("[-] Dosya seçme işlemi sırasında bir hata oluştu:"+str(error),2))
+            self.dosyaSec(secim)
+
+    def dosyaMi(self,path):
+        if os.path.isfile(path):
+            return True
+        else:
+            return False
+
+
 
     def secilenIslem(self,secim):
         print("")
@@ -133,7 +171,7 @@ class Instagram():
 
     def tarayiciBaslat(self):
         print(self.uyariRenk("[*] Tarayıcı Başlatılıyor...",1))
-        self.driver = webdriver.Firefox(firefox_profile=self.dilDegistir(),executable_path="C:\\Users\\Mustafa\\Desktop\\geckodriver.exe")
+        self.driver = webdriver.Firefox(firefox_profile=self.dilDegistir(),executable_path="E:\\Python\\Uygulamalar\\Intagram-Bot\\Instagram-Bot\\geckodriver.exe")
         self.driver.get('https://www.instagram.com/accounts/login/')
 
     def dilDegistir(self):
