@@ -15,7 +15,8 @@ class Instagram():
     def __init__(self):
         init(convert=True)
         self.kullaniciListesiSec(14)
-        """self.script()
+        """"
+        self.script()
         self.threadOlustur()
         self.girisYapildimi=False
         self.tarayiciAcildimi=False
@@ -100,25 +101,30 @@ class Instagram():
     
     def kullaniciListesiSec(self,secim):
         dosyaAdi=self.dosyaSec(secim)
-        print(dosyaAdi)
         kullaniciListesi = []
         try:
             with open(dosyaAdi,"r",encoding="utf-8") as kullanicilar:
                 for kullanici in kullanicilar:
                     kullaniciListesi.append(kullanici)
+            self.kullanicilariTakipEt(kullaniciListesi,14)
         except Exception as error:
             print(self.uyariRenk("[-] Seçilen dosyanın yüklenme işlemi sırasında bir hata oluştu:"+str(error),2))
             self.kullaniciListesiSec(secim)
 
+    def kullanicilariTakipEt(self,kullaniciListesi,secim):
+        for kullanici in kullaniciListesi:
+            self.kullaniciTakipEt(kullanici.strip(),secim)
+            time.sleep(30)
+            print(kullanici)            
+
     def dosyaSec(self,secim):
         try:
-            dosyaAdi=input("Kullanıcı listesinin bulunduğu dosya yolunu giriniz:").strip()
+            dosyaAdi=input("Kullanıcı listesinin bulunduğu dosya yolunu giriniz >> ").strip()
             if self.dosyaMi(dosyaAdi):
-                #print(str(dosyaAdi))
                 return str(dosyaAdi)
             else:
                 print(self.uyariRenk("[-] Lütfen geçerli  bir dosya yolu belirtin!",2))
-                self.dosyaSec(secim)
+                self.kullaniciListesiSec(secim)
         except Exception as error:
             print(self.uyariRenk("[-] Dosya seçme işlemi sırasında bir hata oluştu:"+str(error),2))
             self.dosyaSec(secim)
@@ -307,7 +313,8 @@ class Instagram():
 
             if "Sorry, this page isn't available." in self.driver.page_source:
                 print(self.uyariRenk("[-] " + kullaniciAdi + " kullanıcısına ulaşılamadı", 2))
-                self.profilSec(secim)
+                if secim!=14:
+                    self.profilSec(secim)
 
             if "This Account is Private" in self.driver.page_source:
                 btn_takip = self.driver.find_element_by_css_selector("button.BY3EC")
@@ -319,16 +326,21 @@ class Instagram():
                     print(self.uyariRenk("[+] " + kullaniciAdi + " kullanıcısına takip isteği gönderildi", 1))
                 else:
                     print(self.uyariRenk("[+] " + kullaniciAdi + " kullanıcısı takip edilmeye başlandı", 1))
-                self.profilSec(secim)
+                
+                if secim!=14:
+                    self.profilSec(secim)
             elif btn_takip.text == "Requested":
                 print(self.uyariRenk("[-] " + kullaniciAdi + " kullanıcısına takip isteği zaten gönderildi", 2))
-                self.profilSec(secim)
+                if secim!=14:
+                    self.profilSec(secim)
             else:
                 print(self.uyariRenk("[-] " + kullaniciAdi + " kullanıcısını zaten takip ediyorsun", 2))
-                self.profilSec(secim)
+                if secim!=14:
+                    self.profilSec(secim)
         except Exception as e:
             print(self.uyariRenk("[-] " + kullaniciAdi + " kullanıcısını takip etme işlemi sırasında hata:" + str(e), 2))
-            self.profilSec(secim)
+            if secim!=14:
+                self.profilSec(secim)
 
     def kullaniciTakipVazgec(self,kullaniciAdi,secim):
         print("[*] '" + kullaniciAdi + "' kullanıcısı takip etmekten vazgeçiliyor...")
