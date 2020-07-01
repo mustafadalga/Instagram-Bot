@@ -1,5 +1,5 @@
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.keys import Keys 
 import time
 import datetime
 import os
@@ -14,15 +14,12 @@ import random
 class Instagram():
     def __init__(self):
         init(convert=True)
-        self.kullaniciListesiSec(14)
-        """"
         self.script()
         self.threadOlustur()
         self.girisYapildimi=False
         self.tarayiciAcildimi=False
         self.aktifKullanici=""
         self.girisYap()
-        """
 
     def script(self):
         print("")
@@ -71,9 +68,9 @@ class Instagram():
         if secim:
             try:
                 secim=int(secim)
-                if 0<secim<15:
+                if 0<secim<16:
                     self.secilenIslem(secim)
-                    if secim==1 or secim==2 or secim==3  or secim==8 or secim==9 or secim==10 or secim==11:
+                    if secim==1 or secim==2 or secim==3  or secim==8 or secim==9 or secim==10 or secim==11 or secim==15:
                         self.profilSec(secim)
                     elif secim==4:
                         self.fotografIndir()
@@ -294,9 +291,54 @@ class Instagram():
                 self.kullaniciEngelle(kullanici,secim)
             elif secim==11:
                 self.kullaniciEngelKaldir(kullanici,secim)
+            elif secim==15:
+                self.kullaniciTakipcileriGetir(kullanici,secim)
         else:
             print(self.uyariRenk("[-] '" + kullanici + "' adında bir kullanıcı bulunamadı ",2))
             self.profilSec(secim)
+
+
+    def kullaniciTakipcileriGetir(self,kullaniciAdi,secim):
+        print("[*] '" + kullaniciAdi + "' kullanıcısının takipçi listesini alma işlemi başladı...")
+        try:
+            takipciListesi=set()
+            self.driver.get('https://www.instagram.com/' + kullaniciAdi)
+            time.sleep(5)
+
+            if "Sorry, this page isn't available." in self.driver.page_source:
+                print(self.uyariRenk("[-] " + kullaniciAdi + " kullanıcısına ulaşılamadı", 2))
+                if secim!=14:
+                    self.profilSec(secim)
+
+            if "This Account is Private" not in self.driver.page_source:
+                takipciSayisi = self.driver.find_element_by_css_selector("a.-nal3 > span.g47SY").text
+                if int(takipciSayisi) < 8:
+                    takipciSayisi = 8
+                btn_takip = self.driver.find_element_by_css_selector("a.-nal3")
+                btn_takip.click()
+                time.sleep(5)
+                for i in range(round(int(takipciSayisi)/8)):
+                    takipci_list_popup=self.driver.find_element_by_css_selector('div._1XyCr')
+                    hrefs=takipci_list_popup.find_elements_by_css_selector("a.FPmhX")
+                    for href in hrefs:
+                        href=href.get_attribute('href')
+                        href=href.replace('https://www.instagram.com/','')
+                        if href not in takipciListesi:
+                            print(self.uyariRenk("[*] Takipçi kullanıcı adı:" + href, 1))
+                            takipciListesi.add(href)
+                    self.driver.execute_script('''
+                    var fDialog = document.querySelector('div[role="dialog"] .isgrP');
+                    fDialog.scrollTop = fDialog.scrollHeight
+                ''')
+                    time.sleep(5)
+                    
+            else:
+                print(self.uyariRenk("[-] "+kullaniciAdi+" adlı kişinin hesabı gizli hesap olduğundan takipçi listesi alınamıyor!",2))
+                self.profilSec(secim)
+        except Exception as e:
+            print(self.uyariRenk("[-] " + kullaniciAdi + " kullanıcısının takipçi listesini alma işlemi sırasında hata:" + str(e), 2))
+            self.profilSec(secim)
+
 
     def kullaniciKontrol(self,kullaniciadi):
         response=requests.get("https://www.instagram.com/" + kullaniciadi)
