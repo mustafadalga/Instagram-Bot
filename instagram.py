@@ -297,48 +297,78 @@ class Instagram():
             print(self.uyariRenk("[-] '" + kullanici + "' adında bir kullanıcı bulunamadı ",2))
             self.profilSec(secim)
 
+        
+    def numericMi(self,deger,kullaniciAdi,secim):
+        if deger.isnumeric():
+            return int(deger)        
+        else:
+            self.kullaniciTakipcileriGetir(kullaniciAdi,secim)
+
+    
+    def takipciSayisiKontrol(self,hedefTakipciSayisi,kaynakTakipciSayisi):
+        if hedefTakipciSayisi>kaynakTakipciSayisi:
+            hedefTakipciSayisi=kaynakTakipciSayisi
+        
+        if hedefTakipciSayisi < 8:
+            hedefTakipciSayisi = 8
+
+        return hedefTakipciSayisi
+
+
+
 
     def kullaniciTakipcileriGetir(self,kullaniciAdi,secim):
-        print("[*] '" + kullaniciAdi + "' kullanıcısının takipçi listesini alma işlemi başladı...")
         try:
-            takipciListesi=set()
+            hedefTakipciSayisi = input("Seçmek istediğiniz takipçi sayısını giriniz >> ").strip()
+            hedefTakipciSayisi=self.numericMi(hedefTakipciSayisi,kullaniciAdi,secim)
+
+            print("[*] '" + kullaniciAdi + "' kullanıcısının takipçi listesini alma işlemi başladı...")
             self.driver.get('https://www.instagram.com/' + kullaniciAdi)
             time.sleep(5)
 
             if "Sorry, this page isn't available." in self.driver.page_source:
                 print(self.uyariRenk("[-] " + kullaniciAdi + " kullanıcısına ulaşılamadı", 2))
-                if secim!=14:
-                    self.profilSec(secim)
+                self.profilSec(secim)
+            elif "This Account is Private" not in self.driver.page_source:
+                takipSayisi=0;
+                takipSayiDurumu=False
+                kaynakTakipciSayisi = self.driver.find_element_by_css_selector("a.-nal3 > span.g47SY").text
+                hedefTakipciSayisi=self.takipciSayisiKontrol(hedefTakipciSayisi,int(kaynakTakipciSayisi))
 
-            if "This Account is Private" not in self.driver.page_source:
-                takipciSayisi = self.driver.find_element_by_css_selector("a.-nal3 > span.g47SY").text
-                if int(takipciSayisi) < 8:
-                    takipciSayisi = 8
-                btn_takip = self.driver.find_element_by_css_selector("a.-nal3")
-                btn_takip.click()
+                btn_takipciler = self.driver.find_element_by_css_selector("a.-nal3")
+                btn_takipciler.click()
                 time.sleep(5)
-                for i in range(round(int(takipciSayisi)/8)):
-                    takipci_list_popup=self.driver.find_element_by_css_selector('div._1XyCr')
-                    hrefs=takipci_list_popup.find_elements_by_css_selector("a.FPmhX")
-                    for href in hrefs:
-                        href=href.get_attribute('href')
-                        href=href.replace('https://www.instagram.com/','')
-                        if href not in takipciListesi:
-                            print(self.uyariRenk("[*] Takipçi kullanıcı adı:" + href, 1))
-                            takipciListesi.add(href)
-                    self.driver.execute_script('''
-                    var fDialog = document.querySelector('div[role="dialog"] .isgrP');
-                    fDialog.scrollTop = fDialog.scrollHeight
-                ''')
-                    time.sleep(5)
-                    
+
+                for i in range(round(hedefTakipciSayisi/8)):
+                    dialog_popup=self.driver.find_element_by_css_selector('div._1XyCr')
+                    takipciListe=dialog_popup.find_elements_by_css_selector('div.PZuss > li')
+
+                    for takipci in takipciListe:
+                        takipciKullaniciAdi=takipci.find_element_by_css_selector("a.FPmhX").get_attribute('href')
+                        takipciKullaniciAdi=takipciKullaniciAdi.replace('https://www.instagram.com/','')
+                        btn_takip=takipci.find_element_by_css_selector('button.sqdOP')  
+                        if btn_takip.text=="Follow":
+                            print(self.uyariRenk("[*] {index} -) {takipci} takip edilme işlemi başladı.".format(index=takipSayisi+1,takipci=takipciKullaniciAdi), 1))
+                            btn_takip.click()
+                            takipSayisi=takipSayisi+1
+                            if takipSayisi==hedefTakipciSayisi:
+                                takipSayiDurumu=True
+                                break
+                            time.sleep(5)
+                    if not takipSayiDurumu:
+                        self.driver.execute_script('''
+                        var fDialog = document.querySelector('div[role="dialog"] .isgrP');
+                        fDialog.scrollTop = fDialog.scrollHeight
+                    ''')
+                        time.sleep(3)     
+                    else:
+                        print("[*] Takipçi seçme işlemi tamamlandı.")    
             else:
                 print(self.uyariRenk("[-] "+kullaniciAdi+" adlı kişinin hesabı gizli hesap olduğundan takipçi listesi alınamıyor!",2))
                 self.profilSec(secim)
         except Exception as e:
             print(self.uyariRenk("[-] " + kullaniciAdi + " kullanıcısının takipçi listesini alma işlemi sırasında hata:" + str(e), 2))
             self.profilSec(secim)
-
 
     def kullaniciKontrol(self,kullaniciadi):
         response=requests.get("https://www.instagram.com/" + kullaniciadi)
