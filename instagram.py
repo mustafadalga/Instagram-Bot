@@ -292,7 +292,7 @@ class Instagram():
             elif secim==11:
                 self.kullaniciEngelKaldir(kullanici,secim)
             elif secim==15:
-                self.kullaniciTakipcileriGetir(kullanici,secim)
+                self.kullaniciTakipcileriniTakipEt(kullanici,secim)
         else:
             print(self.uyariRenk("[-] '" + kullanici + "' adında bir kullanıcı bulunamadı ",2))
             self.profilSec(secim)
@@ -302,7 +302,7 @@ class Instagram():
         if deger.isnumeric():
             return int(deger)        
         else:
-            self.kullaniciTakipcileriGetir(kullaniciAdi,secim)
+            self.kullaniciTakipcileriniTakipEt(kullaniciAdi,secim)
 
     
     def takipciSayisiKontrol(self,hedefTakipciSayisi,kaynakTakipciSayisi):
@@ -317,7 +317,7 @@ class Instagram():
 
 
 
-    def kullaniciTakipcileriGetir(self,kullaniciAdi,secim):
+    def kullaniciTakipcileriniTakipEt(self,kullaniciAdi,secim):
         try:
             hedefTakipciSayisi = input("Seçmek istediğiniz takipçi sayısını giriniz >> ").strip()
             hedefTakipciSayisi=self.numericMi(hedefTakipciSayisi,kullaniciAdi,secim)
