@@ -228,7 +228,7 @@ class Instagram():
         if "The username you entered doesn't belong to an account. Please check your username and try again." in self.driver.page_source:
             uyari=self.uyariOlustur("[-] Girdiğiniz kullanıcı adı bir hesaba ait değil. Lütfen kullanıcı adınızı kontrol edin ve tekrar deneyin.",2)
         elif "Sorry, your password was incorrect. Please double-check your password." in self.driver.page_source:
-            uyari=self.uyariOlustur("[-] Üzgünüz, şifreniz hatalıydı. Lütfen şifrenizi tekrar kontrol edin.",2)
+            uyari=self.uyariOlustur("[-] Üzgünüz, parolanız hatalıydı. Lütfen parolanızı tekrar kontrol edin.",2)
         elif "https://www.instagram.com/accounts/login/two_factor" in self.driver.current_url:
             uyari=self.girisDogrulama()
         elif self.driver.current_url!="https://www.instagram.com/accounts/login/":
