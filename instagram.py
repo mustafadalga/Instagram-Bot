@@ -38,8 +38,8 @@ class Instagram():
         print(self.uyariOlustur("# github      	:", 1) + "https://github.com/mustafadalga")
         print(self.uyariOlustur("# email      	:", 1) + "mustafadalgaa < at > gmail[.]com")
         print(self.uyariOlustur("# date        	:", 1) + "15.07.2019")
-        print(self.uyariOlustur("# version     	:", 1) + "1.0")
-        print(self.uyariOlustur("# python_version:", 1) + "3.7.2")
+        print(self.uyariOlustur("# version     	:", 1) + "2.0")
+        print(self.uyariOlustur("# python_version:", 1) + "3.8.1")
         print(self.uyariOlustur("# ==============================================================================", 1))
         print("")
 
