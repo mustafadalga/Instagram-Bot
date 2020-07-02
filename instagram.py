@@ -33,7 +33,6 @@ class Instagram():
         print(self.uyariOlustur("                           |___/                                       ", 1))
         print(self.uyariOlustur("# ==============================================================================", 1))
         print(self.uyariOlustur("# author      	:", 1) + "Mustafa Dalga")
-        print(self.uyariOlustur("# website    	:", 1) + "https://apierson.com")
         print(self.uyariOlustur("# linkedin    	:", 1) + "https://www.linkedin.com/in/mustafadalga")
         print(self.uyariOlustur("# github      	:", 1) + "https://github.com/mustafadalga")
         print(self.uyariOlustur("# email      	:", 1) + "mustafadalgaa < at > gmail[.]com")
