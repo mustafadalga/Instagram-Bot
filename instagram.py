@@ -67,7 +67,7 @@ class Instagram():
         if secim:
             try:
                 secim=int(secim)
-                if 0<secim<17:
+                if 0<secim<18:
                     self.secilenIslem(secim)
                     if secim==1 or secim==2 or secim==3  or secim==8 or secim==9 or secim==10 or secim==11 or secim==15:
                         self.profilSec(secim)
@@ -87,6 +87,8 @@ class Instagram():
                         self.kullaniciListesiSec(secim)
                     elif secim==16:
                         self.paylasimBegenenleriTakipEt()
+                    elif secim==17:
+                        self.takipEtmeyenleriTakiptenCik()
                 else:
                     print(self.uyariOlustur("[-] Lütfen geçerli bir seçim yapınız!",2))
                     self.islemSec()
@@ -96,6 +98,26 @@ class Instagram():
                 self.islemSec()
         else:
             self.islemSec()
+
+
+
+    def takipEtmeyenleriTakiptenCik(self,durum=True):
+        if durum:
+            print(self.uyariOlustur("Seçilen İşlem >>> Takip edilip, takip etmeyen kullanıcıları takipten çıkma",1))
+            print("")
+        print(self.uyariOlustur("       <<< SEÇENEKLER >>>      ", 1))
+        print(self.uyariOlustur("Tüm takip edilenler listesi içerisinden işlem yapmak için evet,",3))
+        print(self.uyariOlustur("Sadece belirtilen sayı kadar takip edilenler içerisinden işlem yapmak için hayır seçiniz.", 3))
+        print("")
+        islem = str(input("Tüm takip edilenler listesi içerisinde mi işlem yapılsın ? >> ").strip())
+        if islem=="evet":
+            print("evet")
+        elif islem=="hayır":
+            print("hayır")
+        else:
+            print(self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!", 2))
+            print("")
+            self.takipEtmeyenleriTakiptenCik(False)
 
 
     def paylasimTipiKontrol(self):
