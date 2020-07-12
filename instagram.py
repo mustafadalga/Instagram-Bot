@@ -9,7 +9,7 @@ import getpass
 from termcolor import colored
 from colorama import init
 import threading
-import random
+
 
 class Instagram():
     def __init__(self):
@@ -67,7 +67,7 @@ class Instagram():
         if secim:
             try:
                 secim=int(secim)
-                if 0<secim<16:
+                if 0<secim<17:
                     self.secilenIslem(secim)
                     if secim==1 or secim==2 or secim==3  or secim==8 or secim==9 or secim==10 or secim==11 or secim==15:
                         self.profilSec(secim)
@@ -85,6 +85,8 @@ class Instagram():
                         self.quit()
                     elif secim==14:
                         self.kullaniciListesiSec(secim)
+                    elif secim==16:
+                        self.paylasimBegenenleriTakipEt()
                 else:
                     print(self.uyariOlustur("[-] Lütfen geçerli bir seçim yapınız!",2))
                     self.islemSec()
@@ -94,7 +96,75 @@ class Instagram():
                 self.islemSec()
         else:
             self.islemSec()
-    
+
+
+    def paylasimTipiKontrol(self):
+        try:
+            btn_text= self.driver.find_element_by_css_selector("div.Nm9Fw > button.sqdOP").text
+            if "likes" in btn_text:
+                return True
+            else:
+                return False
+        except:
+            return False
+
+    def paylasimBegenenleriTakipEt(self):
+        url = input("İşlem yapmak istediğiniz gönderi url >> ").strip()
+
+        if not url:
+            self.paylasimBegenenleriTakipEt()
+        elif url=="menu":
+            self.menu()
+
+        if self.urlKontrol(url):
+            self.driver.get(url)
+            print("[*] '" + url + "'  paylaşımını beğenen kullanıcıları takip etme işlemi başladı...")
+            time.sleep(5)
+            if "This Account is Private" not in self.driver.page_source:
+                try:
+                    if self.paylasimTipiKontrol():
+                        takipIstekSayisi = 0
+                        takipSayiDurumu = False
+                        begenenSayisi=int(self.driver.find_element_by_css_selector("div.Nm9Fw > button.sqdOP > span").text)
+                        btn_begenenler = self.driver.find_element_by_css_selector("div.Nm9Fw > button.sqdOP")
+                        btn_begenenler.click()
+                        time.sleep(5)
+                        for i in range(round(begenenSayisi/6)):
+                            dialog_popup=self.driver.find_element_by_css_selector("div.pbNvD")
+                            begenenlerKullanicilar = dialog_popup.find_elements_by_css_selector('div.HVWg4')
+                            for begenenKullanici in begenenlerKullanicilar:
+                                begenenKullaniciAdi = begenenKullanici.find_element_by_css_selector("div.Igw0E > div.Igw0E > div._7UhW9 > a").get_attribute('href')
+                                begenenKullaniciAdi = begenenKullaniciAdi.replace('https://www.instagram.com/', '').replace('/','')
+                                btn_takip = begenenKullanici.find_element_by_css_selector("div.Igw0E > button.sqdOP")
+                                if btn_takip.text == "Follow":
+                                    print(self.uyariOlustur("[*] {index} -) {kullaniciAdi} kullanıcısı takip edilme işlemi başladı.".format(index=takipIstekSayisi + 1, kullaniciAdi=begenenKullaniciAdi), 1))
+                                    btn_takip.click()
+                                    takipIstekSayisi = takipIstekSayisi + 1
+                                    if takipIstekSayisi == begenenSayisi:
+                                        takipSayiDurumu = True
+                                        break
+                                    time.sleep(5)
+                            if not takipSayiDurumu:
+                                self.driver.execute_script('''
+                                                    var fDialog = document.querySelector('div[role="dialog"] .pbNvD');
+                                                    fDialog.scrollTop = fDialog.scrollHeight
+                                                ''')
+                                time.sleep(3)
+                            else:
+                                print("[*] Takipçi seçme işlemi tamamlandı.")
+                                self.paylasimBegenenleriTakipEt()
+                    else:
+                        print('[*] {url} paylaşımını  beğenen kullanıcıların listesi görüntülenemediğinden dolayı takip etme işlemi yapılamıyor'.format(url=url))
+                except Exception as error:
+                    print(self.uyariOlustur('[-] {url} paylaşımını beğenen kullanıcıların listesini getirme işlemi sırasında hata oluştu: {hata}'.format(url=url,hata=str(error)),2))
+                    self.paylasimBegenenleriTakipEt()
+            else:
+                print(self.uyariOlustur("[-] "+url + " paylaşımının sahibinin profili gizli hesap olduğundan dolayı, bu paylaşımı beğenen kullanıcıların listesi alınamıyor!",2))
+                self.paylasimBegenenleriTakipEt()
+        else:
+            self.paylasimBegenenleriTakipEt()
+
+
     def kullaniciListesiSec(self,secim):
         dosyaAdi=self.dosyaSec(secim)
         kullaniciListesi = []
@@ -130,7 +200,6 @@ class Instagram():
             return True
         else:
             return False
-
 
 
     def secilenIslem(self,secim):
@@ -361,7 +430,7 @@ class Instagram():
                     ''')
                         time.sleep(3)     
                     else:
-                        print("[*] Takipçi seçme işlemi tamamlandı.")    
+                        print("[*] Takipçi seçme işlemi tamamlandı.")
             else:
                 print(self.uyariOlustur("[-] "+kullaniciAdi+" adlı kişinin hesabı gizli hesap olduğundan takipçi listesi alınamıyor!",2))
                 self.profilSec(secim)
