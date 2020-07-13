@@ -109,10 +109,10 @@ class Instagram():
         print(self.uyariOlustur("Tüm takip edilenler listesi içerisinden işlem yapmak için evet,",3))
         print(self.uyariOlustur("Sadece belirtilen sayı kadar takip edilenler içerisinden işlem yapmak için hayır seçiniz.", 3))
         print("")
-        islem = str(input("Tüm takip edilenler listesi içerisinde mi işlem yapılsın ? >> ").strip())
-        if islem=="evet":
+        secilenIslem = str(input("Tüm takip edilenler listesi içerisinde mi işlem yapılsın ? >> ").strip())
+        if secilenIslem=="evet":
             print("evet")
-        elif islem=="hayır":
+        elif secilenIslem=="hayır":
             print("hayır")
         else:
             print(self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!", 2))
