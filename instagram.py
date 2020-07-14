@@ -119,37 +119,78 @@ class Instagram():
                 btn_takip = takip.find_element_by_css_selector('button.sqdOP')
 
 
-    def takipcileriGetir(self):
+    def takipcileriGetir(self,hedefTakipciSayisi=None):
+        print("[*] Takipçileri listeye ekleme işlemi başladı.")
         self.driver.get('https://www.instagram.com/' + self.aktifKullanici)
         time.sleep(5)
-        takipciSayisi = int(self.driver.find_element_by_css_selector("a.-nal3 > span.g47SY").text)
 
+        if hedefTakipciSayisi is None:
+            takipciSayisi = int(self.driver.find_element_by_css_selector("a.-nal3 > span.g47SY").text)
+        else:
+            kaynakTakipciSayisi = int(self.driver.find_element_by_css_selector("a.-nal3 > span.g47SY").text)
+            takipciSayisi=self.takipciSayisiKontrol(hedefTakipciSayisi,kaynakTakipciSayisi)
         btn_takipciler = self.driver.find_element_by_css_selector("ul.k9GMp > li.Y8-fY > a.-nal3")
         btn_takipciler.click()
         time.sleep(5)
+        takipciler=set()
+        takipciIndexNumarasi=0
+        takipciSayiDurumu=False
+        for i in range(round(takipciSayisi / 8)):
+            dialog_popup = self.driver.find_element_by_css_selector('div.pbNvD')
+            takipcilerPopup = dialog_popup.find_elements_by_css_selector('div.PZuss > li')
+            for takipci in takipcilerPopup:
+                takipciKullaniciAdi = takipci.find_element_by_css_selector("a.FPmhX").get_attribute('href')
+                takipciKullaniciAdi = takipciKullaniciAdi.replace('https://www.instagram.com/', '').replace('/','')
+                print(self.uyariOlustur("[*] {index} -) {takipci} takipcisi listeye eklendi.".format(index=takipciIndexNumarasi + 1,takipci=takipciKullaniciAdi), 1))
+                takipciler.add(takipciKullaniciAdi)
+                takipciIndexNumarasi = takipciIndexNumarasi + 1
+                if hedefTakipciSayisi is None:
+                    if takipciIndexNumarasi == takipciSayisi:
+                        takipciSayiDurumu = True
+                        break
+                else:
+                    if hedefTakipciSayisi<8:
+                        if takipciIndexNumarasi == hedefTakipciSayisi:
+                            takipciSayiDurumu = True
+                            break
+                    else:
+                        if takipciIndexNumarasi == takipciSayisi:
+                            takipciSayiDurumu = True
+                            break
+
+            if not takipciSayiDurumu:
+                self.driver.execute_script('''
+                                var fDialog = document.querySelector('div[role="dialog"] .isgrP');
+                                fDialog.scrollTop = fDialog.scrollHeight
+                            ''')
+                time.sleep(3)
+        return takipciler
 
 
 
-    def takipEtmeyenleriTakiptenCik(self,islemSecildiMi=False,secilenIslem=False):
-        if not islemSecildiMi:
+    def takipEtmeyenleriTakiptenCik(self,islemSecildiMi=None,secilenIslem=None):
+        if islemSecildiMi is None:
             print(self.uyariOlustur("Seçilen İşlem >>> Takip edilip, takip etmeyen kullanıcıları takipten çıkma",1))
             print("")
 
-        if not secilenIslem:
+        if secilenIslem is None:
             print(self.uyariOlustur("       <<< SEÇENEKLER >>>      ", 1))
             print(self.uyariOlustur("Tüm takip edilenler listesi içerisinden işlem yapmak için 1,", 3))
             print(self.uyariOlustur("Belirtilen sayı kadar takip edilenler içerisinden işlem yapmak için 2 giriniz.", 3))
             print("")
-            
+
             secilenIslem = str(input("Tüm takip edilenler listesi içerisinde mi işlem yapılsın ? >> ").strip())
 
         if secilenIslem=="1":
             print(self.uyariOlustur("Seçilen İşlem >>> Tüm takip edilenler listesi içerisinden takip etmeyen kullanıcıları takipten çıkma", 1))
+            takipciler=self.takipcileriGetir()
+            print("[*] Takipçileri seçme işlemi tamamlandı.")
         elif secilenIslem=="2":
             print(self.uyariOlustur( "Seçilen İşlem >>> Belirtilen sayı kadar takip edilenler listesi içerisinden takip etmeyen kullanıcıları takipten çıkma",1))
             sayi = input("İşlem yapmak için bir sayı belirleyiniz >> ").strip()
             if sayi.isnumeric():
-                sayi=int(sayi)
+                takipciler = self.takipcileriGetir(int(sayi))
+                print("[*] Takipçileri seçme işlemi tamamlandı.")
             else:
                 print(self.uyariOlustur("[-] Bir sayı girişi yapmadınız.Lütfen bir sayı giriniz!", 2))
                 print("")
@@ -157,7 +198,7 @@ class Instagram():
         else:
             print(self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!", 2))
             print("")
-            self.takipEtmeyenleriTakiptenCik(islemSecildiMi=True,secilenIslem=secilenIslem)
+            self.takipEtmeyenleriTakiptenCik(islemSecildiMi=islemSecildiMi,secilenIslem=secilenIslem)
 
 
     def paylasimTipiKontrol(self):
@@ -455,10 +496,10 @@ class Instagram():
                 print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısına ulaşılamadı", 2))
                 self.profilSec(secim)
             elif "This Account is Private" not in self.driver.page_source:
-                takipSayisi=0;
+                takipIndexNumarasi=0;
                 takipSayiDurumu=False
-                kaynakTakipciSayisi = self.driver.find_element_by_css_selector("a.-nal3 > span.g47SY").text
-                hedefTakipciSayisi=self.takipciSayisiKontrol(hedefTakipciSayisi,int(kaynakTakipciSayisi))
+                kaynakTakipciSayisi = int(self.driver.find_element_by_css_selector("a.-nal3 > span.g47SY").text)
+                hedefTakipciSayisi=self.takipciSayisiKontrol(hedefTakipciSayisi,kaynakTakipciSayisi)
 
                 btn_takipciler = self.driver.find_element_by_css_selector("a.-nal3")
                 btn_takipciler.click()
@@ -473,10 +514,10 @@ class Instagram():
                         takipciKullaniciAdi=takipciKullaniciAdi.replace('https://www.instagram.com/','')
                         btn_takip=takipci.find_element_by_css_selector('button.sqdOP')  
                         if btn_takip.text=="Follow":
-                            print(self.uyariOlustur("[*] {index} -) {takipci} takip edilme işlemi başladı.".format(index=takipSayisi+1,takipci=takipciKullaniciAdi), 1))
+                            print(self.uyariOlustur("[*] {index} -) {takipci} takip edilme işlemi başladı.".format(index=takipIndexNumarasi+1,takipci=takipciKullaniciAdi), 1))
                             btn_takip.click()
-                            takipSayisi=takipSayisi+1
-                            if takipSayisi==hedefTakipciSayisi:
+                            takipIndexNumarasi=takipIndexNumarasi+1
+                            if takipIndexNumarasi==hedefTakipciSayisi:
                                 takipSayiDurumu=True
                                 break
                             time.sleep(5)
