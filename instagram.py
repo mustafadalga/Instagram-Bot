@@ -100,24 +100,64 @@ class Instagram():
             self.islemSec()
 
 
+    def takipEdilenleriGetir(self):
+        self.driver.get('https://www.instagram.com/' + self.aktifKullanici)
+        time.sleep(5)
+        takipEdilenSayisi =int(self.driver.find_element_by_css_selector("a.-nal3 > span.g47SY").text)
+        btn_takipEdilenler=self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[3]/a")
+        btn_takipEdilenler.click()
+        time.sleep(5)
 
-    def takipEtmeyenleriTakiptenCik(self,durum=True):
-        if durum:
+        takipEdilenler = set()
+        for i in range(round(takipEdilenSayisi / 6)):
+            dialog_popup = self.driver.find_element_by_css_selector('div.pbNvD')
+            takipListe = dialog_popup.find_elements_by_css_selector('div.PZuss > li')
+
+            for takip in takipListe:
+                kullanıcıAdi = takip.find_element_by_css_selector("a.FPmhX").get_attribute('href')
+                kullanıcıAdi = kullanıcıAdi.replace('https://www.instagram.com/', '')
+                btn_takip = takip.find_element_by_css_selector('button.sqdOP')
+
+
+    def takipcileriGetir(self):
+        self.driver.get('https://www.instagram.com/' + self.aktifKullanici)
+        time.sleep(5)
+        takipciSayisi = int(self.driver.find_element_by_css_selector("a.-nal3 > span.g47SY").text)
+
+        btn_takipciler = self.driver.find_element_by_css_selector("ul.k9GMp > li.Y8-fY > a.-nal3")
+        btn_takipciler.click()
+        time.sleep(5)
+
+
+
+    def takipEtmeyenleriTakiptenCik(self,islemSecildiMi=False,secilenIslem=False):
+        if not islemSecildiMi:
             print(self.uyariOlustur("Seçilen İşlem >>> Takip edilip, takip etmeyen kullanıcıları takipten çıkma",1))
             print("")
-        print(self.uyariOlustur("       <<< SEÇENEKLER >>>      ", 1))
-        print(self.uyariOlustur("Tüm takip edilenler listesi içerisinden işlem yapmak için evet,",3))
-        print(self.uyariOlustur("Sadece belirtilen sayı kadar takip edilenler içerisinden işlem yapmak için hayır seçiniz.", 3))
-        print("")
-        secilenIslem = str(input("Tüm takip edilenler listesi içerisinde mi işlem yapılsın ? >> ").strip())
-        if secilenIslem=="evet":
-            print("evet")
-        elif secilenIslem=="hayır":
-            print("hayır")
+
+        if not secilenIslem:
+            print(self.uyariOlustur("       <<< SEÇENEKLER >>>      ", 1))
+            print(self.uyariOlustur("Tüm takip edilenler listesi içerisinden işlem yapmak için 1,", 3))
+            print(self.uyariOlustur("Belirtilen sayı kadar takip edilenler içerisinden işlem yapmak için 2 giriniz.", 3))
+            print("")
+            
+            secilenIslem = str(input("Tüm takip edilenler listesi içerisinde mi işlem yapılsın ? >> ").strip())
+
+        if secilenIslem=="1":
+            print(self.uyariOlustur("Seçilen İşlem >>> Tüm takip edilenler listesi içerisinden takip etmeyen kullanıcıları takipten çıkma", 1))
+        elif secilenIslem=="2":
+            print(self.uyariOlustur( "Seçilen İşlem >>> Belirtilen sayı kadar takip edilenler listesi içerisinden takip etmeyen kullanıcıları takipten çıkma",1))
+            sayi = input("İşlem yapmak için bir sayı belirleyiniz >> ").strip()
+            if sayi.isnumeric():
+                sayi=int(sayi)
+            else:
+                print(self.uyariOlustur("[-] Bir sayı girişi yapmadınız.Lütfen bir sayı giriniz!", 2))
+                print("")
+                self.takipEtmeyenleriTakiptenCik(islemSecildiMi=True,secilenIslem=secilenIslem)
         else:
             print(self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!", 2))
             print("")
-            self.takipEtmeyenleriTakiptenCik(False)
+            self.takipEtmeyenleriTakiptenCik(islemSecildiMi=True,secilenIslem=secilenIslem)
 
 
     def paylasimTipiKontrol(self):
@@ -387,14 +427,7 @@ class Instagram():
             print(self.uyariOlustur("[-] '" + kullanici + "' adında bir kullanıcı bulunamadı ",2))
             self.profilSec(secim)
 
-        
-    def numericMi(self,deger,kullaniciAdi,secim):
-        if deger.isnumeric():
-            return int(deger)        
-        else:
-            self.kullaniciTakipcileriniTakipEt(kullaniciAdi,secim)
 
-    
     def takipciSayisiKontrol(self,hedefTakipciSayisi,kaynakTakipciSayisi):
         if hedefTakipciSayisi>kaynakTakipciSayisi:
             hedefTakipciSayisi=kaynakTakipciSayisi
@@ -405,12 +438,14 @@ class Instagram():
         return hedefTakipciSayisi
 
 
-
-
     def kullaniciTakipcileriniTakipEt(self,kullaniciAdi,secim):
         try:
             hedefTakipciSayisi = input("Seçmek istediğiniz takipçi sayısını giriniz >> ").strip()
-            hedefTakipciSayisi=self.numericMi(hedefTakipciSayisi,kullaniciAdi,secim)
+            if hedefTakipciSayisi.isnumeric():
+                hedefTakipciSayisi=int(hedefTakipciSayisi)
+            else:
+                self.kullaniciTakipcileriniTakipEt(kullaniciAdi, secim)
+                
 
             print("[*] '" + kullaniciAdi + "' kullanıcısının takipçi listesini alma işlemi başladı...")
             self.driver.get('https://www.instagram.com/' + kullaniciAdi)
