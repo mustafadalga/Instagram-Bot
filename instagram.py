@@ -219,41 +219,44 @@ class Instagram():
 
 
     def takipEtmeyenleriTakiptenCik(self,islemSecildiMi=None,secilenIslem=None):
-        if islemSecildiMi is None:
-            print(self.uyariOlustur("Seçilen İşlem >>> Takip edilip, takip etmeyen kullanıcıları takipten çıkma",1))
-            print("")
-
-        if secilenIslem is None:
-            print(self.uyariOlustur("       <<< SEÇENEKLER >>>      ", 1))
-            print(self.uyariOlustur("Tüm takip edilenler listesi içerisinden işlem yapmak için 1,", 3))
-            print(self.uyariOlustur("Belirtilen sayı kadar takip edilenler içerisinden işlem yapmak için 2 giriniz.", 3))
-            print("")
-
-            secilenIslem = str(input("Tüm takip edilenler listesi içerisinde mi işlem yapılsın ? >> ").strip())
-
-        if secilenIslem=="1":
-            print(self.uyariOlustur("Seçilen İşlem >>> Tüm takip edilenler listesi içerisinden takip etmeyen kullanıcıları takipten çıkma", 1))
-            takipciler=self.takipcileriGetir()
-            print("[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.")
-            self.takipEdilenleriGetir(takipciler=takipciler,hedefTakipEdilenSayısı=None)
-            print("[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.")
-        elif secilenIslem=="2":
-            print(self.uyariOlustur( "Seçilen İşlem >>> Belirtilen sayı kadar takip edilenler listesi içerisinden takip etmeyen kullanıcıları takipten çıkma",1))
-            sayi = input("İşlem yapmak için bir sayı belirleyiniz >> ").strip()
-            if sayi.isnumeric():
-                limit=int(sayi)
-                takipciler = self.takipcileriGetir(limit)
-                print("[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.")
-                self.takipEdilenleriGetir(takipciler=takipciler, hedefTakipEdilenSayısı=limit)
-                print("[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.")
-            else:
-                print(self.uyariOlustur("[-] Bir sayı girişi yapmadınız.Lütfen bir sayı giriniz!", 2))
+        try:
+            if islemSecildiMi is None:
+                print(self.uyariOlustur("Seçilen İşlem >>> Takip edilip, takip etmeyen kullanıcıları takipten çıkma",1))
                 print("")
-                self.takipEtmeyenleriTakiptenCik(islemSecildiMi=True,secilenIslem=secilenIslem)
-        else:
-            print(self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!", 2))
-            print("")
-            self.takipEtmeyenleriTakiptenCik(islemSecildiMi=islemSecildiMi,secilenIslem=secilenIslem)
+
+            if secilenIslem is None:
+                print(self.uyariOlustur("       <<< SEÇENEKLER >>>      ", 1))
+                print(self.uyariOlustur("Tüm takip edilenler listesi içerisinden işlem yapmak için 1,", 3))
+                print(self.uyariOlustur("Belirtilen sayı kadar takip edilenler içerisinden işlem yapmak için 2 giriniz.", 3))
+                print("")
+                secilenIslem = str(input("Tüm takip edilenler listesi içerisinde mi işlem yapılsın ? >> ").strip())
+
+            if secilenIslem=="1":
+                print(self.uyariOlustur("Seçilen İşlem >>> Tüm takip edilenler listesi içerisinden takip etmeyen kullanıcıları takipten çıkma", 1))
+                takipciler=self.takipcileriGetir()
+                print("[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.")
+                self.takipEdilenleriGetir(takipciler=takipciler,hedefTakipEdilenSayısı=None)
+                print("[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.")
+            elif secilenIslem=="2":
+                print(self.uyariOlustur( "Seçilen İşlem >>> Belirtilen sayı kadar takip edilenler listesi içerisinden takip etmeyen kullanıcıları takipten çıkma",1))
+                sayi = input("İşlem yapmak için bir sayı belirleyiniz >> ").strip()
+                if sayi.isnumeric():
+                    limit=int(sayi)
+                    takipciler = self.takipcileriGetir(limit)
+                    print("[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.")
+                    self.takipEdilenleriGetir(takipciler=takipciler, hedefTakipEdilenSayısı=limit)
+                    print("[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.")
+                else:
+                    print(self.uyariOlustur("[-] Bir sayı girişi yapmadınız.Lütfen bir sayı giriniz!", 2))
+                    print("")
+                    self.takipEtmeyenleriTakiptenCik(islemSecildiMi=True,secilenIslem=secilenIslem)
+            else:
+                print(self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!", 2))
+                print("")
+                self.takipEtmeyenleriTakiptenCik(islemSecildiMi=islemSecildiMi,secilenIslem=secilenIslem)
+        except Exception as error:
+            print(self.uyariOlustur("[-] Takip etmeyen kullanıcıları takipten çıkma işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
+
 
 
     def paylasimTipiKontrol(self):
