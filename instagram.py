@@ -100,73 +100,121 @@ class Instagram():
             self.islemSec()
 
 
-    def takipEdilenleriGetir(self):
-        print("[*] Takip edilen kullanıcıları seçme işlemi başladı.")
-        self.driver.get('https://www.instagram.com/' + self.aktifKullanici)
-        time.sleep(5)
+    def takipEdilenleriGetir(self,takipciler,hedefTakipEdilenSayısı=None):
+        try:
+            print("[*] Takip edilen kullanıcıları seçme işlemi başladı.")
+            if hedefTakipEdilenSayısı is None:
+                takipEdilenSayisi =int(self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[3]/a/span").text)
+            else:
+                kaynakTakipEdilenSayisi = int(self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[3]/a/span").text)
+                takipEdilenSayisi=self.takipciSayisiKontrol(hedefTakipEdilenSayısı,kaynakTakipEdilenSayisi)
 
-        takipEdilenSayisi =int(self.driver.find_element_by_css_selector("a.-nal3 > span.g47SY").text)
-        btn_takipEdilenler=self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[3]/a")
-        btn_takipEdilenler.click()
-        time.sleep(5)
+            btn_takipEdilenler=self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[3]/a")
+            btn_takipEdilenler.click()
+            time.sleep(5)
 
-        takipEdilenler = set()
-        for i in range(round(takipEdilenSayisi / 6)):
-            dialog_popup = self.driver.find_element_by_css_selector('div.pbNvD')
-            takipListe = dialog_popup.find_elements_by_css_selector('div.PZuss > li')
+            takipEdilenIndexNumarasi=0
+            takipSayiDurumu=False
+            print("Hedef:"+str(hedefTakipEdilenSayısı))
+            print("takipEdilenSayisi:"+str(takipEdilenSayisi))
 
-            for takip in takipListe:
-                kullanıcıAdi = takip.find_element_by_css_selector("a.FPmhX").get_attribute('href')
-                kullanıcıAdi = kullanıcıAdi.replace('https://www.instagram.com/', '')
-                btn_takip = takip.find_element_by_css_selector('button.sqdOP')
+            for i in range(round(takipEdilenSayisi / 8)):
+                dialog_popup = self.driver.find_element_by_css_selector('div.pbNvD')
+                takipListe = dialog_popup.find_elements_by_css_selector('div.PZuss > li')
+                for takip in takipListe:
+                    print("takipSayiDurumu:" + str(takipSayiDurumu))
+                    takipEdilenKullanıcıAdi = takip.find_element_by_css_selector("a.FPmhX").get_attribute('href')
+                    takipEdilenKullanıcıAdi = takipEdilenKullanıcıAdi.replace('https://www.instagram.com/', '').replace('/', '')
 
+                    if takipEdilenKullanıcıAdi not in takipciler:
+                        btn_takip = takip.find_element_by_css_selector('button.sqdOP')
+                        btn_takip.click()
+                        time.sleep(2)
+                        btn_onay = self.driver.find_element_by_css_selector("div.mt3GC > button.aOOlW")
+                        btn_onay.click()
+                        print(self.uyariOlustur(
+                            "[*] {index} -) {kullaniciAdi} adlı kullanıcı takip edilmekten vazgeçildi.".format(
+                                index=takipEdilenIndexNumarasi + 1, kullaniciAdi=takipEdilenKullanıcıAdi), 1))
+                        takipEdilenIndexNumarasi = takipEdilenIndexNumarasi + 1
+                        time.sleep(2)
 
-    def takipcileriGetir(self,hedefTakipciSayisi=None):
-        print("[*] Takipçileri listeye ekleme işlemi başladı.")
-        self.driver.get('https://www.instagram.com/' + self.aktifKullanici)
-        time.sleep(5)
-
-        if hedefTakipciSayisi is None:
-            takipciSayisi = int(self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[2]/a/span").text)
-        else:
-            kaynakTakipciSayisi = int(self.driver.find_element_by_css_selector("a.-nal3 > span.g47SY").text)
-            takipciSayisi=self.takipciSayisiKontrol(hedefTakipciSayisi,kaynakTakipciSayisi)
-        btn_takipciler = self.driver.find_element_by_css_selector("ul.k9GMp > li.Y8-fY > a.-nal3")
-        btn_takipciler.click()
-        time.sleep(5)
-        takipciler=set()
-        takipciIndexNumarasi=0
-        takipciSayiDurumu=False
-        for i in range(round(takipciSayisi / 8)):
-            dialog_popup = self.driver.find_element_by_css_selector('div.pbNvD')
-            takipcilerPopup = dialog_popup.find_elements_by_css_selector('div.PZuss > li')
-            for takipci in takipcilerPopup:
-                takipciKullaniciAdi = takipci.find_element_by_css_selector("a.FPmhX").get_attribute('href')
-                takipciKullaniciAdi = takipciKullaniciAdi.replace('https://www.instagram.com/', '').replace('/','')
-                print(self.uyariOlustur("[*] {index} -) {takipci} takipcisi listeye eklendi.".format(index=takipciIndexNumarasi + 1,takipci=takipciKullaniciAdi), 1))
-                takipciler.add(takipciKullaniciAdi)
-                takipciIndexNumarasi = takipciIndexNumarasi + 1
-                if hedefTakipciSayisi is None:
-                    if takipciIndexNumarasi == takipciSayisi:
-                        takipciSayiDurumu = True
-                        break
-                else:
-                    if hedefTakipciSayisi<8:
-                        if takipciIndexNumarasi == hedefTakipciSayisi:
-                            takipciSayiDurumu = True
+                    if hedefTakipEdilenSayısı is None:
+                        if takipEdilenIndexNumarasi == takipEdilenSayisi:
+                            takipSayiDurumu = True
                             break
                     else:
+                        if hedefTakipEdilenSayısı < 8:
+                            if takipEdilenIndexNumarasi == hedefTakipEdilenSayısı:
+                                takipSayiDurumu = True
+                                break
+                        else:
+                            if takipEdilenIndexNumarasi == takipEdilenSayisi:
+                                takipSayiDurumu = True
+                                break
+
+                if not takipSayiDurumu:
+                    self.driver.execute_script('''
+                                                   var fDialog = document.querySelector('div[role="dialog"] .pbNvD');
+                                                   fDialog.scrollTop = fDialog.scrollHeight
+                                               ''')
+        except Exception as error:
+            print(self.uyariOlustur('[-] Takip etmeyen kullanıcıları takipten çıkma işlemi sırasında bir hata oluştu: {hata}'.format(hata=str(error)), 2))
+
+    def takipcileriGetir(self,hedefTakipciSayisi=None):
+        try:
+            print("[*] Takipçileri listeye ekleme işlemi başladı.")
+            self.driver.get('https://www.instagram.com/' + self.aktifKullanici)
+            time.sleep(5)
+
+            if hedefTakipciSayisi is None:
+                takipciSayisi = int(self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[2]/a/span").text)
+            else:
+                kaynakTakipciSayisi = int(self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[2]/a/span").text)
+                takipciSayisi=self.takipciSayisiKontrol(hedefTakipciSayisi,kaynakTakipciSayisi)
+
+
+            btn_takipciler = self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[2]/a")
+            btn_takipciler.click()
+            time.sleep(5)
+
+            takipciler=set()
+            takipciIndexNumarasi=0
+            takipciSayiDurumu=False
+            for i in range(round(takipciSayisi / 8)):
+                dialog_popup = self.driver.find_element_by_css_selector('div.pbNvD')
+                takipcilerPopup = dialog_popup.find_elements_by_css_selector('div.PZuss > li')
+                for takipci in takipcilerPopup:
+                    takipciKullaniciAdi = takipci.find_element_by_css_selector("a.FPmhX").get_attribute('href')
+                    takipciKullaniciAdi = takipciKullaniciAdi.replace('https://www.instagram.com/', '').replace('/','')
+                    print(self.uyariOlustur("[*] {index} -) {takipci} takipcisi listeye eklendi.".format(index=takipciIndexNumarasi + 1,takipci=takipciKullaniciAdi), 1))
+                    takipciler.add(takipciKullaniciAdi)
+                    takipciIndexNumarasi = takipciIndexNumarasi + 1
+                    if hedefTakipciSayisi is None:
                         if takipciIndexNumarasi == takipciSayisi:
                             takipciSayiDurumu = True
                             break
+                    else:
+                        if hedefTakipciSayisi<8:
+                            if takipciIndexNumarasi == hedefTakipciSayisi:
+                                takipciSayiDurumu = True
+                                break
+                        else:
+                            if takipciIndexNumarasi == takipciSayisi:
+                                takipciSayiDurumu = True
+                                break
 
-            if not takipciSayiDurumu:
-                self.driver.execute_script('''
-                                var fDialog = document.querySelector('div[role="dialog"] .isgrP');
-                                fDialog.scrollTop = fDialog.scrollHeight
-                            ''')
-                time.sleep(3)
-        return takipciler
+                if not takipciSayiDurumu:
+                    self.driver.execute_script('''
+                                    var fDialog = document.querySelector('div[role="dialog"] .isgrP');
+                                    fDialog.scrollTop = fDialog.scrollHeight
+                                ''')
+                    time.sleep(3)
+            btn_close_dialog=self.driver.find_element_by_xpath("/html/body/div[4]/div/div/div[1]/div/div[2]/button")
+            btn_close_dialog.click()
+            return takipciler
+        except Exception as error:
+            print(self.uyariOlustur("[-] Takipçileri seçme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
+
 
 
 
@@ -187,14 +235,17 @@ class Instagram():
             print(self.uyariOlustur("Seçilen İşlem >>> Tüm takip edilenler listesi içerisinden takip etmeyen kullanıcıları takipten çıkma", 1))
             takipciler=self.takipcileriGetir()
             print("[*] Takipçileri seçme işlemi tamamlandı.")
-            takipler=self.takipEdilenleriGetir()
+            takipler=self.takipEdilenleriGetir(takipciler=takipciler,hedefTakipEdilenSayısı=None)
             print("[*] Takip edilen kullanıcıları seçme işlemi tamamlandı.")
         elif secilenIslem=="2":
             print(self.uyariOlustur( "Seçilen İşlem >>> Belirtilen sayı kadar takip edilenler listesi içerisinden takip etmeyen kullanıcıları takipten çıkma",1))
             sayi = input("İşlem yapmak için bir sayı belirleyiniz >> ").strip()
             if sayi.isnumeric():
-                takipciler = self.takipcileriGetir(int(sayi))
+                limit=int(sayi)
+                takipciler = self.takipcileriGetir(limit)
                 print("[*] Takipçileri seçme işlemi tamamlandı.")
+                takipler = self.takipEdilenleriGetir(takipciler=takipciler, hedefTakipEdilenSayısı=limit)
+                print("[*] Takip edilen kullanıcıları seçme işlemi tamamlandı.")
             else:
                 print(self.uyariOlustur("[-] Bir sayı girişi yapmadınız.Lütfen bir sayı giriniz!", 2))
                 print("")
@@ -473,14 +524,14 @@ class Instagram():
             self.profilSec(secim)
 
 
-    def takipciSayisiKontrol(self,hedefTakipciSayisi,kaynakTakipciSayisi):
-        if hedefTakipciSayisi>kaynakTakipciSayisi:
-            hedefTakipciSayisi=kaynakTakipciSayisi
+    def takipciSayisiKontrol(self,hedef,kaynak):
+        if hedef>kaynak:
+            hedef=kaynak
         
-        if hedefTakipciSayisi < 8:
-            hedefTakipciSayisi = 8
+        if hedef < 8:
+            hedef = 8
 
-        return hedefTakipciSayisi
+        return hedef
 
 
     def kullaniciTakipcileriniTakipEt(self,kullaniciAdi,secim):
