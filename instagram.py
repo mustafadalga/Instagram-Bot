@@ -101,8 +101,10 @@ class Instagram():
 
 
     def takipEdilenleriGetir(self):
+        print("[*] Takip edilen kullanıcıları seçme işlemi başladı.")
         self.driver.get('https://www.instagram.com/' + self.aktifKullanici)
         time.sleep(5)
+
         takipEdilenSayisi =int(self.driver.find_element_by_css_selector("a.-nal3 > span.g47SY").text)
         btn_takipEdilenler=self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[3]/a")
         btn_takipEdilenler.click()
@@ -125,7 +127,7 @@ class Instagram():
         time.sleep(5)
 
         if hedefTakipciSayisi is None:
-            takipciSayisi = int(self.driver.find_element_by_css_selector("a.-nal3 > span.g47SY").text)
+            takipciSayisi = int(self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[2]/a/span").text)
         else:
             kaynakTakipciSayisi = int(self.driver.find_element_by_css_selector("a.-nal3 > span.g47SY").text)
             takipciSayisi=self.takipciSayisiKontrol(hedefTakipciSayisi,kaynakTakipciSayisi)
@@ -185,6 +187,8 @@ class Instagram():
             print(self.uyariOlustur("Seçilen İşlem >>> Tüm takip edilenler listesi içerisinden takip etmeyen kullanıcıları takipten çıkma", 1))
             takipciler=self.takipcileriGetir()
             print("[*] Takipçileri seçme işlemi tamamlandı.")
+            takipler=self.takipEdilenleriGetir()
+            print("[*] Takip edilen kullanıcıları seçme işlemi tamamlandı.")
         elif secilenIslem=="2":
             print(self.uyariOlustur( "Seçilen İşlem >>> Belirtilen sayı kadar takip edilenler listesi içerisinden takip etmeyen kullanıcıları takipten çıkma",1))
             sayi = input("İşlem yapmak için bir sayı belirleyiniz >> ").strip()
