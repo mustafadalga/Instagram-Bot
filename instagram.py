@@ -234,18 +234,18 @@ class Instagram():
         if secilenIslem=="1":
             print(self.uyariOlustur("Seçilen İşlem >>> Tüm takip edilenler listesi içerisinden takip etmeyen kullanıcıları takipten çıkma", 1))
             takipciler=self.takipcileriGetir()
-            print("[*] Takipçileri seçme işlemi tamamlandı.")
-            takipler=self.takipEdilenleriGetir(takipciler=takipciler,hedefTakipEdilenSayısı=None)
-            print("[*] Takip edilen kullanıcıları seçme işlemi tamamlandı.")
+            print("[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.")
+            self.takipEdilenleriGetir(takipciler=takipciler,hedefTakipEdilenSayısı=None)
+            print("[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.")
         elif secilenIslem=="2":
             print(self.uyariOlustur( "Seçilen İşlem >>> Belirtilen sayı kadar takip edilenler listesi içerisinden takip etmeyen kullanıcıları takipten çıkma",1))
             sayi = input("İşlem yapmak için bir sayı belirleyiniz >> ").strip()
             if sayi.isnumeric():
                 limit=int(sayi)
                 takipciler = self.takipcileriGetir(limit)
-                print("[*] Takipçileri seçme işlemi tamamlandı.")
-                takipler = self.takipEdilenleriGetir(takipciler=takipciler, hedefTakipEdilenSayısı=limit)
-                print("[*] Takip edilen kullanıcıları seçme işlemi tamamlandı.")
+                print("[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.")
+                self.takipEdilenleriGetir(takipciler=takipciler, hedefTakipEdilenSayısı=limit)
+                print("[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.")
             else:
                 print(self.uyariOlustur("[-] Bir sayı girişi yapmadınız.Lütfen bir sayı giriniz!", 2))
                 print("")
