@@ -392,7 +392,6 @@ class Instagram():
             print(self.uyariOlustur(" Seçilen İşlem >>> İnstagram oturumunu kapatma", 1))
         elif secim==13:
             print(self.uyariOlustur(" Seçilen İşlem >>> Python uygulamasından çıkış yapma", 1))
-
         if secim<12:
             print(self.uyariOlustur(" [*] Ana menüye dönmek için  'menu' komutunu giriniz", 3))
         print("")
@@ -537,62 +536,113 @@ class Instagram():
 
         return hedef
 
-
-    def kullaniciTakipcileriniTakipEt(self,kullaniciAdi,secim):
+    def kullaniciTakipcileriniTakipEt(self, kullaniciAdi, secim, islemSecildiMi=None, secilenIslem=None):
         try:
-            hedefTakipciSayisi = input("Seçmek istediğiniz takipçi sayısını giriniz >> ").strip()
-            if hedefTakipciSayisi.isnumeric():
-                hedefTakipciSayisi=int(hedefTakipciSayisi)
+            self.driver.get(self.BASE_URL + kullaniciAdi)
+            time.sleep(4)
+            hedefTakipciSayisi = None
+            if islemSecildiMi is None:
+                print(
+                    self.uyariOlustur("Seçilen İşlem >>> Bir kullanıcının takipçilerini takip etme", 1))
+                print("")
+
+            if secilenIslem is None:
+                print(self.uyariOlustur("       <<< SEÇENEKLER >>>      ", 1))
+                print(self.uyariOlustur("Tüm takipçiler listesi içerisinden işlem yapmak için 1,", 3))
+                print(self.uyariOlustur(
+                    "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz,", 3))
+                print("")
+                secilenIslem = str(input("Tüm takipçiler listesi içerisinde mi işlem yapılsın ? >> ").strip())
+
+            if secilenIslem == "1":
+                print(
+                    self.uyariOlustur("Seçilen İşlem >>> Tüm takipçiler listesi içerisindeki kullanıcıları takip etme",
+                                      1))
+            elif secilenIslem == "2":
+                print(self.uyariOlustur(
+                    "Seçilen İşlem >>> Belirtilen sayı kadar takipçiler listesi içerisindeki kullanıcıları takip etme",
+                    1))
+                hedefTakipciSayisi = input("İşlem yapmak için bir sayı belirleyiniz >> ").strip()
+                if hedefTakipciSayisi.isnumeric():
+                    hedefTakipciSayisi = int(hedefTakipciSayisi)
+                else:
+                    print(self.uyariOlustur("[-] Bir sayı girişi yapmadınız.Lütfen bir sayı giriniz!", 2))
+                    print("")
+                    self.kullaniciTakipcileriniTakipEt(kullaniciAdi, secim, islemSecildiMi=True,
+                                                       secilenIslem=secilenIslem)
             else:
-                self.kullaniciTakipcileriniTakipEt(kullaniciAdi, secim)
-                
+                print(self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!", 2))
+                print("")
+                self.kullaniciTakipcileriniTakipEt(kullaniciAdi, secim, islemSecildiMi=None, secilenIslem=secilenIslem)
+
 
             print("[*] '" + kullaniciAdi + "' kullanıcısının takipçilerini takip etme işlemi başladı...")
-            self.driver.get(self.BASE_URL + kullaniciAdi)
-            time.sleep(5)
 
             if "Sorry, this page isn't available." in self.driver.page_source:
                 print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısına ulaşılamadı", 2))
                 self.profilSec(secim)
             elif "This Account is Private" not in self.driver.page_source:
-                takipIndexNumarasi=0;
-                takipSayiDurumu=False
-                kaynakTakipciSayisi = int(self.driver.find_element_by_css_selector("a.-nal3 > span.g47SY").text)
-                hedefTakipciSayisi=self.takipciSayisiKontrol(hedefTakipciSayisi,kaynakTakipciSayisi)
+                takipciIndexNumarasi = 0;
+                devamEtsinMi=True
+
+                if hedefTakipciSayisi is None:
+                    takipciSayisi = int(self.driver.find_element_by_css_selector("a.-nal3 > span.g47SY").text)
+                else:
+                    kaynakTakipciSayisi = int(self.driver.find_element_by_css_selector("a.-nal3 > span.g47SY").text)
+                    takipciSayisi = self.takipciSayisiKontrol(hedefTakipciSayisi, kaynakTakipciSayisi)
 
                 btn_takipciler = self.driver.find_element_by_css_selector("a.-nal3")
                 btn_takipciler.click()
                 time.sleep(5)
 
-                for i in range(round(hedefTakipciSayisi/8)):
-                    dialog_popup=self.driver.find_element_by_css_selector('div._1XyCr')
-                    takipciListe=dialog_popup.find_elements_by_css_selector('div.PZuss > li')
+                while devamEtsinMi:
+                    dialog_popup = self.driver.find_element_by_css_selector('div._1XyCr')
+                    takipciListe = dialog_popup.find_elements_by_css_selector('div.PZuss > li')
 
                     for takipci in takipciListe:
-                        takipciKullaniciAdi=takipci.find_element_by_css_selector("a.FPmhX").get_attribute('href')
-                        takipciKullaniciAdi=takipciKullaniciAdi.replace(self.BASE_URL,'')
-                        btn_takip=takipci.find_element_by_css_selector('button.sqdOP')  
-                        if btn_takip.text=="Follow":
-                            print(self.uyariOlustur("[*] {index} -) {takipci} takip edilme işlemi başladı.".format(index=takipIndexNumarasi+1,takipci=takipciKullaniciAdi), 1))
-                            btn_takip.click()
-                            takipIndexNumarasi=takipIndexNumarasi+1
-                            if takipIndexNumarasi==hedefTakipciSayisi:
-                                takipSayiDurumu=True
-                                break
-                            time.sleep(5)
-                    if not takipSayiDurumu:
+                        takipciKullaniciAdi = takipci.find_element_by_css_selector("a.FPmhX").get_attribute('href')
+                        takipciKullaniciAdi = takipciKullaniciAdi.replace(self.BASE_URL, '').replace('/','')
+                        try:
+                            btn_takip = takipci.find_element_by_css_selector('button.sqdOP')
+                            if btn_takip.text == "Follow":
+                                print(self.uyariOlustur("[*] {index} -) {takipci} takip edilme işlemi başladı.".format(
+                                    index=takipciIndexNumarasi + 1, takipci=takipciKullaniciAdi), 1))
+                                btn_takip.click()
+                                takipciIndexNumarasi = takipciIndexNumarasi + 1
+
+                                if hedefTakipciSayisi is None:
+                                    if takipciIndexNumarasi == takipciSayisi:
+                                        devamEtsinMi = False
+                                        break
+                                else:
+                                    if hedefTakipciSayisi < 8:
+                                        if takipciIndexNumarasi == hedefTakipciSayisi:
+                                            devamEtsinMi = False
+                                            break
+                                    else:
+                                        if takipciIndexNumarasi == takipciSayisi:
+                                            devamEtsinMi = False
+                                            break
+                                time.sleep(5)
+                        except Exception:
+                            pass
+
+                    if devamEtsinMi:
                         self.driver.execute_script('''
-                        var fDialog = document.querySelector('div[role="dialog"] .isgrP');
-                        fDialog.scrollTop = fDialog.scrollHeight
-                    ''')
-                        time.sleep(3)     
-                    else:
-                        print("[*] '" + kullaniciAdi + "' kullanıcısının takipçilerini takip etme işlemi tamamlandı.")
+                          var fDialog = document.querySelector('div[role="dialog"] .isgrP');
+                          fDialog.scrollTop = fDialog.scrollHeight
+                      ''')
+                        time.sleep(3)
+                print("[*] '" + kullaniciAdi + "' kullanıcısının takipçilerini takip etme işlemi tamamlandı.")
+
             else:
-                print(self.uyariOlustur("[-] "+kullaniciAdi+" adlı kişinin hesabı gizli hesap olduğundan takipçileri takip edilemiyor!",2))
+                print(self.uyariOlustur(
+                    "[-] " + kullaniciAdi + " adlı kişinin hesabı gizli hesap olduğundan takipçileri takip edilemiyor!",
+                    2))
                 self.profilSec(secim)
         except Exception as e:
-            print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısının takipçilerini takip etme işlemi sırasında hata:" + str(e), 2))
+            print(self.uyariOlustur(
+                "[-] " + kullaniciAdi + " kullanıcısının takipçilerini takip etme işlemi sırasında hata:" + str(e), 2))
             self.profilSec(secim)
 
     def kullaniciKontrol(self,kullaniciadi):
