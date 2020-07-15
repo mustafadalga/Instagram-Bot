@@ -19,6 +19,7 @@ class Instagram():
         self.girisYapildimi=False
         self.tarayiciAcildimi=False
         self.aktifKullanici=""
+        self.BASE_URL="https://www.instagram.com/"
         self.girisYap()
 
     def script(self):
@@ -27,7 +28,7 @@ class Instagram():
         print(self.uyariOlustur(" |_   _|         | |                                  |  _ \      | |  ", 1))
         print(self.uyariOlustur("   | |  _ __  ___| |_ __ _  __ _ _ __ __ _ _ __ ___   | |_) | ___ | |_ ", 1))
         print(self.uyariOlustur("   | | | '_ \/ __| __/ _` |/ _` | '__/ _` | '_ ` _ \  |  _ < / _ \| __|", 1))
-        print(self.uyariOlustur("  _| |_| | | \__ \ || (_| | (_| | | | (_| | | | | | | | |_) | (_) | |_ ", 1))
+        print(self.uyariOlustur("  _| |_| | | \__ \ || (_| | (_| | | | (_| c | | | | | | |_) | (_) | |_ ", 1))
         print(self.uyariOlustur(" |_____|_| |_|___/\__\__,_|\__, |_|  \__,_|_| |_| |_| |____/ \___/ \__|", 1))
         print(self.uyariOlustur("                            __/ |                                      ", 1))
         print(self.uyariOlustur("                           |___/                                       ", 1))
@@ -124,7 +125,7 @@ class Instagram():
                 for takip in takipListe:
                     print("takipSayiDurumu:" + str(takipSayiDurumu))
                     takipEdilenKullanıcıAdi = takip.find_element_by_css_selector("a.FPmhX").get_attribute('href')
-                    takipEdilenKullanıcıAdi = takipEdilenKullanıcıAdi.replace('https://www.instagram.com/', '').replace('/', '')
+                    takipEdilenKullanıcıAdi = takipEdilenKullanıcıAdi.replace(self.BASE_URL, '').replace('/', '')
 
                     if takipEdilenKullanıcıAdi not in takipciler:
                         btn_takip = takip.find_element_by_css_selector('button.sqdOP')
@@ -163,7 +164,7 @@ class Instagram():
     def takipcileriGetir(self,hedefTakipciSayisi=None):
         try:
             print("[*] Takipçileri listeye ekleme işlemi başladı.")
-            self.driver.get('https://www.instagram.com/' + self.aktifKullanici)
+            self.driver.get(self.BASE_URL + self.aktifKullanici)
             time.sleep(5)
 
             if hedefTakipciSayisi is None:
@@ -185,7 +186,7 @@ class Instagram():
                 takipcilerPopup = dialog_popup.find_elements_by_css_selector('div.PZuss > li')
                 for takipci in takipcilerPopup:
                     takipciKullaniciAdi = takipci.find_element_by_css_selector("a.FPmhX").get_attribute('href')
-                    takipciKullaniciAdi = takipciKullaniciAdi.replace('https://www.instagram.com/', '').replace('/','')
+                    takipciKullaniciAdi = takipciKullaniciAdi.replace(self.BASE_URL, '').replace('/','')
                     print(self.uyariOlustur("[*] {index} -) {takipci} takipcisi listeye eklendi.".format(index=takipciIndexNumarasi + 1,takipci=takipciKullaniciAdi), 1))
                     takipciler.add(takipciKullaniciAdi)
                     takipciIndexNumarasi = takipciIndexNumarasi + 1
@@ -295,7 +296,7 @@ class Instagram():
                             begenenlerKullanicilar = dialog_popup.find_elements_by_css_selector('div.HVWg4')
                             for begenenKullanici in begenenlerKullanicilar:
                                 begenenKullaniciAdi = begenenKullanici.find_element_by_css_selector("div.Igw0E > div.Igw0E > div._7UhW9 > a").get_attribute('href')
-                                begenenKullaniciAdi = begenenKullaniciAdi.replace('https://www.instagram.com/', '').replace('/','')
+                                begenenKullaniciAdi = begenenKullaniciAdi.replace(self.BASE_URL, '').replace('/','')
                                 btn_takip = begenenKullanici.find_element_by_css_selector("div.Igw0E > button.sqdOP")
                                 if btn_takip.text == "Follow":
                                     print(self.uyariOlustur("[*] {index} -) {kullaniciAdi} kullanıcısı takip edilme işlemi başladı.".format(index=takipIstekSayisi + 1, kullaniciAdi=begenenKullaniciAdi), 1))
@@ -404,7 +405,7 @@ class Instagram():
     def tarayiciBaslat(self):
         print(self.uyariOlustur("[*] Tarayıcı Başlatılıyor...",1))
         self.driver = webdriver.Firefox(firefox_profile=self.dilDegistir(),executable_path="E:\\Python\\Uygulamalar\\Intagram-Bot\\Instagram-Bot\\geckodriver.exe")
-        self.driver.get('https://www.instagram.com/accounts/login/')
+        self.driver.get(self.BASE_URL+'accounts/login/')
 
     def dilDegistir(self):
         profile = webdriver.FirefoxProfile()
@@ -458,9 +459,9 @@ class Instagram():
             uyari=self.uyariOlustur("[-] Girdiğiniz kullanıcı adı bir hesaba ait değil. Lütfen kullanıcı adınızı kontrol edin ve tekrar deneyin.",2)
         elif "Sorry, your password was incorrect. Please double-check your password." in self.driver.page_source:
             uyari=self.uyariOlustur("[-] Üzgünüz, parolanız hatalıydı. Lütfen parolanızı tekrar kontrol edin.",2)
-        elif "https://www.instagram.com/accounts/login/two_factor" in self.driver.current_url:
+        elif self.BASE_URL+"accounts/login/two_factor" in self.driver.current_url:
             uyari=self.girisDogrulama()
-        elif self.driver.current_url!="https://www.instagram.com/accounts/login/":
+        elif self.driver.current_url!=self.BASE_URL+"accounts/login/":
             uyari=self.uyariOlustur("[+] Giriş işlemi başarılı",1)
             self.girisYapildimi=True
         else:
@@ -486,7 +487,7 @@ class Instagram():
             print(self.uyariOlustur("[-] Lütfen güvenlik kodunu kontrol edin ve tekrar deneyin.",2))
             self.inputTemizle(kodInput)
             self.girisDogrulama(False)
-        elif "https://www.instagram.com/accounts/login/two_factor" not in self.driver.current_url:
+        elif self.BASE_URL+"accounts/login/two_factor" not in self.driver.current_url:
             self.girisYapildimi=True
             return self.uyariOlustur("[+] Giriş işlemi başarılı",1)
         else:
@@ -547,7 +548,7 @@ class Instagram():
                 
 
             print("[*] '" + kullaniciAdi + "' kullanıcısının takipçilerini takip etme işlemi başladı...")
-            self.driver.get('https://www.instagram.com/' + kullaniciAdi)
+            self.driver.get(self.BASE_URL + kullaniciAdi)
             time.sleep(5)
 
             if "Sorry, this page isn't available." in self.driver.page_source:
@@ -569,7 +570,7 @@ class Instagram():
 
                     for takipci in takipciListe:
                         takipciKullaniciAdi=takipci.find_element_by_css_selector("a.FPmhX").get_attribute('href')
-                        takipciKullaniciAdi=takipciKullaniciAdi.replace('https://www.instagram.com/','')
+                        takipciKullaniciAdi=takipciKullaniciAdi.replace(self.BASE_URL,'')
                         btn_takip=takipci.find_element_by_css_selector('button.sqdOP')  
                         if btn_takip.text=="Follow":
                             print(self.uyariOlustur("[*] {index} -) {takipci} takip edilme işlemi başladı.".format(index=takipIndexNumarasi+1,takipci=takipciKullaniciAdi), 1))
@@ -595,7 +596,7 @@ class Instagram():
             self.profilSec(secim)
 
     def kullaniciKontrol(self,kullaniciadi):
-        response=requests.get("https://www.instagram.com/" + kullaniciadi)
+        response=requests.get(self.BASE_URL + kullaniciadi)
         if response.status_code==404:
             return False
         else:
@@ -604,7 +605,7 @@ class Instagram():
     def kullaniciTakipEt(self,kullaniciAdi,secim):
         print("[*] '" + kullaniciAdi + "' kullanıcısını takip etme işlemine başladı...")
         try:
-            self.driver.get('https://www.instagram.com/' + kullaniciAdi)
+            self.driver.get(self.BASE_URL + kullaniciAdi)
             time.sleep(5)
 
             if "Sorry, this page isn't available." in self.driver.page_source:
@@ -641,7 +642,7 @@ class Instagram():
     def kullaniciTakipVazgec(self,kullaniciAdi,secim):
         print("[*] '" + kullaniciAdi + "' kullanıcısı takip etmekten vazgeçiliyor...")
         try:
-            self.driver.get('https://www.instagram.com/' + kullaniciAdi)
+            self.driver.get(self.BASE_URL + kullaniciAdi)
             time.sleep(5)
 
             if "Sorry, this page isn't available." in self.driver.page_source:
@@ -670,7 +671,7 @@ class Instagram():
     def kullaniciEngelle(self,kullaniciAdi,secim):
         print("[*] '" + kullaniciAdi + "' kullanıcısı engelleniyor...")
         try:
-            self.driver.get('https://www.instagram.com/' + kullaniciAdi)
+            self.driver.get(self.BASE_URL + kullaniciAdi)
             time.sleep(3)
 
             if "Sorry, this page isn't available." in self.driver.page_source:
@@ -702,7 +703,7 @@ class Instagram():
     def kullaniciEngelKaldir(self,kullaniciAdi,secim):
         print("[*] '" + kullaniciAdi + "' kullanıcısının engeli kaldırılıyor...")
         try:
-            self.driver.get('https://www.instagram.com/' + kullaniciAdi)
+            self.driver.get(self.BASE_URL + kullaniciAdi)
             time.sleep(3)
 
             if "Sorry, this page isn't available." in self.driver.page_source:
@@ -731,7 +732,7 @@ class Instagram():
             self.profilSec(secim)
 
     def paylasimlariIndir(self,kullaniciadi,secim):
-        self.driver.get("https://www.instagram.com/" + kullaniciadi)
+        self.driver.get(self.BASE_URL + kullaniciadi)
         time.sleep(10)
         try:
             if "This Account is Private" not in self.driver.page_source:
@@ -897,7 +898,7 @@ class Instagram():
             print(self.uyariOlustur("[-] Veri indirme işlemi sırasında hata oluştu:" + str(e), 2))
 
     def paylasimlariBegen(self,kullaniciadi,secim,durum=True):
-        self.driver.get("https://www.instagram.com/" + kullaniciadi)
+        self.driver.get(self.BASE_URL + kullaniciadi)
         time.sleep(10)
         if "This Account is Private" not in self.driver.page_source:
             print("[*] '" + kullaniciadi + "' kullanıcısının paylaşımlarının tarama işlemi başladı...")
@@ -1112,7 +1113,7 @@ class Instagram():
     def cikisYap(self):
         print("[*] İnstagramdan çıkış yapılıyor...")
         try:
-            self.driver.get("https://www.instagram.com/"+self.aktifKullanici)
+            self.driver.get(self.BASE_URL+self.aktifKullanici)
             time.sleep(3)
             self.driver.find_element_by_css_selector("span.glyphsSpriteUser__outline__24__grey_9").click()
             time.sleep(5)
@@ -1122,7 +1123,7 @@ class Instagram():
             cikis=self.driver.find_element_by_xpath("/html/body/div[3]/div/div/div/button[6]")
             cikis.click()
             print(self.uyariOlustur("[*] İnstagramdan çıkış yapıldı...", 1))
-            self.driver.get('https://www.instagram.com/accounts/login/')
+            self.driver.get(self.BASE_URL+'accounts/login/')
             self.girisYapildimi=False
             self.girisYap()
         except Exception as e:
