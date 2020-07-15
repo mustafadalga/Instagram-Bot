@@ -546,7 +546,7 @@ class Instagram():
                 self.kullaniciTakipcileriniTakipEt(kullaniciAdi, secim)
                 
 
-            print("[*] '" + kullaniciAdi + "' kullanıcısının takipçi listesini alma işlemi başladı...")
+            print("[*] '" + kullaniciAdi + "' kullanıcısının takipçilerini takip etme işlemi başladı...")
             self.driver.get('https://www.instagram.com/' + kullaniciAdi)
             time.sleep(5)
 
@@ -586,12 +586,12 @@ class Instagram():
                     ''')
                         time.sleep(3)     
                     else:
-                        print("[*] Takipçi seçme işlemi tamamlandı.")
+                        print("[*] '" + kullaniciAdi + "' kullanıcısının takipçilerini takip etme işlemi tamamlandı.")
             else:
-                print(self.uyariOlustur("[-] "+kullaniciAdi+" adlı kişinin hesabı gizli hesap olduğundan takipçi listesi alınamıyor!",2))
+                print(self.uyariOlustur("[-] "+kullaniciAdi+" adlı kişinin hesabı gizli hesap olduğundan takipçileri takip edilemiyor!",2))
                 self.profilSec(secim)
         except Exception as e:
-            print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısının takipçi listesini alma işlemi sırasında hata:" + str(e), 2))
+            print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısının takipçilerini takip etme işlemi sırasında hata:" + str(e), 2))
             self.profilSec(secim)
 
     def kullaniciKontrol(self,kullaniciadi):
