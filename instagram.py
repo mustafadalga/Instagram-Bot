@@ -278,6 +278,10 @@ class Instagram():
         except:
             return False
 
+    def metindenKarakterSil(self,metin,silinecekKarakterler):
+        return metin.replace(silinecekKarakterler,'')
+        #return ''.join(karakter for karakter in metin if karakter not in silinecekKarakterler)
+
     def paylasimBegenenleriTakipEt(self):
         url = input("İşlem yapmak istediğiniz gönderi url >> ").strip()
 
@@ -294,13 +298,14 @@ class Instagram():
                 try:
                     if self.paylasimTipiKontrol():
                         takipIstekSayisi = 0
-                        takipSayiDurumu = False
-                        begenenSayisi=int(self.driver.find_element_by_css_selector("div.Nm9Fw > button.sqdOP > span").text)
+                        islemIndex=0
+                        begenenSayisi=self.driver.find_element_by_css_selector("div.Nm9Fw > button.sqdOP > span").text
+                        begenenSayisi=int(self.metindenKarakterSil(begenenSayisi,','))
                         btn_begenenler = self.driver.find_element_by_css_selector("div.Nm9Fw > button.sqdOP")
                         btn_begenenler.click()
                         time.sleep(5)
-
-cle                        for i in range(round(begenenSayisi/6)):
+                        devamEtsinMi=True
+                        while devamEtsinMi:
                             dialog_popup=self.driver.find_element_by_css_selector("div.pbNvD")
                             begenenlerKullanicilar = dialog_popup.find_elements_by_css_selector('div.HVWg4')
                             for begenenKullanici in begenenlerKullanicilar:
@@ -312,12 +317,18 @@ cle                        for i in range(round(begenenSayisi/6)):
                                     btn_takip.click()
                                     takipIstekSayisi = takipIstekSayisi + 1
                                     if takipIstekSayisi == begenenSayisi:
-                                        takipSayiDurumu = True
+                                        devamEtsinMi = False
                                         break
                                     time.sleep(5)
-                            if not takipSayiDurumu:
+
+                                islemIndex=islemIndex+1
+                                print(islemIndex)
+                                if islemIndex==begenenSayisi:
+                                    print(islemIndex)
+                                    devamEtsinMi=False
+                            if devamEtsinMi:
                                 self.driver.execute_script('''
-                                                    var fDialog = document.querySelector('div[role="dialog"] .pbNvD');
+                                                    var fDialog = document.querySelector('div[role="dialog"]  .i0EQd > div:nth-child(1)');
                                                     fDialog.scrollTop = fDialog.scrollHeight
                                                 ''')
                                 time.sleep(3)
