@@ -115,51 +115,61 @@ class Instagram():
             time.sleep(5)
 
             takipEdilenIndexNumarasi=0
-            takipSayiDurumu=False
-            print("Hedef:"+str(hedefTakipEdilenSayısı))
-            print("takipEdilenSayisi:"+str(takipEdilenSayisi))
-
-            for i in range(round(takipEdilenSayisi / 8)):
+            devamEtsinMi=True
+            while devamEtsinMi:
                 dialog_popup = self.driver.find_element_by_css_selector('div.pbNvD')
                 takipListe = dialog_popup.find_elements_by_css_selector('div.PZuss > li')
                 for takip in takipListe:
-                    print("takipSayiDurumu:" + str(takipSayiDurumu))
                     takipEdilenKullanıcıAdi = takip.find_element_by_css_selector("a.FPmhX").get_attribute('href')
                     takipEdilenKullanıcıAdi = takipEdilenKullanıcıAdi.replace(self.BASE_URL, '').replace('/', '')
 
                     if takipEdilenKullanıcıAdi not in takipciler:
                         btn_takip = takip.find_element_by_css_selector('button.sqdOP')
-                        btn_takip.click()
-                        time.sleep(2)
-                        btn_onay = self.driver.find_element_by_css_selector("div.mt3GC > button.aOOlW")
-                        btn_onay.click()
-                        print(self.uyariOlustur(
-                            "[*] {index} -) {kullaniciAdi} adlı kullanıcı takip edilmekten vazgeçildi.".format(
-                                index=takipEdilenIndexNumarasi + 1, kullaniciAdi=takipEdilenKullanıcıAdi), 1))
-                        takipEdilenIndexNumarasi = takipEdilenIndexNumarasi + 1
-                        time.sleep(2)
+                        if btn_takip.text=="Following":
+                            btn_takip.click()
+                            time.sleep(2)
+                            try:
+                                btn_onay = self.driver.find_element_by_css_selector("div.mt3GC > button.aOOlW")
+                                btn_onay.click()
+                            except Exception as error:
+                                print(self.uyariOlustur('[-] {kullaniciAdi} kullanıcısını takipten çıkma işlemi sırasında bir hata oluştu: {hata}'.format(hata=str(error)), 2))
+                                pass
+                            print(self.uyariOlustur("[*] {index} -) {kullaniciAdi} adlı kullanıcı takip edilmekten vazgeçildi.".format(index=takipEdilenIndexNumarasi + 1, kullaniciAdi=takipEdilenKullanıcıAdi), 1))
+                            takipEdilenIndexNumarasi = takipEdilenIndexNumarasi + 1
+                            time.sleep(3)
 
                     if hedefTakipEdilenSayısı is None:
                         if takipEdilenIndexNumarasi == takipEdilenSayisi:
-                            takipSayiDurumu = True
+                            devamEtsinMi = False
                             break
                     else:
                         if hedefTakipEdilenSayısı < 8:
                             if takipEdilenIndexNumarasi == hedefTakipEdilenSayısı:
-                                takipSayiDurumu = True
+                                devamEtsinMi = False
                                 break
                         else:
                             if takipEdilenIndexNumarasi == takipEdilenSayisi:
-                                takipSayiDurumu = True
+                                devamEtsinMi = False
                                 break
 
-                if not takipSayiDurumu:
-                    self.driver.execute_script('''
-                                                   var fDialog = document.querySelector('div[role="dialog"] .pbNvD');
-                                                   fDialog.scrollTop = fDialog.scrollHeight
-                                               ''')
+                if devamEtsinMi:
+                    try:
+                        self.popupAsagiKaydir()
+                    except Exception as error:
+                        print(self.uyariOlustur('[-] Popup aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}'.format(hata=str(error)), 2))
+                        pass
+                    time.sleep(3)
+
         except Exception as error:
             print(self.uyariOlustur('[-] Takip etmeyen kullanıcıları takipten çıkma işlemi sırasında bir hata oluştu: {hata}'.format(hata=str(error)), 2))
+
+
+    def popupAsagiKaydir(self):
+        self.driver.execute_script('''
+                                                    var fDialog = document.querySelector('div[role="dialog"] .isgrP');
+                                                    fDialog.scrollTop = fDialog.scrollHeight
+                                                ''')
+
 
     def takipcileriGetir(self,hedefTakipciSayisi=None):
         try:
@@ -203,12 +213,12 @@ class Instagram():
                             if takipciIndexNumarasi == takipciSayisi:
                                 devamEtsinMi = False
                                 break
-
-                if not devamEtsinMi:
-                    self.driver.execute_script('''
-                                    var fDialog = document.querySelector('div[role="dialog"] .isgrP');
-                                    fDialog.scrollTop = fDialog.scrollHeight
-                                ''')
+                if devamEtsinMi:
+                    try:
+                        self.popupAsagiKaydir()
+                    except Exception as error:
+                        print(self.uyariOlustur('[-] Popup aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}'.format(hata=str(error)), 2))
+                        pass
                     time.sleep(3)
 
             btn_close_dialog=self.driver.find_element_by_xpath("/html/body/div[4]/div/div/div[1]/div/div[2]/button")
@@ -236,7 +246,7 @@ class Instagram():
             if secilenIslem=="1":
                 print(self.uyariOlustur("Seçilen İşlem >>> Tüm takip edilenler listesi içerisinden takip etmeyen kullanıcıları takipten çıkma", 1))
                 takipciler=self.takipcileriGetir()
-                print("[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.")
+                print("[*] Takipçileri listeye ekleme işlemi başladı.")
                 self.takipEdilenleriGetir(takipciler=takipciler,hedefTakipEdilenSayısı=None)
                 print("[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.")
             elif secilenIslem=="2":
@@ -245,7 +255,7 @@ class Instagram():
                 if sayi.isnumeric():
                     limit=int(sayi)
                     takipciler = self.takipcileriGetir(limit)
-                    print("[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.")
+                    print("[*] Takipçileri listeye ekleme işlemi başladı.")
                     self.takipEdilenleriGetir(takipciler=takipciler, hedefTakipEdilenSayısı=limit)
                     print("[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.")
                 else:
