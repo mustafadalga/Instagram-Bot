@@ -251,7 +251,7 @@ class Instagram():
                 print("[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.")
             elif secilenIslem=="2":
                 print(self.uyariOlustur( "Seçilen İşlem >>> Belirtilen sayı kadar takip edilenler listesi içerisinden takip etmeyen kullanıcıları takipten çıkma",1))
-                sayi = input("İşlem yapmak için bir sayı belirleyiniz >> ").strip()
+                sayi = input("İşlem yapmak için bir sayı giriniz >>> ").strip()
                 if sayi.isnumeric():
                     limit=int(sayi)
                     takipciler = self.takipcileriGetir(limit)
@@ -282,7 +282,7 @@ class Instagram():
         return metin.replace(silinecekKarakterler,'')
         #return ''.join(karakter for karakter in metin if karakter not in silinecekKarakterler)
 
-    def paylasimBegenenleriTakipEt(self):
+    def paylasimBegenenleriTakipEt(self,islemSecildiMi=None,secilenIslem=None):
         url = input("İşlem yapmak istediğiniz gönderi url >> ").strip()
 
         if not url:
@@ -292,19 +292,56 @@ class Instagram():
 
         if self.urlKontrol(url):
             self.driver.get(url)
-            print("[*] '" + url + "'  paylaşımını beğenen kullanıcıları takip etme işlemi başladı...")
             time.sleep(5)
+
+            hedefBegenenSayisi=None
+            if islemSecildiMi is None:
+                print(self.uyariOlustur("Seçilen İşlem >>> Bir paylaşımı beğenen kullanıcıları takip etme", 1))
+                print("")
+
+            if secilenIslem is None:
+                print(self.uyariOlustur("       <<< SEÇENEKLER >>>      ", 1))
+                print(self.uyariOlustur("Tüm takipçiler listesi içerisinden işlem yapmak için 1,", 3))
+                print(self.uyariOlustur("Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz,", 3))
+                print("")
+                secilenIslem = str(input("Tüm takipçiler listesi içerisinde mi işlem yapılsın ? >> ").strip())
+
+            if secilenIslem == "1":
+                print(
+                    self.uyariOlustur("Seçilen İşlem >>> Paylaşımı beğenen tüm kullanıcıları takip etme",1))
+            elif secilenIslem == "2":
+                print(self.uyariOlustur("Seçilen İşlem >>> Belirtilen sayı kadar paylaşımı beğenen tüm kullanıcıları takip etme",1))
+                hedefBegenenSayisi = input("İşlem yapmak için bir sayı giriniz >>> ").strip()
+                if hedefBegenenSayisi.isnumeric():
+                    hedefBegenenSayisi = int(hedefBegenenSayisi)
+                else:
+                    print(self.uyariOlustur("[-] Bir sayı girişi yapmadınız.Lütfen bir sayı giriniz!", 2))
+                    print("")
+                    self.paylasimBegenenleriTakipEt(islemSecildiMi=True,secilenIslem=secilenIslem)
+            else:
+                print(self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!", 2))
+                print("")
+                self.paylasimBegenenleriTakipEt(islemSecildiMi=None,secilenIslem=secilenIslem)
+
             if "This Account is Private" not in self.driver.page_source:
                 try:
+                    print("[*] '" + url + "'  paylaşımını beğenen kullanıcıları takip etme işlemi başladı...")
                     if self.paylasimTipiKontrol():
                         takipIstekSayisi = 0
-                        islemIndex=0
-                        begenenSayisi=self.driver.find_element_by_css_selector("div.Nm9Fw > button.sqdOP > span").text
-                        begenenSayisi=int(self.metindenKarakterSil(begenenSayisi,','))
+                        islemIndex = 0
+                        devamEtsinMi = True
+                        if hedefBegenenSayisi is None:
+                            begenenSayisi=self.driver.find_element_by_css_selector("div.Nm9Fw > button.sqdOP > span").text
+                            begenenSayisi = int(self.metindenKarakterSil(begenenSayisi, ','))
+                        else:
+                            kaynakbegenenSayisi = self.driver.find_element_by_css_selector("div.Nm9Fw > button.sqdOP > span").text
+                            kaynakbegenenSayisi = int(self.metindenKarakterSil(kaynakbegenenSayisi, ','))
+                            begenenSayisi = self.takipciSayisiKontrol(hedefBegenenSayisi, kaynakbegenenSayisi)
+
                         btn_begenenler = self.driver.find_element_by_css_selector("div.Nm9Fw > button.sqdOP")
                         btn_begenenler.click()
                         time.sleep(5)
-                        devamEtsinMi=True
+
                         while devamEtsinMi:
                             dialog_popup=self.driver.find_element_by_css_selector("div.pbNvD")
                             begenenlerKullanicilar = dialog_popup.find_elements_by_css_selector('div.HVWg4')
@@ -322,9 +359,7 @@ class Instagram():
                                     time.sleep(5)
 
                                 islemIndex=islemIndex+1
-                                print(islemIndex)
                                 if islemIndex==begenenSayisi:
-                                    print(islemIndex)
                                     devamEtsinMi=False
                             if devamEtsinMi:
                                 self.driver.execute_script('''
@@ -550,10 +585,6 @@ class Instagram():
     def takipciSayisiKontrol(self,hedef,kaynak):
         if hedef>kaynak:
             hedef=kaynak
-        
-        if hedef < 8:
-            hedef = 8
-
         return hedef
 
     def kullaniciTakipcileriniTakipEt(self, kullaniciAdi, secim, islemSecildiMi=None, secilenIslem=None):
@@ -582,7 +613,7 @@ class Instagram():
                 print(self.uyariOlustur(
                     "Seçilen İşlem >>> Belirtilen sayı kadar takipçiler listesi içerisindeki kullanıcıları takip etme",
                     1))
-                hedefTakipciSayisi = input("İşlem yapmak için bir sayı belirleyiniz >> ").strip()
+                hedefTakipciSayisi = input("İşlem yapmak için bir sayı giriniz >>> ").strip()
                 if hedefTakipciSayisi.isnumeric():
                     hedefTakipciSayisi = int(hedefTakipciSayisi)
                 else:
@@ -602,7 +633,7 @@ class Instagram():
                 print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısına ulaşılamadı", 2))
                 self.profilSec(secim)
             elif "This Account is Private" not in self.driver.page_source:
-                takipciIndexNumarasi = 0;
+                takipIstekSayisi = 0;
                 devamEtsinMi=True
 
                 if hedefTakipciSayisi is None:
@@ -626,21 +657,21 @@ class Instagram():
                             btn_takip = takipci.find_element_by_css_selector('button.sqdOP')
                             if btn_takip.text == "Follow":
                                 print(self.uyariOlustur("[*] {index} -) {takipci} takip edilme işlemi başladı.".format(
-                                    index=takipciIndexNumarasi + 1, takipci=takipciKullaniciAdi), 1))
+                                    index=takipIstekSayisi + 1, takipci=takipciKullaniciAdi), 1))
                                 btn_takip.click()
-                                takipciIndexNumarasi = takipciIndexNumarasi + 1
+                                takipIstekSayisi = takipIstekSayisi + 1
 
                                 if hedefTakipciSayisi is None:
-                                    if takipciIndexNumarasi == takipciSayisi:
+                                    if takipIstekSayisi == takipciSayisi:
                                         devamEtsinMi = False
                                         break
                                 else:
                                     if hedefTakipciSayisi < 8:
-                                        if takipciIndexNumarasi == hedefTakipciSayisi:
+                                        if takipIstekSayisi == hedefTakipciSayisi:
                                             devamEtsinMi = False
                                             break
                                     else:
-                                        if takipciIndexNumarasi == takipciSayisi:
+                                        if takipIstekSayisi == takipciSayisi:
                                             devamEtsinMi = False
                                             break
                                 time.sleep(5)
