@@ -273,11 +273,8 @@ class Instagram():
 
     def paylasimTipiKontrol(self):
         try:
-            btn_text= self.driver.find_element_by_css_selector("div.Nm9Fw > button.sqdOP").text
-            if "likes" in btn_text:
-                return True
-            else:
-                return False
+            self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/div[1]/article/div[2]/div/div/div[1]/img")
+            return True
         except:
             return False
 
@@ -302,7 +299,8 @@ class Instagram():
                         btn_begenenler = self.driver.find_element_by_css_selector("div.Nm9Fw > button.sqdOP")
                         btn_begenenler.click()
                         time.sleep(5)
-                        for i in range(round(begenenSayisi/6)):
+
+cle                        for i in range(round(begenenSayisi/6)):
                             dialog_popup=self.driver.find_element_by_css_selector("div.pbNvD")
                             begenenlerKullanicilar = dialog_popup.find_elements_by_css_selector('div.HVWg4')
                             for begenenKullanici in begenenlerKullanicilar:
@@ -639,10 +637,7 @@ class Instagram():
                             pass
 
                     if devamEtsinMi:
-                        self.driver.execute_script('''
-                          var fDialog = document.querySelector('div[role="dialog"] .isgrP');
-                          fDialog.scrollTop = fDialog.scrollHeight
-                      ''')
+                        self.popupAsagiKaydir()
                         time.sleep(3)
                 print("[*] '" + kullaniciAdi + "' kullanıcısının takipçilerini takip etme işlemi tamamlandı.")
 
