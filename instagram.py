@@ -180,8 +180,8 @@ class Instagram():
 
             takipciler=set()
             takipciIndexNumarasi=0
-            takipciSayiDurumu=False
-            for i in range(round(takipciSayisi / 8)):
+            devamEtsinMi=True
+            while devamEtsinMi:
                 dialog_popup = self.driver.find_element_by_css_selector('div.pbNvD')
                 takipcilerPopup = dialog_popup.find_elements_by_css_selector('div.PZuss > li')
                 for takipci in takipcilerPopup:
@@ -192,24 +192,25 @@ class Instagram():
                     takipciIndexNumarasi = takipciIndexNumarasi + 1
                     if hedefTakipciSayisi is None:
                         if takipciIndexNumarasi == takipciSayisi:
-                            takipciSayiDurumu = True
+                            devamEtsinMi = False
                             break
                     else:
                         if hedefTakipciSayisi<8:
                             if takipciIndexNumarasi == hedefTakipciSayisi:
-                                takipciSayiDurumu = True
+                                devamEtsinMi = False
                                 break
                         else:
                             if takipciIndexNumarasi == takipciSayisi:
-                                takipciSayiDurumu = True
+                                devamEtsinMi = False
                                 break
 
-                if not takipciSayiDurumu:
+                if not devamEtsinMi:
                     self.driver.execute_script('''
                                     var fDialog = document.querySelector('div[role="dialog"] .isgrP');
                                     fDialog.scrollTop = fDialog.scrollHeight
                                 ''')
                     time.sleep(3)
+
             btn_close_dialog=self.driver.find_element_by_xpath("/html/body/div[4]/div/div/div[1]/div/div[2]/button")
             btn_close_dialog.click()
             return takipciler
