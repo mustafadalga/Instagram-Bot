@@ -68,7 +68,7 @@ class Instagram():
         if secim:
             try:
                 secim = int(secim)
-                if 0 < secim < 19:
+                if 0 < secim < 20:
                     self.secilenIslem(secim)
                     if secim == 1 or secim == 2 or secim == 3 or secim == 8 or secim == 9 or secim == 10 or secim == 11 or secim == 15:
                         self.profilSec(secim)
@@ -92,6 +92,8 @@ class Instagram():
                         self.takipEtmeyenleriTakiptenCik()
                     elif secim == 18:
                         self.topluTakiptenCik()
+                    elif secim==19:
+                        self.topluMesajSilme()
                 else:
                     print(self.uyariOlustur("[-] Lütfen geçerli bir seçim yapınız!", 2))
                     self.islemSec()
@@ -102,11 +104,46 @@ class Instagram():
         else:
             self.islemSec()
 
+    def topluMesajSilme(self):
+        print("[*] Toplu mesaj silme işlemi başladı.")
+        try:
+            self.driver.get(self.BASE_URL+'direct/inbox/')
+            time.sleep(5)
+            devamEtsinMi=True
+            silinenMesajlar = set()
+            islemIndex=0
+            while devamEtsinMi:
+                mesajListesi = self.driver.find_elements_by_css_selector("div.N9abW  a.rOtsg")
+                if len(mesajListesi) == 0:
+                    print("[*] Mesaj kutusunda mesaj bulunmamaktadır.")
+                    break
+                for mesaj in mesajListesi:
+                    if mesaj not in silinenMesajlar:
+                        silinenMesajlar.add(mesaj)
+                        kullaniciAdi=mesaj.find_element_by_css_selector("._7UhW9.xLCgt.MMzan.KV-D4.fDxYl").text
+                        islemIndex=islemIndex+1
+                        print(self.uyariOlustur("[*] {index} -) {kullaniciAdi} ile yapılan mesajlaşma silinecek.".format(index=islemIndex,kullaniciAdi=kullaniciAdi), 1))
+                        mesaj.click()
+                        time.sleep(2)
+                        self.driver.find_element_by_xpath("/html/body/div[1]/section/div/div[2]/div/div/div[2]/div[1]/div/div/div[3]/button").click()
+                        time.sleep(1)
+                        self.driver.find_element_by_xpath("/html/body/div[1]/section/div/div[2]/div/div/div[2]/div/div[2]/div[3]/div[1]/button").click()
+                        time.sleep(2)
+                        self.driver.find_element_by_xpath("/html/body/div[4]/div/div/div/div[2]/button[1]").click()
+                        print(self.uyariOlustur("[*] {index} -) {kullaniciAdi} ile yapılan mesajlaşma başarıyla silindi.".format(index=islemIndex,kullaniciAdi=kullaniciAdi), 1))
+                        time.sleep(10)
+                    break
+        except Exception as error:
+            print(self.uyariOlustur('[-] Toplu mesaj  aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}'.format(hata=str(error)),2))
+
+        print("[*] Toplu mesaj silme işlemi tamamlandı.")
+
     def topluTakiptenCik(self):
         try:
             print("[*] Toplu takipten çıkma işlemi başladı.")
             self.driver.get(self.BASE_URL + self.aktifKullanici)
             time.sleep(5)
+
 
             takipEdilenSayisi = self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[3]/a/span").text
             takipEdilenSayisi = int(self.metindenKarakterSil(takipEdilenSayisi, ','))
@@ -160,6 +197,7 @@ class Instagram():
         except Exception as error:
             print(self.uyariOlustur(
                 "[-] Toplu takipten çıkma işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
+
 
     def takipEdilenleriGetir(self, takipciler, hedefTakipEdilenSayisi=None):
         try:
@@ -250,12 +288,12 @@ class Instagram():
             if hedefTakipciSayisi is None:
                 takipciSayisi = self.driver.find_element_by_xpath(
                     "/html/body/div[1]/section/main/div/header/section/ul/li[2]/a/span").text
-                takipciSayisi = self.metindenKarakterSil(takipciSayisi, ',')
+                takipciSayisi =int(self.metindenKarakterSil(takipciSayisi, ','))
             else:
                 kaynakTakipciSayisi = self.driver.find_element_by_xpath(
                     "/html/body/div[1]/section/main/div/header/section/ul/li[2]/a/span").text
                 kaynakTakipciSayisi = self.metindenKarakterSil(kaynakTakipciSayisi, ',')
-                takipciSayisi = self.hedefKaynaktanBuyukMu(hedefTakipciSayisi, kaynakTakipciSayisi)
+                takipciSayisi = int(self.hedefKaynaktanBuyukMu(hedefTakipciSayisi, kaynakTakipciSayisi))
 
             btn_takipciler = self.driver.find_element_by_xpath(
                 "/html/body/div[1]/section/main/div/header/section/ul/li[2]/a")
@@ -270,7 +308,7 @@ class Instagram():
                 takipcilerPopup = dialog_popup.find_elements_by_css_selector('div.PZuss > li')
                 for takipci in takipcilerPopup:
                     takipciKullaniciAdi = takipci.find_element_by_css_selector("a.FPmhX").get_attribute('href')
-                    takipciKullaniciAdi = takipciKullaniciAdi.replace(self.BASE_URL, '').replace('/', '')
+                    takipciKullaniciAdi=self.metindenKarakterSil(self.metindenKarakterSil(takipciKullaniciAdi,self.BASE_URL),'/')
                     print(self.uyariOlustur(
                         "[*] {index} -) {takipci} takipcisi listeye eklendi.".format(index=takipciIndexNumarasi + 1,
                                                                                      takipci=takipciKullaniciAdi), 1))
