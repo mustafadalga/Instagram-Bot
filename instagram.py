@@ -68,7 +68,7 @@ class Instagram():
         if secim:
             try:
                 secim = int(secim)
-                if 0 < secim < 21:
+                if 0 < secim < 22:
                     self.secilenIslem(secim)
                     if secim == 1 or secim == 2 or secim == 3 or secim == 8 or secim == 9 or secim == 10 or secim == 11 or secim == 15:
                         self.profilSec(secim)
@@ -96,6 +96,8 @@ class Instagram():
                         self.topluMesajSilme()
                     elif secim==20:
                         self.hikayeIndirme()
+                    elif secim==21:
+                        self.oneCikanHikayeIndir()
                 else:
                     print(self.uyariOlustur("[-] Lütfen geçerli bir seçim yapınız!", 2))
                     self.islemSec()
@@ -169,34 +171,29 @@ class Instagram():
                 "[-] Hikaye sayısı getirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
 
     def hikayeleriGetir(self):
-        if self.hikayeVarMi():
-            try:
-                self.driver.find_element_by_css_selector("div.RR-M-").click()
-                time.sleep(3)
-                hikayeler={
-                    "video":[],
-                    "fotograf":[]
-                }
-                for i in range(self.hikayeSayisiGetir()):
-                    if self.hikayeVideoMu():
-                        video_url=self.driver.find_element_by_css_selector("div.qbCDp > video.y-yJ5 > source").get_attribute("src")
-                        print(self.uyariOlustur("[*] Video hikaye url:" + str(video_url), 1))
-                        hikayeler["video"].append(video_url)
-                    else:
-                        foto_srcset = str(self.driver.find_element_by_css_selector("div.qbCDp >  img.y-yJ5").get_attribute("srcset"))
-                        foto_url=(foto_srcset.split(",")[-1]).split(" ")[0]
-                        print(self.uyariOlustur("[*] Video hikaye url:" + str(foto_url), 1))
-                        hikayeler["fotograf"].append(foto_url)
-                    btn_ileri=self.driver.find_element_by_css_selector("button.ow3u_")
-                    btn_ileri.click()
-                    time.sleep(1)
-                return hikayeler
-            except Exception as error:
-                print(self.uyariOlustur(
-                    "[-] Hikayeleri getirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
-        else:
-            print("[-] Hikaye bulunamadı!")
-            return False
+        try:
+            hikayeler={
+                "video":[],
+                "fotograf":[]
+            }
+            for i in range(self.hikayeSayisiGetir()):
+                if self.hikayeVideoMu():
+                    video_url=self.driver.find_element_by_css_selector("div.qbCDp > video.y-yJ5 > source").get_attribute("src")
+                    print(self.uyariOlustur("[*] Video hikaye url:" + str(video_url), 1))
+                    hikayeler["video"].append(video_url)
+                else:
+                    foto_srcset = str(self.driver.find_element_by_css_selector("div.qbCDp >  img.y-yJ5").get_attribute("srcset"))
+                    foto_url=(foto_srcset.split(",")[-1]).split(" ")[0]
+                    print(self.uyariOlustur("[*] Fotoğraf hikaye url:" + str(foto_url), 1))
+                    hikayeler["fotograf"].append(foto_url)
+                btn_ileri=self.driver.find_element_by_css_selector("button.ow3u_")
+                btn_ileri.click()
+                time.sleep(1)
+            return hikayeler
+        except Exception as error:
+            print(self.uyariOlustur(
+                "[-] Hikayeleri getirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
+
 
     def sayfaMevcutMu(self):
         if "Sorry, this page isn't available." not in self.driver.page_source:
@@ -215,24 +212,63 @@ class Instagram():
             print(self.uyariOlustur("Seçilen İşlem >>> Bir kullanıcının hikayelerini indirme", 1))
 
             kullanici = input("Hikayelerini indirmek istediğiniz profilin kullanıcı adınız giriniz >> ").strip()
+            self.driver.get(self.BASE_URL + kullanici)
+            time.sleep(5)
 
             if not self.sayfaMevcutMu():
                 print(self.uyariOlustur("[-] " + kullanici + " kullanıcısına ulaşılamadı", 2))
                 self.hikayeIndirme()
 
             if not self.hesapGizliMi():
-                self.driver.get(self.BASE_URL + kullanici)
-                time.sleep(5)
-                hikayeler = self.hikayeleriGetir()
-                if hikayeler:
+                if self.hikayeVarMi():
+                    self.driver.find_element_by_css_selector("div.RR-M-").click()
+                    time.sleep(3)
+                    hikayeler = self.hikayeleriGetir()
                     self.dosyaIndir(hikayeler)
                     print("[*] {kullanici} kullanıcısının hikayelerini indirme işlemi tamamlandı.".format(
                         kullanici=kullanici))
+                else:
+                    print(self.uyariOlustur("[-] Hikaye bulunamadı!",2))
             else:
                 print(self.uyariOlustur("[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan takipçileri takip edilemiyor!".format(kullanici=kullanici),2))
 
         except Exception as error:
             print(self.uyariOlustur("[-] Hikayeleri indirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
+            self.hikayeIndirme()
+
+    def elemanMevcutMu(self,secici,seciciTuru):
+        try:
+            self.driver.find_element_by_xpath(secici)
+            return True
+        except:
+            return False
+
+
+    def oneCikanHikayeIndir(self):
+        try:
+            print(self.uyariOlustur("Seçilen İşlem >>> Bir kullanıcının öne çıkan hikayelerini indirme", 1))
+            url = input("Öne çıkan hikaye url giriniz >> ").strip()
+            if self.urlKontrol(url):
+                self.driver.get(url)
+                time.sleep(5)
+
+                if not self.sayfaMevcutMu():
+                    print(self.uyariOlustur("[-] İndirmek istediğiniz öne çıkan hikayenin url'sine ulaşılamadı!", 2))
+                    self.oneCikanHikayeIndir()
+
+                print("[*] {url}  öne çıkan hikayesini indirme işlemi başladı".format(url=url))
+                btn_oynat=self.driver.find_element_by_css_selector("button._42FBe")
+                btn_oynat.click()
+                time.sleep(1)
+                hikayeler = self.hikayeleriGetir()
+                self.dosyaIndir(hikayeler)
+                print("[*] {url}  öne çıkan hikayesini indirme işlemi tamamlandı.".format(url=url))
+            else:
+                print(self.uyariOlustur("[-] İndirmek istediğiniz öne çıkan hikayenin url'sine ulaşılamadı!", 2))
+        except Exception as error:
+            print(self.uyariOlustur(
+                "[-] Öne çıkan hikayeyi indirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
+            self.oneCikanHikayeIndir()
 
     def dosyaIndir(self,veri):
         try:
@@ -1464,6 +1500,8 @@ class Instagram():
             return False
         else:
             return True
+
+
 
     def uyariOlustur(self, mesaj, durum):
         if durum == 1:
