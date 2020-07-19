@@ -198,27 +198,41 @@ class Instagram():
             print("[-] Hikaye bulunamadı!")
             return False
 
+    def sayfaMevcutMu(self):
+        if "Sorry, this page isn't available." not in self.driver.page_source:
+            return True
+        else:
+            return False
+
+    def hesapGizliMi(self):
+        if "This Account is Private" in self.driver.page_source:
+            return True
+        else:
+            return False
+
     def hikayeIndirme(self):
         try:
             print(self.uyariOlustur("Seçilen İşlem >>> Bir kullanıcının hikayelerini indirme", 1))
 
             kullanici = input("Hikayelerini indirmek istediğiniz profilin kullanıcı adınız giriniz >> ").strip()
 
-            if "Sorry, this page isn't available." in self.driver.page_source:
+            if not self.sayfaMevcutMu():
                 print(self.uyariOlustur("[-] " + kullanici + " kullanıcısına ulaşılamadı", 2))
                 self.hikayeIndirme()
 
-            self.driver.get(self.BASE_URL+kullanici)
-            time.sleep(5)
+            if not self.hesapGizliMi():
+                self.driver.get(self.BASE_URL + kullanici)
+                time.sleep(5)
+                hikayeler = self.hikayeleriGetir()
+                if hikayeler:
+                    self.dosyaIndir(hikayeler)
+                    print("[*] {kullanici} kullanıcısının hikayelerini indirme işlemi tamamlandı.".format(
+                        kullanici=kullanici))
+            else:
+                print(self.uyariOlustur("[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan takipçileri takip edilemiyor!".format(kullanici=kullanici),2))
 
-            hikayeler=self.hikayeleriGetir()
-            if hikayeler:
-                self.dosyaIndir(hikayeler)
-                print("[*] {kullanici} kullanıcısının hikayelerini indirme işlemi tamamlandı.".format(kullanici=kullanici))
         except Exception as error:
-            print(self.uyariOlustur(
-                "[-] Hikayeleri indirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
-
+            print(self.uyariOlustur("[-] Hikayeleri indirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
 
     def dosyaIndir(self,veri):
         try:
@@ -535,7 +549,7 @@ class Instagram():
                 print("")
                 self.paylasimBegenenleriTakipEt(islemSecildiMi=None, secilenIslem=secilenIslem)
 
-            if "This Account is Private" not in self.driver.page_source:
+            if not self.hesapGizliMi():
                 try:
                     print("[*] '" + url + "'  paylaşımını beğenen kullanıcıları takip etme işlemi başladı...")
                     if self.paylasimTipiKontrol():
@@ -855,10 +869,11 @@ class Instagram():
 
             print("[*] '" + kullaniciAdi + "' kullanıcısının takipçilerini takip etme işlemi başladı...")
 
-            if "Sorry, this page isn't available." in self.driver.page_source:
+            if not self.sayfaMevcutMu():
                 print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısına ulaşılamadı", 2))
                 self.profilSec(secim)
-            elif "This Account is Private" not in self.driver.page_source:
+
+            if not self.hesapGizliMi():
                 takipIstekSayisi = 0;
                 devamEtsinMi = True
                 islemIndex = 0
@@ -933,18 +948,18 @@ class Instagram():
             self.driver.get(self.BASE_URL + kullaniciAdi)
             time.sleep(5)
 
-            if "Sorry, this page isn't available." in self.driver.page_source:
+            if not self.sayfaMevcutMu():
                 print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısına ulaşılamadı", 2))
                 if secim != 14:
                     self.profilSec(secim)
 
-            if "This Account is Private" in self.driver.page_source:
+            if self.hesapGizliMi():
                 btn_takip = self.driver.find_element_by_css_selector("button.BY3EC")
             else:
                 btn_takip = self.driver.find_element_by_css_selector('button._5f5mN')
             if (btn_takip.text == 'Follow'):
                 btn_takip.click()
-                if "This Account is Private" in self.driver.page_source:
+                if self.hesapGizliMi():
                     print(self.uyariOlustur("[+] " + kullaniciAdi + " kullanıcısına takip isteği gönderildi", 1))
                 else:
                     print(self.uyariOlustur("[+] " + kullaniciAdi + " kullanıcısı takip edilmeye başlandı", 1))
@@ -971,11 +986,11 @@ class Instagram():
             self.driver.get(self.BASE_URL + kullaniciAdi)
             time.sleep(5)
 
-            if "Sorry, this page isn't available." in self.driver.page_source:
+            if not self.sayfaMevcutMu():
                 print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısına ulaşılamadı", 2))
                 self.profilSec(secim)
 
-            if "This Account is Private" in self.driver.page_source:
+            if self.hesapGizliMi():
                 btn_takip = self.driver.find_element_by_css_selector("button.BY3EC")
             else:
                 btn_takip = self.driver.find_element_by_css_selector('button._5f5mN')
@@ -1001,11 +1016,11 @@ class Instagram():
             self.driver.get(self.BASE_URL + kullaniciAdi)
             time.sleep(3)
 
-            if "Sorry, this page isn't available." in self.driver.page_source:
+            if not self.sayfaMevcutMu():
                 print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısına ulaşılamadı", 2))
                 self.profilSec(secim)
 
-            if "This Account is Private" in self.driver.page_source:
+            if self.hesapGizliMi():
                 btn = self.driver.find_element_by_css_selector('button.BY3EC')
             else:
                 btn = self.driver.find_element_by_css_selector('button._5f5mN')
@@ -1034,11 +1049,11 @@ class Instagram():
             self.driver.get(self.BASE_URL + kullaniciAdi)
             time.sleep(3)
 
-            if "Sorry, this page isn't available." in self.driver.page_source:
+            if not self.sayfaMevcutMu():
                 print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısına ulaşılamadı", 2))
                 self.profilSec(secim)
 
-            if "This Account is Private" in self.driver.page_source:
+            if self.hesapGizliMi():
                 btn = self.driver.find_element_by_css_selector('button.BY3EC')
             else:
                 btn = self.driver.find_element_by_css_selector('button._5f5mN')
@@ -1064,7 +1079,7 @@ class Instagram():
         self.driver.get(self.BASE_URL + kullaniciadi)
         time.sleep(10)
         try:
-            if "This Account is Private" not in self.driver.page_source:
+            if not self.hesapGizliMi():
                 print("[*] Paylaşım tarama işlemi başladı....")
                 video_urls, carousel_url = self.paylasimTara(kullaniciadi)
                 print("[*] Video indirme işlemine geçiliyor...")
@@ -1239,7 +1254,7 @@ class Instagram():
     def paylasimlariBegen(self, kullaniciadi, secim, durum=True):
         self.driver.get(self.BASE_URL + kullaniciadi)
         time.sleep(10)
-        if "This Account is Private" not in self.driver.page_source:
+        if not self.hesapGizliMi():
             print("[*] '" + kullaniciadi + "' kullanıcısının paylaşımlarının tarama işlemi başladı...")
             gonderiSayisi = self.driver.find_element_by_css_selector(
                 "ul.k9GMp > li.Y8-fY > span.-nal3 > span.g47SY").text
@@ -1333,7 +1348,7 @@ class Instagram():
                 print("[*] '" + url + "' adresindeki paylaşımın beğenmekten vazgeçme işlemi başladı...")
             time.sleep(10)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            if "This Account is Private" not in self.driver.page_source:
+            if not self.hesapGizliMi():
                 try:
                     btn_begen_class = self.driver.find_element_by_css_selector(
                         "span.fr66n > button > span").get_attribute("class")
@@ -1385,7 +1400,7 @@ class Instagram():
                 self.driver.get(url)
                 print("[*] '" + url + "' adresindeki fotoğrafın indirme işlemi başladı...")
                 time.sleep(10)
-                if "This Account is Private" not in self.driver.page_source:
+                if not self.hesapGizliMi():
                     klasoradi = self.driver.find_element_by_css_selector("h2.BrX75").find_element_by_css_selector(
                         "a.FPmhX").text
                     self.klasorOlustur(klasoradi)
@@ -1421,7 +1436,7 @@ class Instagram():
                 self.driver.get(url)
                 print("[*] '" + url + "' adresindeki video'nun indirme işlemi başladı...")
                 time.sleep(10)
-                if "This Account is Private" not in self.driver.page_source:
+                if not self.hesapGizliMi():
                     klasoradi = self.driver.find_element_by_css_selector("h2.BrX75").find_element_by_css_selector(
                         "a.FPmhX").text
                     self.klasorOlustur(klasoradi)
