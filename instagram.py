@@ -291,8 +291,6 @@ class Instagram():
             print("[*] Toplu takipten çıkma işlemi başladı.")
             self.driver.get(self.BASE_URL + self.aktifKullanici)
             time.sleep(5)
-
-
             takipEdilenSayisi = self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[3]/a/span").text
             takipEdilenSayisi = int(self.metindenKarakterSil(takipEdilenSayisi, ','))
 
@@ -1495,11 +1493,14 @@ class Instagram():
             self.videoIndir()
 
     def urlKontrol(self, url):
-        response = requests.get(url)
-        if response.status_code == 404:
+        try:
+            response = requests.get(url)
+            if response.status_code == 404:
+                return False
+            else:
+                return True
+        except:
             return False
-        else:
-            return True
 
 
 
