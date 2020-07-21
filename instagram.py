@@ -10,7 +10,6 @@ from termcolor import colored
 from colorama import init
 import threading
 
-
 class Instagram():
     def __init__(self):
         init(convert=True)
@@ -68,7 +67,7 @@ class Instagram():
         if secim:
             try:
                 secim = int(secim)
-                if 0 < secim < 22:
+                if 0 < secim < 23:
                     self.secilenIslem(secim)
                     if secim == 1 or secim == 2 or secim == 3 or secim == 8 or secim == 9 or secim == 10 or secim == 11 or secim == 15:
                         self.profilSec(secim)
@@ -98,6 +97,8 @@ class Instagram():
                         self.hikayeIndirme()
                     elif secim==21:
                         self.oneCikanHikayeIndir()
+                    elif secim==22:
+                        self.gonderiYorumYapma()
                 else:
                     print(self.uyariOlustur("[-] Lütfen geçerli bir seçim yapınız!", 2))
                     self.islemSec()
@@ -141,6 +142,70 @@ class Instagram():
             print(self.uyariOlustur('[-] Toplu mesaj  aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}'.format(hata=str(error)),2))
 
         print("[*] Toplu mesaj silme işlemi tamamlandı.")
+
+
+    def yorumVarMi(self,yorum):
+        if len(yorum)>0:
+            return True
+        else:
+            return False
+
+    def yorumUzunlukBelirle(self,yorum):
+        return yorum[0:1000]
+
+    def yorumEkle(self,yorum):
+        try:
+            textarea = self.driver.find_element_by_class_name('Ypffh')
+            textarea.click()
+            textarea = self.driver.find_element_by_class_name('Ypffh')
+            textarea.send_keys(yorum)
+            textarea.send_keys(Keys.ENTER)
+        except Exception as error:
+            print(self.uyariOlustur(
+                "[-] {url} gönderisine yorum yapma işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)),
+                2))
+
+    def gonderiYorumYapma(self,url=None,yorum=None):
+        try:
+            if not (url and yorum):
+                print(self.uyariOlustur("Seçilen İşlem >>> Bir gönderiye yorum yapma", 1))
+
+            if not url:
+                url = input("Yorum yapmak istediğiniz gönderi url'isini giriniz >> ").strip()
+            if not yorum:
+                yorum = input("Yorumunuzu giriniz >> ").strip()
+
+            if self.urlKontrol(url):
+                self.driver.get(url)
+                time.sleep(5)
+
+                if not self.sayfaMevcutMu():
+                    print(self.uyariOlustur("[-] İndirmek istediğiniz öne çıkan hikayenin url'sine ulaşılamadı!", 2))
+                    self.gonderiYorumYapma()
+
+                if not self.hesapGizliMi():
+                    if self.yorumVarMi(yorum):
+                        yorum = self.yorumUzunlukBelirle(yorum)
+                        print("[*] {url}  gönderisine yorum yapma işlemi başladı.".format(url=url))
+                        self.yorumEkle(yorum)
+                        print("[*] {url}  gönderisine yorum yapma işlemi tamamlandı.".format(url=url))
+                        self.gonderiYorumYapma()
+                    else:
+                        print(
+                            self.uyariOlustur("[-] Yorum girişi yapmadınız!", 2))
+                        self.gonderiYorumYapma(url=url,yorum=None)
+                else:
+                    print(self.uyariOlustur(
+                        "[-] {url} gönderisinin sahibinin hesabı gizli hesap olduğundan dolayı yorum yapma işlemi gerçekleştirilemiyor".format(url=url), 2))
+                    self.gonderiYorumYapma()
+            else:
+                print(self.uyariOlustur("[-] {url} url'sine ulaşılamadı!".format(url=url), 2))
+                self.gonderiYorumYapma(url=None,yorum=yorum)
+        except Exception as error:
+            print(self.uyariOlustur(
+                "[-] {url} gönderisine yorum yapma işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
+            self.gonderiYorumYapma()
+
 
 
     def hikayeVarMi(self):
