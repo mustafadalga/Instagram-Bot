@@ -67,7 +67,7 @@ class Instagram():
         if secim:
             try:
                 secim = int(secim)
-                if 0 < secim < 23:
+                if 0 < secim < 24:
                     self.secilenIslem(secim)
                     if secim == 1 or secim == 2 or secim == 3 or secim == 8 or secim == 9 or secim == 10 or secim == 11 or secim == 15:
                         self.profilSec(secim)
@@ -99,6 +99,8 @@ class Instagram():
                         self.oneCikanHikayeIndir()
                     elif secim==22:
                         self.gonderiYorumYapma()
+                    elif secim==23:
+                        self.gonderiTopluYorumYapma()
                 else:
                     print(self.uyariOlustur("[-] Lütfen geçerli bir seçim yapınız!", 2))
                     self.islemSec()
@@ -151,19 +153,134 @@ class Instagram():
             return False
 
     def yorumUzunlukBelirle(self,yorum):
-        return yorum[0:1000]
+        return yorum[0:250]
 
-    def yorumEkle(self,yorum):
+    def yorumYap(self,yorum):
         try:
+
             textarea = self.driver.find_element_by_class_name('Ypffh')
+            self.inputTemizle(textarea)
             textarea.click()
             textarea = self.driver.find_element_by_class_name('Ypffh')
+
             textarea.send_keys(yorum)
             textarea.send_keys(Keys.ENTER)
         except Exception as error:
-            print(self.uyariOlustur(
-                "[-] {url} gönderisine yorum yapma işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)),
-                2))
+            print(self.uyariOlustur( "[-] {url} gönderisine yorum yapma işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
+
+    def rastgeleYorumGetir(self):
+        try:
+            return requests.get("http://metaphorpsum.com/paragraphs/1/1").text
+        except Exception as error:
+            print(self.uyariOlustur("[-] Rastgele yorum getirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)),2))
+
+    def yorumLimitiAsildiMi(self,yorumSayisi):
+        if yorumSayisi>50:
+            return True
+        else:
+            return False
+
+    def dosyaİceriginiAl(self,dosya):
+        try:
+            icerik=set()
+            with open(dosya, "r", encoding="utf-8") as satirlar:
+                for satir in satirlar:
+                    if len(satir.strip())>0:
+                        icerik.add(satir)
+            return icerik
+        except Exception as error:
+            print(self.uyariOlustur("[-] Seçilen dosyanın yüklenme işlemi sırasında bir hata oluştu:" + str(error), 2))
+            return False
+
+    def dosyaİcerigiAlindiMi(self,icerik):
+        if icerik:
+            return True
+        else:
+            return False
+
+
+    def gonderiTopluYorumYapma(self,url=None,yorumSayisi=None,secilenIslem=None):
+        try:
+            if url is None and yorumSayisi is None and secilenIslem is None:
+                print(self.uyariOlustur("Seçilen İşlem >>> Bir gönderiye toplu yorum yapma", 1))
+
+            if not url:
+                url = input("Yorum yapmak istediğiniz gönderi url'isini giriniz >> ").strip()
+
+                if self.urlKontrol(url):
+                    print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
+                    self.driver.get(url)
+                    time.sleep(3)
+
+                    if not self.sayfaMevcutMu():
+                        print(self.uyariOlustur("[-] {url} url'sine ulaşılamadı!".format(url=url), 2))
+                        self.gonderiTopluYorumYapma()
+
+                    if self.hesapGizliMi():
+                        print(self.uyariOlustur(
+                           "[-] {url} gönderisinin sahibinin hesabı gizli hesap olduğundan dolayı toplu yorum yapma işlemi gerçekleştirilemiyor".format(
+                               url=url), 2))
+                        self.gonderiTopluYorumYapma()
+                else:
+                    print(self.uyariOlustur("[-] Gönderi url'si girmediniz!!", 2))
+                    self.gonderiTopluYorumYapma()
+
+            if not yorumSayisi:
+                yorumSayisi = input("Yapmak istediğiniz yorum sayısını giriniz >> ").strip()
+                if yorumSayisi.isnumeric() and int(yorumSayisi)>0:
+                    yorumSayisi=int(yorumSayisi)
+                    if self.yorumLimitiAsildiMi(yorumSayisi):
+                        yorumSayisi=50
+                        print(self.uyariOlustur("[*] En fazla 50 yorum yapabilirsiniz.Yorum sayısı 50 olarak belirlenmiştir!", 2))
+                else:
+                    print(self.uyariOlustur("[-] Yapmak istediğiniz yorum sayısını girmediniz!", 2))
+                    self.gonderiTopluYorumYapma(url=url, yorumSayisi=None, secilenIslem=None)
+
+            if not secilenIslem:
+                print(self.uyariOlustur("       <<< SEÇENEKLER >>>      ", 1))
+                print(self.uyariOlustur("Uygulama ile oluşturan rastgele yorumlar ile işlem yapmak için 1,", 3))
+                print(self.uyariOlustur("Txt dosyasından olarak oluşturduğunuz yorumlar ile işlem yapmak için 2 giriniz.", 3))
+                print("")
+                secilenIslem = str(input("Uygulama ile oluşturan rastgele yorumlar seçilsin mi? >> ").strip())
+
+            if secilenIslem == "1":
+                print(self.uyariOlustur("Seçilen İşlem >>> Uygulama ile oluşturan rastgele yorumlar ile işlem yapma",1))
+                print("[*] {url}  gönderisine toplu yorum yapma işlemi başladı.".format(url=url))
+                try:
+                    for i in range(yorumSayisi):
+                        yorum=self.rastgeleYorumGetir()
+                        yorum=self.yorumUzunlukBelirle(yorum)
+                        self.yorumYap(yorum)
+                        print("[*] {index}.yorum yapıldı.".format(index=i+1))
+                        time.sleep(15)
+                except Exception as error:
+                    print(error)
+            elif secilenIslem == "2":
+                print(self.uyariOlustur("Seçilen İşlem >>> Txt dosyasından olarak oluşturduğunuz yorumlar ile işlem yapma",1))
+                dosya = self.dosyaSec(1)
+                yorumlar = self.dosyaİceriginiAl(dosya)
+                if self.dosyaİcerigiAlindiMi(yorumlar):
+                    print("[*] {url}  gönderisine toplu yorum yapma işlemi başladı.".format(url=url))
+                    for index,yorum in enumerate(yorumlar):
+                        yorum = self.yorumUzunlukBelirle(yorum)
+                        self.yorumYap(yorum)
+                        print("[*] {index}.yorum yapıldı.".format(index=index + 1))
+                        if (index+1)==yorumSayisi:
+                            break
+                        time.sleep(15)
+                else:
+                    self.gonderiTopluYorumYapma(url=url, yorumSayisi=yorumSayisi, secilenIslem=secilenIslem)
+            else:
+                print(self.uyariOlustur("[-] Bir seçim yapmadınız!.Lütfen yapmak istediğiniz işlemin numarasını giriniz!", 2))
+                print("")
+                self.gonderiTopluYorumYapma(url=url, yorumSayisi=yorumSayisi, secilenIslem=None)
+
+        except Exception as error:
+            print(self.uyariOlustur("[-] {url} gönderisine toplu yorum yapma işlemi sırasında bir hata oluştu: {hata}".format(url=url,hata=str(error)), 2))
+            self.gonderiTopluYorumYapma()
+
+        print("[*] {url}  gönderisine toplu yorum yapma işlemi tamamlandı.".format(url=url))
+
 
     def gonderiYorumYapma(self,url=None,yorum=None):
         try:
@@ -187,7 +304,7 @@ class Instagram():
                     if self.yorumVarMi(yorum):
                         yorum = self.yorumUzunlukBelirle(yorum)
                         print("[*] {url}  gönderisine yorum yapma işlemi başladı.".format(url=url))
-                        self.yorumEkle(yorum)
+                        self.yorumYap(yorum)
                         print("[*] {url}  gönderisine yorum yapma işlemi tamamlandı.".format(url=url))
                         self.gonderiYorumYapma()
                     else:
@@ -203,10 +320,8 @@ class Instagram():
                 self.gonderiYorumYapma(url=None,yorum=yorum)
         except Exception as error:
             print(self.uyariOlustur(
-                "[-] {url} gönderisine yorum yapma işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
+                "[-] {url} gönderisine yorum yapma işlemi sırasında bir hata oluştu: {hata}".format(url=url,hata=str(error)), 2))
             self.gonderiYorumYapma()
-
-
 
     def hikayeVarMi(self):
         try:
@@ -418,13 +533,11 @@ class Instagram():
                     "/html/body/div[1]/section/main/div/header/section/ul/li[3]/a/span").text
                 takipEdilenSayisi = int(self.metindenKarakterSil(takipEdilenSayisi, ','))
             else:
-                kaynakTakipEdilenSayisi = self.driver.find_element_by_xpath(
-                    "/html/body/div[1]/section/main/div/header/section/ul/li[3]/a/span").text
+                kaynakTakipEdilenSayisi = self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[3]/a/span").text
                 kaynakTakipEdilenSayisi = self.metindenKarakterSil(kaynakTakipEdilenSayisi, ',')
                 takipEdilenSayisi = int(self.hedefKaynaktanBuyukMu(hedefTakipEdilenSayisi, kaynakTakipEdilenSayisi))
 
-            btn_takipEdilenler = self.driver.find_element_by_xpath(
-                "/html/body/div[1]/section/main/div/header/section/ul/li[3]/a")
+            btn_takipEdilenler = self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[3]/a")
             btn_takipEdilenler.click()
             time.sleep(5)
 
@@ -448,9 +561,7 @@ class Instagram():
                                 btn_onay = self.driver.find_element_by_css_selector("div.mt3GC > button.aOOlW")
                                 btn_onay.click()
                             except Exception as error:
-                                print(self.uyariOlustur(
-                                    '[-] {kullaniciAdi} kullanıcısını takipten çıkma işlemi sırasında bir hata oluştu: {hata}'.format(
-                                        kullaniciAdi=takipEdilenKullanıcıAdi, hata=str(error)), 2))
+                                print(self.uyariOlustur('[-] {kullaniciAdi} kullanıcısını takipten çıkma işlemi sırasında bir hata oluştu: {hata}'.format(kullaniciAdi=takipEdilenKullanıcıAdi, hata=str(error)), 2))
                                 pass
                             print(self.uyariOlustur(
                                 "[*] {index} -) {kullaniciAdi} adlı kullanıcı takip edilmekten vazgeçildi.".format(
@@ -497,17 +608,14 @@ class Instagram():
             time.sleep(5)
 
             if hedefTakipciSayisi is None:
-                takipciSayisi = self.driver.find_element_by_xpath(
-                    "/html/body/div[1]/section/main/div/header/section/ul/li[2]/a/span").text
+                takipciSayisi = self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[2]/a/span").text
                 takipciSayisi =int(self.metindenKarakterSil(takipciSayisi, ','))
             else:
-                kaynakTakipciSayisi = self.driver.find_element_by_xpath(
-                    "/html/body/div[1]/section/main/div/header/section/ul/li[2]/a/span").text
+                kaynakTakipciSayisi = self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[2]/a/span").text
                 kaynakTakipciSayisi = self.metindenKarakterSil(kaynakTakipciSayisi, ',')
                 takipciSayisi = int(self.hedefKaynaktanBuyukMu(hedefTakipciSayisi, kaynakTakipciSayisi))
 
-            btn_takipciler = self.driver.find_element_by_xpath(
-                "/html/body/div[1]/section/main/div/header/section/ul/li[2]/a")
+            btn_takipciler = self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[2]/a")
             btn_takipciler.click()
             time.sleep(5)
 
@@ -520,9 +628,7 @@ class Instagram():
                 for takipci in takipcilerPopup:
                     takipciKullaniciAdi = takipci.find_element_by_css_selector("a.FPmhX").get_attribute('href')
                     takipciKullaniciAdi=self.metindenKarakterSil(self.metindenKarakterSil(takipciKullaniciAdi,self.BASE_URL),'/')
-                    print(self.uyariOlustur(
-                        "[*] {index} -) {takipci} takipcisi listeye eklendi.".format(index=takipciIndexNumarasi + 1,
-                                                                                     takipci=takipciKullaniciAdi), 1))
+                    print(self.uyariOlustur("[*] {index} -) {takipci} takipcisi listeye eklendi.".format(index=takipciIndexNumarasi + 1,takipci=takipciKullaniciAdi), 1))
                     takipciler.add(takipciKullaniciAdi)
                     takipciIndexNumarasi = takipciIndexNumarasi + 1
                     if takipciIndexNumarasi == takipciSayisi:
@@ -587,7 +693,7 @@ class Instagram():
             else:
                 print(self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!", 2))
                 print("")
-                self.takipEtmeyenleriTakiptenCik(islemSecildiMi=islemSecildiMi, secilenIslem=secilenIslem)
+                self.takipEtmeyenleriTakiptenCik(islemSecildiMi=islemSecildiMi, secilenIslem=None)
         except Exception as error:
             print(self.uyariOlustur(
                 "[-] Takip etmeyen kullanıcıları takipten çıkma işlemi sırasında bir hata oluştu: {hata}".format(
@@ -646,7 +752,7 @@ class Instagram():
             else:
                 print(self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!", 2))
                 print("")
-                self.paylasimBegenenleriTakipEt(islemSecildiMi=None, secilenIslem=secilenIslem)
+                self.paylasimBegenenleriTakipEt(islemSecildiMi=None, secilenIslem=None)
 
             if not self.hesapGizliMi():
                 try:
@@ -722,15 +828,12 @@ class Instagram():
             self.paylasimBegenenleriTakipEt()
 
     def kullaniciListesiSec(self, secim):
-        dosyaAdi = self.dosyaSec(secim)
-        kullaniciListesi = []
-        try:
-            with open(dosyaAdi, "r", encoding="utf-8") as kullanicilar:
-                for kullanici in kullanicilar:
-                    kullaniciListesi.append(kullanici)
-            self.kullanicilariTakipEt(kullaniciListesi, 14)
-        except Exception as error:
-            print(self.uyariOlustur("[-] Seçilen dosyanın yüklenme işlemi sırasında bir hata oluştu:" + str(error), 2))
+        print(self.uyariOlustur("Seçilen İşlem >>> Txt dosyasından olarak oluşturduğunuz kullanicilar listesi ile işlem yapma", 1))
+        dosya = self.dosyaSec(secim)
+        kullanicilar=self.dosyaİceriginiAl(dosya)
+        if self.dosyaİcerigiAlindiMi(kullanicilar):
+            self.kullanicilariTakipEt(kullanicilar, 14)
+        else:
             self.kullaniciListesiSec(secim)
 
     def kullanicilariTakipEt(self, kullaniciListesi, secim):
@@ -741,12 +844,12 @@ class Instagram():
 
     def dosyaSec(self, secim):
         try:
-            dosyaAdi = input("Kullanıcı listesinin bulunduğu dosya yolunu giriniz >> ").strip()
-            if self.dosyaMi(dosyaAdi):
+            dosyaAdi = input("Dosya yolunu giriniz >> ").strip()
+            if self.dosyaMi(dosyaAdi) and self.txtDosyasiMi(dosyaAdi):
                 return str(dosyaAdi)
             else:
                 print(self.uyariOlustur("[-] Lütfen geçerli  bir dosya yolu belirtin!", 2))
-                self.kullaniciListesiSec(secim)
+                self.dosyaSec(secim)
         except Exception as error:
             print(self.uyariOlustur("[-] Dosya seçme işlemi sırasında bir hata oluştu:" + str(error), 2))
             self.dosyaSec(secim)
@@ -756,6 +859,13 @@ class Instagram():
             return True
         else:
             return False
+
+    def txtDosyasiMi(self,dosya):
+        if os.path.splitext(dosya)[-1].lower()==".txt":
+            return True
+        else:
+            return False
+
 
     def secilenIslem(self, secim):
         print("")
@@ -964,7 +1074,7 @@ class Instagram():
             else:
                 print(self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!", 2))
                 print("")
-                self.kullaniciTakipcileriniTakipEt(kullaniciAdi, secim, islemSecildiMi=None, secilenIslem=secilenIslem)
+                self.kullaniciTakipcileriniTakipEt(kullaniciAdi, secim, islemSecildiMi=None, secilenIslem=None)
 
             print("[*] '" + kullaniciAdi + "' kullanıcısının takipçilerini takip etme işlemi başladı...")
 
