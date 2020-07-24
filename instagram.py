@@ -1035,7 +1035,9 @@ class Instagram():
         try:
             for i in range(2):
                 time.sleep(5)
-                self.driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]").click()
+                btn=self.driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]")
+                self.driver.execute_script("arguments[0].click();", btn)
+
         except Exception as error:
             print(self.uyariOlustur(
                 "[-] Bildirim uyarısını kapatma işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
@@ -1044,6 +1046,14 @@ class Instagram():
         profile = webdriver.FirefoxProfile()
         profile.set_preference('intl.accept_languages', 'en-US, en')
         return profile
+
+    def aktifKullaniciGetir(self):
+        try:
+            self.driver.find_element_by_xpath("/html/body/div[1]/section/nav/div[2]/div/div/div[3]/div/div[5]").click()
+            kullanici=self.driver.find_element_by_xpath("/html/body/div[1]/section/nav/div[2]/div/div/div[3]/div/div[5]/div[2]/div/div[2]/div[2]/a[1]").get_attribute("href")
+            self.aktifKullanici=str(kullanici).replace(self.BASE_URL,"")
+        except Exception as error:
+            print(self.uyariOlustur("[-] Aktif kullanıcı adı getirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
 
     def girisYap(self, username=False, password=False):
         try:
@@ -1078,7 +1088,8 @@ class Instagram():
             time.sleep(5)
             print(self.girisKontrol())
             if self.girisYapildimi:
-                self.aktifKullanici = username
+                self.aktifKullaniciGetir()
+                print(self.aktifKullanici)
                 self.bildirimThreadOlustur()
                 self.menu()
             else:
