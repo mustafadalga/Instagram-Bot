@@ -103,6 +103,8 @@ class Instagram():
                         self.gonderiTopluYorumYapma()
                     elif secim==24:
                         self.etiketeGoreBegenme()
+                    elif secim==25:
+                        self.etiketeGoreTakipEtme()
                 else:
                     print(self.uyariOlustur("[-] Lütfen geçerli bir seçim yapınız!", 2))
                     self.islemSec()
@@ -328,36 +330,88 @@ class Instagram():
     def gonderiIlerlet(self):
         self.driver.find_element_by_css_selector("a._65Bje").click()
 
-    def etiketeGoreBegenme(self,etiket=None,begeniLimit=None):
+
+    def etiketGetir(self):
         try:
-            if etiket is None and begeniLimit is None:
-                print(self.uyariOlustur("Seçilen İşlem >>> Etiketlere Göre Beğeni Yapma", 1))
+            etiket = input("Bir etiket adı giriniz >> ").strip()
 
-            if not etiket:
-                etiket = input("Bir etiket adı giriniz >> ").strip()
-                if self.degerVarMi(etiket):
-                    url="{BASE_URL}explore/tags/{etiket}".format(BASE_URL=self.BASE_URL,etiket=str(etiket))
-                    print("[*] {url}  sayfasına yönlendiriliyor...".format(url=url))
-                    self.driver.get(url)
-                    time.sleep(5)
-                    if not self.sayfaMevcutMu():
-                        print(self.uyariOlustur("[-] {etiket} etiketine ait bir gönderi bulunamadı!".format(etiket=etiket), 2))
-                        self.etiketeGoreBegenme()
-                else:
-                    print(self.uyariOlustur("[-] Bir etiket girişi yapmadınız!", 2))
-                    self.etiketeGoreBegenme()
+            if self.degerVarMi(etiket):
+                url = "{BASE_URL}explore/tags/{etiket}".format(BASE_URL=self.BASE_URL, etiket=str(etiket))
+                print("[*] {url}  sayfasına yönlendiriliyor...".format(url=url))
+                self.driver.get(url)
+                time.sleep(5)
+                if not self.sayfaMevcutMu():
+                    print(self.uyariOlustur("[-] {etiket} etiketine ait bir gönderi bulunamadı!".format(etiket=etiket),2))
+                    return self.etiketGetir()
+                return etiket
+            else:
+                print(self.uyariOlustur("[-] Bir etiket girişi yapmadınız!", 2))
+                return self.etiketGetir()
+        except Exception as error:
+            print(self.uyariOlustur("[-] Etiket belirleme işlemi yapma sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
 
-            if not begeniLimit:
-                begeniLimit = input("Beğenmek istediğiniz gönderi sayısını giriniz >> ").strip()
-                if begeniLimit.isnumeric() and int(begeniLimit) > 0:
-                    begeniLimit = int(begeniLimit)
-                else:
-                    print(self.uyariOlustur("[-] Bir sayı girişi yapmadınız!", 2))
-                    self.etiketeGoreBegenme(etiket=etiket,begeniLimit=None)
+    def etiketeGoreIslemLimitiGetir(self,islemNo):
+        try:
+            if islemNo==1:
+                limit = input("Beğenmek istediğiniz gönderi sayısını giriniz >> ").strip()
 
+            elif islemNo==2:
+                limit = input("Takip etmek istediğiniz kullanıcı sayısını giriniz >> ").strip()
+
+            if limit.isnumeric() and int(limit) > 0:
+                return int(limit)
+            else:
+                print(self.uyariOlustur("[-] Bir sayı girişi yapmadınız!", 2))
+                return self.etiketeGoreIslemLimitiGetir(islemNo=islemNo)
+        except Exception as error:
+            print(self.uyariOlustur(
+                "[-] Belirleyen etikete göre işlem yapma limiti belirleme işlemi yapma sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
+
+    def etiketeGoreTakipEtme(self):
+        try:
+            print(self.uyariOlustur("Seçilen İşlem >>> Etiketlere Göre Takip Etme", 1))
+            etiket=self.etiketGetir()
+
+            limit=self.etiketeGoreIslemLimitiGetir(2)
+            print(etiket)
 
             kaynakGonderiSayisi=int(self.metindenKarakterSil(self.driver.find_element_by_css_selector("span.g47SY").text, ','))
-            begeniLimit = self.hedefKaynaktanBuyukMu(begeniLimit, kaynakGonderiSayisi)
+            limit = self.hedefKaynaktanBuyukMu(limit, kaynakGonderiSayisi)
+            ilkGonderi=self.driver.find_element_by_xpath("/html/body/div[1]/section/main/article/div[1]/div/div/div[1]/div[1]")
+            ilkGonderi.click()
+            time.sleep(1)
+            islemIndex=0
+
+            print("[*] {etiket}  etiketine göre kullanıcı takip etme işlemi başladı.".format(etiket=etiket))
+            while True:
+                kullanici=self.driver.find_element_by_xpath("/html/body/div[4]/div[2]/div/article/header/div[2]/div[1]")
+                kullaniciAdi=kullanici.find_element_by_css_selector("a.sqdOP").text
+                btn_takip=kullanici.find_element_by_css_selector("button.oW_lN")
+                if btn_takip.text!="Following":
+                    btn_takip.click()
+                    print(self.uyariOlustur("[+] {index}-) {kullanici} takip edilmeye başlandı.".format(index=islemIndex+1,kullanici=kullaniciAdi), 1))
+                    islemIndex=islemIndex+1
+                    if islemIndex==limit:
+                        break
+                    time.sleep(0.50)
+                    self.gonderiIlerlet()
+                    time.sleep(10)
+                else:
+                    print(self.uyariOlustur("[*] {kullanici} zaten takip ediliyor.".format(kullanici=kullaniciAdi), 1))
+                    self.gonderiIlerlet()
+                    time.sleep(5)
+            print("[*] {etiket}  etiketine göre kullanıcı takip etme işlemi tamamlandı.".format(etiket=etiket))
+        except Exception as error:
+            print(self.uyariOlustur("[-] Etikete göre beğeni işlemi yapma sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
+            self.etiketeGoreTakipEtme()
+
+    def etiketeGoreBegenme(self):
+        try:
+            print(self.uyariOlustur("Seçilen İşlem >>> Etiketlere Göre Beğeni Yapma", 1))
+            etiket=self.etiketGetir()
+            limit = self.etiketeGoreIslemLimitiGetir(1)
+            kaynakGonderiSayisi=int(self.metindenKarakterSil(self.driver.find_element_by_css_selector("span.g47SY").text, ','))
+            limit = self.hedefKaynaktanBuyukMu(limit, kaynakGonderiSayisi)
             ilkGonderi=self.driver.find_element_by_xpath("/html/body/div[1]/section/main/article/div[1]/div/div/div[1]/div[1]")
             ilkGonderi.click()
             time.sleep(1)
@@ -371,7 +425,7 @@ class Instagram():
                     btn_begen.click()
                     print(self.uyariOlustur("[+] {index}-) {url} gönderisi beğenildi.".format(index=islemIndex+1,url=self.driver.current_url), 1))
                     islemIndex=islemIndex+1
-                    if islemIndex==begeniLimit:
+                    if islemIndex==limit:
                         break
                     time.sleep(0.50)
                     self.gonderiIlerlet()
@@ -911,10 +965,10 @@ class Instagram():
                 return str(dosyaAdi)
             else:
                 print(self.uyariOlustur("[-] Lütfen geçerli  bir dosya yolu belirtin!", 2))
-                self.dosyaSec(secim)
+                return self.dosyaSec(secim)
         except Exception as error:
             print(self.uyariOlustur("[-] Dosya seçme işlemi sırasında bir hata oluştu:" + str(error), 2))
-            self.dosyaSec(secim)
+            return self.dosyaSec(secim)
 
     def dosyaMi(self, path):
         if os.path.isfile(path):
@@ -1011,6 +1065,7 @@ class Instagram():
             print(self.girisKontrol())
             if self.girisYapildimi:
                 self.aktifKullanici = username
+
                 self.menu()
             else:
                 self.inputTemizle(usernameInput)
