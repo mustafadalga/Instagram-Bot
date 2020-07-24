@@ -14,7 +14,7 @@ class Instagram():
     def __init__(self):
         init(convert=True)
         self.script()
-        self.threadOlustur()
+        self.tarayiciThreadOlustur()
         self.girisYapildimi = False
         self.tarayiciAcildimi = False
         self.aktifKullanici = ""
@@ -1015,7 +1015,7 @@ class Instagram():
             print(self.uyariOlustur(" [*] Ana menüye dönmek için  'menu' komutunu giriniz", 3))
         print("")
 
-    def threadOlustur(self):
+    def tarayiciThreadOlustur(self):
         t1 = threading.Thread(target=self.tarayiciBaslat)
         t1.daemon = True
         t1.start()
@@ -1025,6 +1025,20 @@ class Instagram():
         self.driver = webdriver.Firefox(firefox_profile=self.dilDegistir(),
                                         executable_path="E:\\Python\\Uygulamalar\\Intagram-Bot\\Instagram-Bot\\geckodriver.exe")
         self.driver.get(self.BASE_URL + 'accounts/login/')
+
+    def bildirimThreadOlustur(self):
+        t1 = threading.Thread(target=self.bildirimPopupKapat)
+        t1.daemon = True
+        t1.start()
+
+    def bildirimPopupKapat(self):
+        try:
+            for i in range(2):
+                time.sleep(5)
+                self.driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]").click()
+        except Exception as error:
+            print(self.uyariOlustur(
+                "[-] Bildirim uyarısını kapatma işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
 
     def dilDegistir(self):
         profile = webdriver.FirefoxProfile()
@@ -1065,7 +1079,7 @@ class Instagram():
             print(self.girisKontrol())
             if self.girisYapildimi:
                 self.aktifKullanici = username
-
+                self.bildirimThreadOlustur()
                 self.menu()
             else:
                 self.inputTemizle(usernameInput)
