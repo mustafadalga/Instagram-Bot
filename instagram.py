@@ -1089,7 +1089,6 @@ class Instagram():
             print(self.girisKontrol())
             if self.girisYapildimi:
                 self.aktifKullaniciGetir()
-                print(self.aktifKullanici)
                 self.bildirimThreadOlustur()
                 self.menu()
             else:
@@ -1846,15 +1845,8 @@ class Instagram():
     def cikisYap(self):
         print("[*] İnstagramdan çıkış yapılıyor...")
         try:
-            self.driver.get(self.BASE_URL + self.aktifKullanici)
-            time.sleep(3)
-            self.driver.find_element_by_css_selector("span.glyphsSpriteUser__outline__24__grey_9").click()
-            time.sleep(5)
-            ayarlar = self.driver.find_element_by_css_selector("span.glyphsSpriteSettings__outline__24__grey_9")
-            ayarlar.click()
-            time.sleep(3)
-            cikis = self.driver.find_element_by_xpath("/html/body/div[3]/div/div/div/button[6]")
-            cikis.click()
+            self.driver.find_element_by_xpath("/html/body/div[1]/section/nav/div[2]/div/div/div[3]/div/div[5]").click()
+            self.driver.find_element_by_xpath("/html/body/div[1]/section/nav/div[2]/div/div/div[3]/div/div[5]/div[2]/div/div[2]/div[2]/div").click()
             print(self.uyariOlustur("[*] İnstagramdan çıkış yapıldı...", 1))
             self.driver.get(self.BASE_URL + 'accounts/login/')
             self.girisYapildimi = False
