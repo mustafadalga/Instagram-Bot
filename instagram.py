@@ -18,6 +18,7 @@ class Instagram():
         self.girisYapildimi = False
         self.tarayiciAcildimi = False
         self.aktifKullanici = ""
+        self.index=1
         self.BASE_URL = "https://www.instagram.com/"
         self.girisYap()
 
@@ -468,24 +469,17 @@ class Instagram():
 
     def hikayeleriGetir(self):
         try:
-            hikayeler={
-                "video":[],
-                "fotograf":[]
-            }
             for i in range(self.hikayeSayisiGetir()):
                 if self.hikayeVideoMu():
-                    video_url=self.driver.find_element_by_css_selector("div.qbCDp > video.y-yJ5 > source").get_attribute("src")
-                    print(self.uyariOlustur("[*] Video hikaye url:" + str(video_url), 1))
-                    hikayeler["video"].append(video_url)
+                    url=self.driver.find_element_by_css_selector("div.qbCDp > video.y-yJ5 > source").get_attribute("src")
+                    self.dosyaIndir(url,2)
                 else:
                     foto_srcset = str(self.driver.find_element_by_css_selector("div.qbCDp >  img.y-yJ5").get_attribute("srcset"))
-                    foto_url=(foto_srcset.split(",")[-1]).split(" ")[0]
-                    print(self.uyariOlustur("[*] Fotoğraf hikaye url:" + str(foto_url), 1))
-                    hikayeler["fotograf"].append(foto_url)
+                    url=(foto_srcset.split(",")[-1]).split(" ")[0]
+                    self.dosyaIndir(url, 1)
                 btn_ileri=self.driver.find_element_by_css_selector("button.ow3u_")
                 btn_ileri.click()
                 time.sleep(1)
-            return hikayeler
         except Exception as error:
             print(self.uyariOlustur(
                 "[-] Hikayeleri getirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
@@ -519,10 +513,12 @@ class Instagram():
                 if self.hikayeVarMi():
                     self.driver.find_element_by_css_selector("div.RR-M-").click()
                     time.sleep(3)
-                    hikayeler = self.hikayeleriGetir()
-                    self.dosyaIndir(hikayeler)
-                    print("[*] {kullanici} kullanıcısının hikayelerini indirme işlemi tamamlandı.".format(
-                        kullanici=kullanici))
+                    print("[*] {kullanici} kullanıcısının hikayelerini indirme işlemi başladı.".format(kullanici=kullanici))
+                    self.klasorOlustur(kullanici)
+                    self.hikayeleriGetir()
+                    self.indexSifirla()
+                    self.klasorDegistir("../")
+                    print("[*] {kullanici} kullanıcısının hikayelerini indirme işlemi tamamlandı.".format(kullanici=kullanici))
                 else:
                     print(self.uyariOlustur("[-] Hikaye bulunamadı!",2))
             else:
@@ -539,6 +535,11 @@ class Instagram():
         except:
             return False
 
+    def indexSifirla(self):
+        self.index=0
+
+    def indexArtir(self):
+        self.index=self.index+1
 
     def oneCikanHikayeIndir(self):
         try:
@@ -556,8 +557,11 @@ class Instagram():
                 btn_oynat=self.driver.find_element_by_css_selector("button._42FBe")
                 btn_oynat.click()
                 time.sleep(1)
-                hikayeler = self.hikayeleriGetir()
-                self.dosyaIndir(hikayeler)
+                kullanici=self.driver.find_element_by_xpath("/html/body/div[1]/section/div/div/section/header/div/div[1]/div/div/div/a").get_attribute("title")
+                self.klasorOlustur(kullanici)
+                self.hikayeleriGetir()
+                self.indexSifirla()
+                self.klasorDegistir("../")
                 print("[*] {url}  öne çıkan hikayesini indirme işlemi tamamlandı.".format(url=url))
             else:
                 print(self.uyariOlustur("[-] İndirmek istediğiniz öne çıkan hikayenin url'sine ulaşılamadı!", 2))
@@ -566,21 +570,19 @@ class Instagram():
                 "[-] Öne çıkan hikayeyi indirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
             self.oneCikanHikayeIndir()
 
-    def dosyaIndir(self,veri):
+    def dosyaIndir(self,url,veriTuru):
         try:
-            count=1
-            for tur in veri:
-                for dosya in veri["{tur}".format(tur=tur)]:
-                    if tur=="fotograf":
-                        isim = str(count) + "_" + str(datetime.datetime.now()).replace(":", "_").replace(" ","") + ".jpg"
-                    elif tur=="video":
-                        isim = str(count) + str(datetime.datetime.now()).replace(":", "_").replace(" ", "") + ".mp4"
-                    count += 1
-                    urllib.request.urlretrieve(dosya, isim)
-                    print(self.uyariOlustur("[+] " + dosya + " indirildi", 1))
+            if veriTuru==1:
+                isim = str(self.index)+"_"+ str(datetime.datetime.now()).replace(":", "_").replace(" ","") + ".jpg"
+            elif veriTuru==2:
+                isim =str(self.index)+"_"+str(datetime.datetime.now()).replace(":", "_").replace(" ", "") + ".mp4"
+            urllib.request.urlretrieve(url, isim)
+            print(self.uyariOlustur("[+] {index}-) {url} indirildi".format(index=self.index,url=url), 1))
+            self.indexArtir()
         except Exception as error:
             print(self.uyariOlustur(
                 '[-] dosya indirme işlemi sırasında bir hata oluştu: {hata}'.format(hata=str(error)), 2))
+
 
     def topluTakiptenCik(self):
         try:
@@ -1037,10 +1039,8 @@ class Instagram():
                 time.sleep(5)
                 btn=self.driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]")
                 self.driver.execute_script("arguments[0].click();", btn)
-
         except Exception as error:
-            print(self.uyariOlustur(
-                "[-] Bildirim uyarısını kapatma işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
+            pass
 
     def dilDegistir(self):
         profile = webdriver.FirefoxProfile()
