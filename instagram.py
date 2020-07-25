@@ -302,7 +302,7 @@ class Instagram():
                 time.sleep(5)
 
                 if not self.sayfaMevcutMu():
-                    print(self.uyariOlustur("[-] İndirmek istediğiniz öne çıkan hikayenin url'sine ulaşılamadı!", 2))
+                    print(self.uyariOlustur("[-] Yorum yapmak istediğiniz öne çıkan hikayenin url'sine ulaşılamadı!", 2))
                     self.gonderiYorumYapma()
 
                 if not self.hesapGizliMi():
@@ -329,7 +329,10 @@ class Instagram():
             self.gonderiYorumYapma()
 
     def gonderiIlerlet(self):
-        self.driver.find_element_by_css_selector("a._65Bje").click()
+        try:
+            self.driver.find_element_by_css_selector("a._65Bje").click()
+        except:
+            pass
 
 
     def etiketGetir(self):
@@ -464,8 +467,7 @@ class Instagram():
             hikayeSayisi=self.driver.find_elements_by_css_selector("div.w9Vr-  > div._7zQEa")
             return len(hikayeSayisi)
         except Exception as error:
-            print(self.uyariOlustur(
-                "[-] Hikaye sayısı getirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
+            print(self.uyariOlustur("[-] Hikaye sayısı getirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
 
     def hikayeleriGetir(self):
         try:
@@ -515,6 +517,7 @@ class Instagram():
                     time.sleep(3)
                     print("[*] {kullanici} kullanıcısının hikayelerini indirme işlemi başladı.".format(kullanici=kullanici))
                     self.klasorOlustur(kullanici)
+                    self.indexSifirla()
                     self.hikayeleriGetir()
                     self.indexSifirla()
                     self.klasorDegistir("../")
@@ -536,7 +539,7 @@ class Instagram():
             return False
 
     def indexSifirla(self):
-        self.index=0
+        self.index=1
 
     def indexArtir(self):
         self.index=self.index+1
@@ -559,6 +562,7 @@ class Instagram():
                 time.sleep(1)
                 kullanici=self.driver.find_element_by_xpath("/html/body/div[1]/section/div/div/section/header/div/div[1]/div/div/div/a").get_attribute("title")
                 self.klasorOlustur(kullanici)
+                self.indexSifirla()
                 self.hikayeleriGetir()
                 self.indexSifirla()
                 self.klasorDegistir("../")
@@ -577,7 +581,7 @@ class Instagram():
             elif veriTuru==2:
                 isim =str(self.index)+"_"+str(datetime.datetime.now()).replace(":", "_").replace(" ", "") + ".mp4"
             urllib.request.urlretrieve(url, isim)
-            print(self.uyariOlustur("[+] {index}-) {url} indirildi".format(index=self.index,url=url), 1))
+            print(self.uyariOlustur("[+] {url} indirildi".format(url=url), 1))
             self.indexArtir()
         except Exception as error:
             print(self.uyariOlustur(
@@ -817,13 +821,6 @@ class Instagram():
                 "[-] Takip etmeyen kullanıcıları takipten çıkma işlemi sırasında bir hata oluştu: {hata}".format(
                     hata=str(error)), 2))
 
-    def paylasimTipiKontrol(self):
-        try:
-            self.driver.find_element_by_xpath(
-                "/html/body/div[1]/section/main/div/div[1]/article/div[2]/div/div/div[1]/img")
-            return True
-        except:
-            return False
 
     def metindenKarakterSil(self, metin, silinecekKarakterler):
         return metin.replace(silinecekKarakterler, '')
@@ -838,6 +835,7 @@ class Instagram():
             self.menu()
 
         if self.urlKontrol(url):
+            print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
             self.driver.get(url)
             time.sleep(5)
 
@@ -874,8 +872,8 @@ class Instagram():
 
             if not self.hesapGizliMi():
                 try:
-                    print("[*] '" + url + "'  paylaşımını beğenen kullanıcıları takip etme işlemi başladı...")
-                    if self.paylasimTipiKontrol():
+                    if not self.gonderiTipiVideoMu():
+                        print("[*] '" + url + "'  paylaşımını beğenen kullanıcıları takip etme işlemi başladı...")
                         takipIstekSayisi = 0
                         islemIndex = 0
                         devamEtsinMi = True
@@ -1154,7 +1152,7 @@ class Instagram():
         if self.kullaniciKontrol(kullanici):
             print("[*] Tarayıcı '" + kullanici + "' profiline yönlendiriliyor...")
             if secim == 1:
-                self.paylasimlariIndir(kullanici, secim)
+                self.gonderileriIndir(kullanici, secim)
             elif secim == 2:
                 self.paylasimlariBegen(kullanici, secim)
             elif secim == 3:
@@ -1425,181 +1423,130 @@ class Instagram():
                 "[-] " + kullaniciAdi + " kullanıcısının engelini kaldırma işlemi sırasında hata:" + str(e), 2))
             self.profilSec(secim)
 
-    def paylasimlariIndir(self, kullaniciadi, secim):
-        self.driver.get(self.BASE_URL + kullaniciadi)
-        time.sleep(10)
+
+    def gonderiTipiVideoMu(self,element=None):
         try:
-            if not self.hesapGizliMi():
-                print("[*] Paylaşım tarama işlemi başladı....")
-                video_urls, carousel_url = self.paylasimTara(kullaniciadi)
-                print("[*] Video indirme işlemine geçiliyor...")
-                print("[*] İndirilecek Tekli Video Sayısı:" + str(len(video_urls)))
-                self.veriIndir(video_urls, "video")
-                if len(video_urls) > 0:
-                    print(self.uyariOlustur("[+] Video indirme işlemi tamamlandı", 1))
-
-                print("[*] Carousel Video ve Resim paylaşımlarının tarama işlemi geçiliyor...")
-                print("[*] Carouse Paylaşımlarının tarama işlemi başladı...")
-                print("[*] İndirilecek Toplam Carousel Paylaşım Sayısı:" + str(len(carousel_url)))
-                self.veriIndir(carousel_url, "carousel")
-                if len(carousel_url) > 0:
-                    print(self.uyariOlustur("[+] Carousel Video ve Resim paylaşımlarının indirme işlemi tamamlandı...",
-                                            1))
-
-                print(self.uyariOlustur("[+] " + kullaniciadi + " adlı kullanıcının tüm paylaşımları indirildi", 1))
-                self.klasorDegistir("../")
-                self.profilSec(secim)
+            if element:
+                element.find_element_by_css_selector("video.tWeCl")
             else:
-                print(self.uyariOlustur(
-                    "[-] " + kullaniciadi + " adlı kişinin hesabı gizli hesap olduğundan Paylaşımları indirme işlemi yapılamıyor!",
-                    2))
-                self.profilSec(secim)
-        except Exception as e:
-            print(self.uyariOlustur(
-                "[-] '" + kullaniciadi + "' kullanısının paylaşımlarını indirme işlemi sırasında bir hata oluştu:" + str(
-                    e), 2))
-            self.profilSec(secim)
-
-    def paylasimTara(self, kullaniciadi):
-        img_src = set()
-        carousel_url = set()
-        video_urls = set()
-        try:
-            gonderiSayisi = self.driver.find_element_by_css_selector("span.g47SY").text
-            if int(gonderiSayisi) < 10:
-                gonderiSayisi = 10
-            for i in range(round(int(gonderiSayisi) / 10)):
-                try:
-                    self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-                    article = self.driver.find_element_by_css_selector('article.FyNDV')
-                    hrefs = article.find_elements_by_tag_name("a")
-                    for href in hrefs:
-                        durum = True
-                        divs = href.find_elements_by_tag_name("div")
-                        for div in divs:
-                            if "u7YqG" in div.get_attribute("class"):
-                                span = div.find_element_by_tag_name("span")
-                                href = href.get_attribute("href")
-                                if "mediatypesSpriteVideo__filled__32" in span.get_attribute("class"):
-                                    if href not in video_urls:
-                                        print(self.uyariOlustur("[*] Video url:" + href, 1))
-                                    video_urls.add(href)
-
-                                    durum = False
-                                elif "mediatypesSpriteCarousel__filled__32" in span.get_attribute("class"):
-                                    if href not in carousel_url:
-                                        print(self.uyariOlustur("[*] Carousel paylaşim url:" + href, 1))
-                                    carousel_url.add(href)
-
-                                    durum = False
-                        if durum:
-                            src = href.find_element_by_tag_name("img").get_attribute("src")
-                            if src not in img_src:
-                                print(self.uyariOlustur("[*] Resim url:" + src, 1))
-                            img_src.add(src)
-                    time.sleep(10)
-                except Exception as e:
-                    print(self.uyariOlustur(
-                        "[-] '" + kullaniciadi + "' kullanıcısının paylaşımlarını tarama işlemi sırasında hata oluştu:" + str(
-                            e), 2))
-                    continue
-        except Exception as e:
-            print(self.uyariOlustur(
-                "[-] '" + kullaniciadi + "' kullanıcısının paylaşımlarını tarama işlemi sırasında hata oluştu:" + str(
-                    e), 2))
-            pass
-
-        print("[*] İndirilecek Tekli Fotoğraf Sayısı:" + str(len(img_src)))
-        self.klasorOlustur(kullaniciadi)
-        print("[*] Fotoğraf indirme işlemi başladı")
-        self.veriIndir(img_src, "resim")
-        print("[*] Fotoğraf indirme işlemi tamamlandı")
-        return video_urls, carousel_url
-
-    def carouselTara(self, url):
-        self.driver.get(url)
-        time.sleep(10)
-        try:
-            ul = self.driver.find_element_by_css_selector("ul.YlNGR")
-            li = ul.find_elements_by_css_selector("li._-1_m6")
-            carousel_len = len(ul.find_elements_by_css_selector("li._-1_m6"))
-            carousel = []
-            print("[*] " + url + " Adresi url'leri taranıyor.")
-            for i in range(carousel_len):
-                satir = {}
-                if self.resimMi(li[i]):
-                    src = li[i].find_element_by_css_selector("img.FFVAD").get_attribute("src")
-                    satir['src'] = src
-                    satir['tip'] = 'fotograf'
-                    print(self.uyariOlustur("[*] Img src:" + src, 1))
-                    time.sleep(3)
-                    if i < carousel_len - 1:
-                        self.driver.find_element_by_css_selector("button._6CZji").click()
-                else:
-                    src = li[i].find_element_by_css_selector("video.tWeCl").get_attribute("src")
-                    satir['src'] = src
-                    satir['tip'] = 'video'
-                    print(self.uyariOlustur("[*] Video url:" + src, 1))
-                    print("Tip:" + satir['tip'])
-                    time.sleep(3)
-                    if i < carousel_len - 1:
-                        self.driver.find_element_by_css_selector("button._6CZji").click()
-                carousel.append(satir)
-            print("[*] Carousel tarama işlemi tamamlandı")
-            return carousel
-        except Exception as e:
-            print(self.uyariOlustur("[-] Carousel tarama işlemi sırasında hata oluştu:" + str(e), 2))
-            pass
-
-    def resimMi(self, li):
-        try:
-            li.find_element_by_css_selector("img.FFVAD")
+                self.driver.find_element_by_css_selector("video.tWeCl")
             return True
         except:
             return False
 
-    def veriIndir(self, veri, durum):
+    def AlbumIcerikSayisiGetir(self):
         try:
-            count = 1
-            if durum == "resim":
-                for img in veri:
-                    try:
-                        isim = str(count) + "_" + str(datetime.datetime.now()).replace(":", "_").replace(" ",
-                                                                                                         "") + ".jpg"
-                        count += 1
-                        urllib.request.urlretrieve(img, isim)
-                        print(self.uyariOlustur("[+] " + img + " indirildi", 1))
-                    except Exception as e:
-                        print(str(e))
-                        continue
-            elif durum == "video":
-                for url in veri:
-                    self.driver.get(url)
-                    print("[*] Indirilecek video url:" + url)
-                    time.sleep(5)
-                    video = self.driver.find_element_by_css_selector("video.tWeCl").get_attribute("src")
-                    isim = str(count) + str(datetime.datetime.now()).replace(":", "_").replace(" ", "") + ".mp4"
-                    count += 1
-                    urllib.request.urlretrieve(video, isim)
-                    print(self.uyariOlustur("[+] " + video + " indirildi", 1))
-            elif durum == "carousel":
-                klasor_count = 1
-                for url in veri:
-                    urls = self.carouselTara(url)
-                    klasor_adi = str(klasor_count) + "_carousel"
-                    self.klasorOlustur(klasor_adi)
-                    for link in urls:
-                        if link['tip'] == "fotograf":
-                            isim = str(count) + str(datetime.datetime.now()).replace(":", "_").replace(" ", "") + ".jpg"
-                        elif link['tip'] == "video":
-                            isim = str(count) + str(datetime.datetime.now()).replace(":", "_").replace(" ", "") + ".mp4"
-                        count += 1
-                        urllib.request.urlretrieve(link['src'], isim)
-                        print(self.uyariOlustur("[+] " + link['src'] + " indirildi", 1))
-                    self.klasorDegistir("../")
-                    klasor_count += 1
-        except Exception as e:
-            print(self.uyariOlustur("[-] Veri indirme işlemi sırasında hata oluştu:" + str(e), 2))
+            return len(self.driver.find_elements_by_css_selector("div.Yi5aA"))
+        except Exception as error:
+            print(self.uyariOlustur(
+                "[-] {url} gönderisinin album içerik sayısını getirme işlemi sırasında hata:{hata}".format(
+                    url=str(self.driver.current_url), hata=str(error)), 2))
+            return None
+
+    def gonderiAlbumMu(self):
+        try:
+            self.driver.find_element_by_css_selector("div.Yi5aA")
+            return True
+        except:
+            return False
+
+    def albumUrlGetir(self):
+        try:
+            album=set()
+            ul=self.driver.find_element_by_css_selector("article ul.vi798")
+            for i in range(self.AlbumIcerikSayisiGetir()):
+                liste = ul.find_elements_by_css_selector("li.Ckrof")
+                for li in liste:
+                    [url,veriTuru]=self.albumIcerikUrlGetir(li)
+                    if url not in album and url is not None:
+                        album.add(url)
+                        self.dosyaIndir(url,veriTuru)
+                btn_ileri=self.driver.find_element_by_css_selector("button._6CZji div.coreSpriteRightChevron")
+                btn_ileri.click()
+                time.sleep(1)
+        except:
+            pass
+
+    def albumIcerikUrlGetir(self,element):
+        try:
+            veriTuru=None
+            if self.gonderiTipiVideoMu(element):
+                url=element.find_element_by_css_selector("video.tWeCl").get_attribute("src")
+                veriTuru=2
+            else:
+                url=element.find_element_by_css_selector("img.FFVAD").get_attribute("src")
+                veriTuru = 1
+            return url,veriTuru
+        except Exception as error:
+            print(self.uyariOlustur(
+                "[-] Gönderi url'si getirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
+            return None,None
+
+    def gonderiUrlGetir(self):
+        try:
+            veriTuru=None
+            if self.gonderiTipiVideoMu():
+                url=self.driver.find_element_by_css_selector("video.tWeCl").get_attribute("src")
+                veriTuru=2
+            else:
+                url=self.driver.find_element_by_xpath("/html/body/div[4]/div[2]/div/article/div[2]/div/div/div[1]/img").get_attribute("src")
+                veriTuru=1
+            return url,veriTuru
+        except Exception as error:
+            print(self.uyariOlustur(
+                "[-] Gönderi url'si getirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
+            return None,None
+
+    def gonderiVarMi(self,gonderiSayisi):
+        if gonderiSayisi>0:
+            return True
+        else:
+            return False
+
+    def gonderileriIndir(self,kullanici,secim):
+        try:
+            self.driver.get(self.BASE_URL + kullanici)
+            time.sleep(5)
+            if not self.hesapGizliMi():
+                print("[*] {kullanici}  adlı kullanıcının gönderilerini indirme işlemi başladı".format(kullanici=kullanici))
+                gonderiSayisi=int(self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[1]/span/span").text)
+                if not self.gonderiVarMi(gonderiSayisi):
+                    print(self.uyariOlustur("[-] {kullanici} adlı kullanıcının gönderileri bulunmamaktadır.".format(kullanici=kullanici),2))
+                    self.profilSec(secim)
+                ilkGonderi=self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/div[3]/article/div[1]/div/div[1]/div[1]")
+                ilkGonderi.click()
+                time.sleep(1)
+                self.klasorOlustur(kullanici)
+                self.indexSifirla()
+                for index in range(gonderiSayisi):
+                    if self.gonderiAlbumMu():
+                        self.klasorOlustur(str(self.index)+"_carousel")
+                        tempIndex=self.index
+                        self.indexSifirla()
+                        self.albumUrlGetir()
+                        self.klasorDegistir("../")
+                        self.index=tempIndex+1
+                    else:
+                        [url,veriTuru]=self.gonderiUrlGetir()
+                        if url is not None:
+                            self.dosyaIndir(url,veriTuru)
+                        else:
+                            continue
+                    self.gonderiIlerlet()
+                    time.sleep(3)
+                self.indexSifirla()
+                self.klasorDegistir("../")
+                print("[*] {kullanici}  adlı kullanıcının gönderilerini indirme işlemi başladı hikayesini indirme işlemi tamamlandı.".format(kullanici=kullanici))
+                self.profilSec(secim)
+            else:
+                print(self.uyariOlustur("[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan gönderileri indirme işlemi yapılamıyor!".format(kullanici=kullanici),2))
+                self.profilSec(secim)
+
+        except Exception as error:
+            print(self.uyariOlustur(
+                "[-] {kullanici} kullanıcısının gönderilerini indirme işlemi sırasında bir hata oluştu:{hata}".format(kullanici=kullanici,hata=error), 2))
+            self.profilSec(secim)
+
 
     def paylasimlariBegen(self, kullaniciadi, secim, durum=True):
         self.driver.get(self.BASE_URL + kullaniciadi)
