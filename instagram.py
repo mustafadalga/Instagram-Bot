@@ -87,7 +87,7 @@ class Instagram():
                     elif secim == 14:
                         self.kullaniciListesiSec(secim)
                     elif secim == 16:
-                        self.paylasimBegenenleriTakipEt()
+                        self.gonderiBegenenleriTakipEt()
                     elif secim == 17:
                         self.takipEtmeyenleriTakiptenCik()
                     elif secim == 18:
@@ -409,6 +409,12 @@ class Instagram():
             print(self.uyariOlustur("[-] Etikete göre beğeni işlemi yapma sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
             self.etiketeGoreTakipEtme()
 
+    def begenButonuGetir(self):
+        return self.driver.find_element_by_xpath("/html/body/div[4]/div[2]/div/article/div[3]/section[1]/span[1]/button")
+
+    def begenButonuDurumGetir(self,buton):
+        return str(buton.find_element_by_tag_name("svg").get_attribute("aria-label")).lower()
+
     def etiketeGoreBegenme(self):
         try:
             print(self.uyariOlustur("Seçilen İşlem >>> Etiketlere Göre Beğeni Yapma", 1))
@@ -423,8 +429,8 @@ class Instagram():
 
             print("[*] {etiket}  etiketine göre beğeni yapma işlemi başladı.".format(etiket=etiket))
             while True:
-                btn_begen=self.driver.find_element_by_xpath("/html/body/div[4]/div[2]/div/article/div[3]/section[1]/span[1]/button")
-                begeniDurum=str(btn_begen.find_element_by_tag_name("svg").get_attribute("aria-label")).lower()
+                btn_begen=self.begenButonuGetir()
+                begeniDurum=self.begenButonuDurumGetir(btn_begen)
                 if begeniDurum!="unlike":
                     btn_begen.click()
                     print(self.uyariOlustur("[+] {index}-) {url} gönderisi beğenildi.".format(index=islemIndex+1,url=self.driver.current_url), 1))
@@ -826,11 +832,11 @@ class Instagram():
         return metin.replace(silinecekKarakterler, '')
         # return ''.join(karakter for karakter in metin if karakter not in silinecekKarakterler)
 
-    def paylasimBegenenleriTakipEt(self, islemSecildiMi=None, secilenIslem=None):
+    def gonderiBegenenleriTakipEt(self, islemSecildiMi=None, secilenIslem=None):
         url = input("İşlem yapmak istediğiniz gönderi url >> ").strip()
 
         if not url:
-            self.paylasimBegenenleriTakipEt()
+            self.gonderiBegenenleriTakipEt()
         elif url == "menu":
             self.menu()
 
@@ -864,11 +870,11 @@ class Instagram():
                 else:
                     print(self.uyariOlustur("[-] Bir sayı girişi yapmadınız.Lütfen bir sayı giriniz!", 2))
                     print("")
-                    self.paylasimBegenenleriTakipEt(islemSecildiMi=True, secilenIslem=secilenIslem)
+                    self.gonderiBegenenleriTakipEt(islemSecildiMi=True, secilenIslem=secilenIslem)
             else:
                 print(self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!", 2))
                 print("")
-                self.paylasimBegenenleriTakipEt(islemSecildiMi=None, secilenIslem=None)
+                self.gonderiBegenenleriTakipEt(islemSecildiMi=None, secilenIslem=None)
 
             if not self.hesapGizliMi():
                 try:
@@ -925,7 +931,7 @@ class Instagram():
                                 time.sleep(3)
                             else:
                                 print("[*] Takipçi seçme işlemi tamamlandı.")
-                                self.paylasimBegenenleriTakipEt()
+                                self.gonderiBegenenleriTakipEt()
                     else:
                         print(
                             '[*] {url} paylaşımını  beğenen kullanıcıların listesi görüntülenemediğinden dolayı takip etme işlemi yapılamıyor'.format(
@@ -934,14 +940,14 @@ class Instagram():
                     print(self.uyariOlustur(
                         '[-] {url} paylaşımını beğenen kullanıcıların listesini getirme işlemi sırasında hata oluştu: {hata}'.format(
                             url=url, hata=str(error)), 2))
-                    self.paylasimBegenenleriTakipEt()
+                    self.gonderiBegenenleriTakipEt()
             else:
                 print(self.uyariOlustur(
                     "[-] " + url + " paylaşımının sahibinin profili gizli hesap olduğundan dolayı, bu paylaşımı beğenen kullanıcıların listesi alınamıyor!",
                     2))
-                self.paylasimBegenenleriTakipEt()
+                self.gonderiBegenenleriTakipEt()
         else:
-            self.paylasimBegenenleriTakipEt()
+            self.gonderiBegenenleriTakipEt()
 
     def kullaniciListesiSec(self, secim):
         print(self.uyariOlustur("Seçilen İşlem >>> Txt dosyasından olarak oluşturduğunuz kullanicilar listesi ile işlem yapma", 1))
@@ -1154,9 +1160,9 @@ class Instagram():
             if secim == 1:
                 self.gonderileriIndir(kullanici, secim)
             elif secim == 2:
-                self.paylasimlariBegen(kullanici, secim)
+                self.gonderileriBegen(kullanici, secim)
             elif secim == 3:
-                self.paylasimlariBegen(kullanici, secim, False)
+                self.gonderileriBegen(kullanici, secim, False)
             elif secim == 8:
                 self.kullaniciTakipEt(kullanici, secim)
             elif secim == 9:
@@ -1497,11 +1503,10 @@ class Instagram():
                 "[-] Gönderi url'si getirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
             return None,None
 
-    def gonderiVarMi(self,gonderiSayisi):
-        if gonderiSayisi>0:
-            return True
-        else:
-            return False
+    def gonderiVarMi(self,kullanici,gonderiSayisi,secim):
+        if gonderiSayisi<1:
+            print(self.uyariOlustur("[-] {kullanici} adlı kullanıcının gönderileri bulunmamaktadır.".format(kullanici=kullanici), 2))
+            self.profilSec(secim)
 
     def gonderileriIndir(self,kullanici,secim):
         try:
@@ -1510,9 +1515,8 @@ class Instagram():
             if not self.hesapGizliMi():
                 print("[*] {kullanici}  adlı kullanıcının gönderilerini indirme işlemi başladı".format(kullanici=kullanici))
                 gonderiSayisi=int(self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[1]/span/span").text)
-                if not self.gonderiVarMi(gonderiSayisi):
-                    print(self.uyariOlustur("[-] {kullanici} adlı kullanıcının gönderileri bulunmamaktadır.".format(kullanici=kullanici),2))
-                    self.profilSec(secim)
+                self.gonderiVarMi(kullanici, gonderiSayisi, secim)
+
                 ilkGonderi=self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/div[3]/article/div[1]/div/div[1]/div[1]")
                 ilkGonderi.click()
                 time.sleep(1)
@@ -1536,7 +1540,7 @@ class Instagram():
                     time.sleep(3)
                 self.indexSifirla()
                 self.klasorDegistir("../")
-                print("[*] {kullanici}  adlı kullanıcının gönderilerini indirme işlemi başladı hikayesini indirme işlemi tamamlandı.".format(kullanici=kullanici))
+                print("[*] {kullanici}  adlı kullanıcının gönderilerini indirme işlemi tamamlandı.".format(kullanici=kullanici))
                 self.profilSec(secim)
             else:
                 print(self.uyariOlustur("[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan gönderileri indirme işlemi yapılamıyor!".format(kullanici=kullanici),2))
@@ -1547,84 +1551,58 @@ class Instagram():
                 "[-] {kullanici} kullanıcısının gönderilerini indirme işlemi sırasında bir hata oluştu:{hata}".format(kullanici=kullanici,hata=error), 2))
             self.profilSec(secim)
 
-
-    def paylasimlariBegen(self, kullaniciadi, secim, durum=True):
-        self.driver.get(self.BASE_URL + kullaniciadi)
+    def gonderiBegenDurumDegistir(self,btn):
+        btn.click()
+        self.indexArtir()
+        time.sleep(0.50)
+        self.gonderiIlerlet()
         time.sleep(10)
-        if not self.hesapGizliMi():
-            print("[*] '" + kullaniciadi + "' kullanıcısının paylaşımlarının tarama işlemi başladı...")
-            gonderiSayisi = self.driver.find_element_by_css_selector(
-                "ul.k9GMp > li.Y8-fY > span.-nal3 > span.g47SY").text
-            if int(gonderiSayisi) < 10:
-                gonderiSayisi = 10
-            pics_href = set()
-            for i in range(round(int(gonderiSayisi) / 10)):
-                try:
-                    self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-                    hrefs = self.driver.find_element_by_css_selector('article.FyNDV').find_elements_by_tag_name("a")
-                    for href in hrefs:
-                        href = href.get_attribute("href")
-                        if href not in pics_href:
-                            print(self.uyariOlustur("[+] Url:" + href, 1))
-                        pics_href.add(href)
 
-                    time.sleep(5)
-                except Exception as e:
-                    print(self.uyariOlustur(
-                        "[-] '" + kullaniciadi + "' kullanıcısının paylaşımlarını tarama işlemi sırasında bir hata oluştu:" + str(
-                            e), 2))
-                    continue
-
-            print(self.uyariOlustur("[+] '" + kullaniciadi + "' kullanıcısının paylaşımlarının tarama işlemi bitti...",
-                                    1))
-            print("[*] Toplam paylaşım sayısı:" + str(len(pics_href)))
-            if durum:
-                print("[*] Paylaşım beğenme işlemi başladı...")
-            else:
-                print("[*] Paylaşım beğenmekten vazgeçme işlemi başladı...")
-            for pic in pics_href:
-                if durum:
-                    print("[*] " + pic + " paylaşımı beğeniliyor...")
-                else:
-                    print("[*] " + pic + " paylaşımı beğenmekten vazgeçiliyor...")
-                try:
-                    self.driver.get(pic)
-                    time.sleep(5)
-                    self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-                    btn_begen_class = self.driver.find_element_by_css_selector(
-                        "span.fr66n > button > span").get_attribute("class")
+    def gonderileriBegen(self, kullanici, secim, durum=True):
+        try:
+            self.driver.get(self.BASE_URL + kullanici)
+            time.sleep(5)
+            if not self.hesapGizliMi():
+                print("[*] {kullanici}  adlı kullanıcının gönderilerini beğenme işlemi başladı".format(kullanici=kullanici))
+                gonderiSayisi=int(self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/header/section/ul/li[1]/span/span").text)
+                self.gonderiVarMi(kullanici, gonderiSayisi, secim)
+                ilkGonderi=self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/div[3]/article/div[1]/div/div[1]/div[1]")
+                ilkGonderi.click()
+                time.sleep(1)
+                self.klasorOlustur(kullanici)
+                self.indexSifirla()
+                for index in range(gonderiSayisi):
+                    btn_begen = self.begenButonuGetir()
+                    begeniDurum = self.begenButonuDurumGetir(btn_begen)
                     if durum:
-                        if "glyphsSpriteHeart__outline__24__grey_9" in btn_begen_class:
-                            begen = self.driver.find_element_by_css_selector(
-                                "span.glyphsSpriteHeart__outline__24__grey_9")
-                            begen.click()
-                            print(self.uyariOlustur("[+] " + pic + " paylaşımı beğenildi", 1))
-                            time.sleep(10)
+                        if begeniDurum == "like":
+                            print(self.uyariOlustur("[+] {index}-) {url} gönderisi beğenildi.".format(index=str(self.index),url=self.driver.current_url), 1))
+                            self.gonderiBegenDurumDegistir(btn_begen)
                         else:
-                            print(self.uyariOlustur("[-] Bu gönderi daha önce beğenildi.", 1))
+                            print(self.uyariOlustur("[*] {url} gönderisi daha önce beğenildi.".format(url=self.driver.current_url), 1))
+                            self.gonderiIlerlet()
+                            time.sleep(5)
                     else:
-                        if "glyphsSpriteHeart__filled__24__red_5" in btn_begen_class:
-                            btn_begen = self.driver.find_element_by_css_selector(
-                                "span.glyphsSpriteHeart__filled__24__red_5")
-                            btn_begen.click()
-                            print(self.uyariOlustur("[+] " + pic + " paylaşımı beğenilmekten vazgeçildi.", 1))
-                            time.sleep(10)
+                        if begeniDurum == "unlike":
+                            print(self.uyariOlustur("[+] {index}-) {url} gönderisi beğenilmekten vazgeçildi.".format(index=str(self.index),url=self.driver.current_url),
+                                1))
+                            self.gonderiBegenDurumDegistir(btn_begen)
                         else:
-                            print(self.uyariOlustur("[-] Bu gönderi zaten beğenilmedi.", 1))
-                except Exception as e:
-                    print(self.uyariOlustur(
-                        "[-] '" + kullaniciadi + "' kullanıcısının paylaşımlarını beğenme işlemi sırasında bir hata oluştu:" + str(
-                            e), 2))
-                    continue
-
-            print(
-                self.uyariOlustur("[+] '" + kullaniciadi + "' kullanıcısının paylaşımlarını beğenme işlemi tamamlandı",
-                                  1))
-            self.profilSec(secim)
-        else:
+                            print(self.uyariOlustur("[*] {url} gönderisi zaten beğenilmedi.".format(url=self.driver.current_url), 1))
+                            self.gonderiIlerlet()
+                            time.sleep(5)
+                self.indexSifirla()
+                print("[*] {kullanici}  adlı kullanıcının gönderilerini beğenme işlemi tamamlandı.".format(kullanici=kullanici))
+                self.profilSec(secim)
+            else:
+                print(self.uyariOlustur("[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan gönderileri beğenme işlemi yapılamıyor!".format(kullanici=kullanici),2))
+                self.profilSec(secim)
+        except Exception as error:
             print(self.uyariOlustur(
-                "[-] " + kullaniciadi + " adlı kişinin hesabı gizli hesap olduğundan beğeni işlemi yapılamıyor!", 2))
+                "[-] {kullanici} kullanıcısının gönderilerini beğenme işlemi sırasında bir hata oluştu:{hata}".format(
+                    kullanici=kullanici, hata=error), 2))
             self.profilSec(secim)
+
 
     def paylasimBegen(self, durum=True):
         if durum:
