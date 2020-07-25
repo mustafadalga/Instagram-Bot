@@ -77,9 +77,9 @@ class Instagram():
                     elif secim == 5:
                         self.videoIndir()
                     elif secim == 6:
-                        self.paylasimBegen()
+                        self.gonderiBegen()
                     elif secim == 7:
-                        self.paylasimBegen(False)
+                        self.gonderiBegen(False)
                     elif secim == 12:
                         self.cikisYap()
                     elif secim == 13:
@@ -1595,72 +1595,77 @@ class Instagram():
                 print("[*] {kullanici}  adlı kullanıcının gönderilerini beğenme işlemi tamamlandı.".format(kullanici=kullanici))
                 self.profilSec(secim)
             else:
-                print(self.uyariOlustur("[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan gönderileri beğenme işlemi yapılamıyor!".format(kullanici=kullanici),2))
+                if durum:
+                    print(self.uyariOlustur("[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan gönderileri beğenme işlemi yapılamıyor!".format(kullanici=kullanici),2))
+                else:
+                    print(self.uyariOlustur(
+                        "[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan gönderileri beğenmekten vazgeçme işlemi yapılamıyor!".format(
+                            kullanici=kullanici), 2))
                 self.profilSec(secim)
         except Exception as error:
-            print(self.uyariOlustur(
-                "[-] {kullanici} kullanıcısının gönderilerini beğenme işlemi sırasında bir hata oluştu:{hata}".format(
-                    kullanici=kullanici, hata=error), 2))
-            self.profilSec(secim)
-
-
-    def paylasimBegen(self, durum=True):
-        if durum:
-            url = input("Beğenmek istediğiniz paylaşım url >> ").strip()
-        else:
-            url = input("Beğenmekten vazgeçmek istediğiniz paylaşım url >> ").strip()
-
-        if not url:
-            self.paylasimBegen(durum)
-        elif url == "menu":
-            self.menu()
-
-        if self.urlKontrol(url):
-            self.driver.get(url)
             if durum:
-                print("[*] '" + url + "' adresindeki paylaşımın beğenme işlemi başladı...")
-            else:
-                print("[*] '" + url + "' adresindeki paylaşımın beğenmekten vazgeçme işlemi başladı...")
-            time.sleep(10)
-            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            if not self.hesapGizliMi():
-                try:
-                    btn_begen_class = self.driver.find_element_by_css_selector(
-                        "span.fr66n > button > span").get_attribute("class")
-                    if durum:
-                        if "glyphsSpriteHeart__outline__24__grey_9" in btn_begen_class:
-                            begen = self.driver.find_element_by_css_selector(
-                                "span.glyphsSpriteHeart__outline__24__grey_9")
-                            begen.click()
-                            print(self.uyariOlustur("[+] " + url + " paylaşımı beğenildi", 1))
-                            self.paylasimBegen(durum)
-                        else:
-                            print(self.uyariOlustur("[-] Bu gönderi daha önce beğenildi.", 2))
-                            self.paylasimBegen(durum)
-                    else:
-                        if "glyphsSpriteHeart__filled__24__red_5" in btn_begen_class:
-                            btn_begen = self.driver.find_element_by_css_selector(
-                                "span.glyphsSpriteHeart__filled__24__red_5")
-                            btn_begen.click()
-                            print(self.uyariOlustur("[+] " + url + " paylaşımı beğenilmekten vazgeçildi.", 1))
-                            self.paylasimBegen(durum)
-                        else:
-                            print(self.uyariOlustur("[-] Bu gönderi zaten beğenilmedi.", 2))
-                            self.paylasimBegen(durum)
-                except Exception as e:
-                    if durum:
-                        print(self.uyariOlustur("[-] Paylaşım beğenme işlemi sırasında hata:" + str(e), 2))
-                        self.paylasimBegen(durum)
-                    else:
-                        print(self.uyariOlustur("[-] Paylaşım beğenmekten vazgeçme işlemi sırasında hata:" + str(e), 2))
-                        self.paylasimBegen(durum)
+                print(self.uyariOlustur(
+                    "[-] {kullanici} kullanıcısının gönderilerini beğenme işlemi sırasında bir hata oluştu:{hata}".format(
+                        kullanici=kullanici, hata=error), 2))
             else:
                 print(self.uyariOlustur(
-                    "[-] " + url + " paylaşımının sahibinin profili gizli hesap olduğundan beğeni işlemi yapılamıyor!",
-                    2))
-                self.paylasimBegen(durum)
-        else:
-            self.paylasimBegen(durum)
+                    "[-] {kullanici} kullanıcısının gönderilerini beğenmekten vazgeçme işlemi sırasında bir hata oluştu:{hata}".format(
+                        kullanici=kullanici, hata=error), 2))
+            self.profilSec(secim)
+
+    def gonderiBegen(self,durum=True):
+        try:
+            if durum:
+                url = input("Beğenmek istediğiniz paylaşım url >> ").strip()
+            else:
+                url = input("Beğenmekten vazgeçmek istediğiniz paylaşım url >> ").strip()
+
+            if not url:
+                self.gonderiBegen(durum)
+            elif url == "menu":
+                self.menu()
+            if self.urlKontrol(url):
+                print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
+                self.driver.get(url)
+                time.sleep(5)
+                if not self.hesapGizliMi():
+                    if durum:
+                        print("[*] {url} adresindeki paylaşımın beğenme işlemi başladı...".format(url=url))
+                    else:
+                        print("[*] {url} adresindeki paylaşımın beğenmekten vazgeçme işlemi başladı...".format(url=url))
+                    btn_begen = self.driver.find_element_by_xpath("/html/body/div[1]/section/main/div/div[1]/article/div[3]/section[1]/span[1]/button")
+                    begeniDurum = self.begenButonuDurumGetir(btn_begen)
+                    if durum:
+                        if begeniDurum == "like":
+                            btn_begen.click()
+                            print(self.uyariOlustur("[+] {url} gönderisi beğenildi.".format(url=self.driver.current_url), 1))
+                        else:
+                            print(self.uyariOlustur("[*] {url} gönderisi daha önce beğenildi.".format(url=self.driver.current_url), 1))
+                    else:
+                        if begeniDurum == "unlike":
+                            btn_begen.click()
+                            print(self.uyariOlustur("[+] {url} gönderisi beğenilmekten vazgeçildi.".format(url=self.driver.current_url),1))
+                        else:
+                            print(self.uyariOlustur("[*] {url} gönderisi zaten beğebilmedi.".format(url=self.driver.current_url),1))
+                    if durum:
+                        print("[*] {url} adresindeki paylaşımın beğenme işlemi tamamlandı.".format(url=url))
+                    else:
+                        print("[*] {url} adresindeki paylaşımın beğenmekten vazgeçme işlemi tamamlandı.".format(url=url))
+                    self.gonderiBegen(durum)
+                else:
+                    if durum:
+                        print(self.uyariOlustur( "[-] {url} paylaşımının sahibinin profili gizli hesap olduğundan beğeni işlemi yapılamıyor!".format(url=url),2))
+                    else:
+                        print(self.uyariOlustur("[-] {url} paylaşımının sahibinin profili gizli hesap olduğundan beğenmektez vazgeçme işlemi yapılamıyor!".format(url=url), 2))
+                    self.gonderiBegen(durum)
+            else:
+                self.gonderiBegen(durum)
+        except Exception as error:
+            if durum:
+                print(self.uyariOlustur("[-] gönderi beğenme işlemi sırasında bir hata oluştu:{hata}".format( hata=error), 2))
+            else:
+                print(self.uyariOlustur("[-] gönderi beğenmekten vazgeçme işlemi sırasında bir hata oluştu:{hata}".format(hata=error), 2))
+            self.gonderiBegen(durum)
 
     def fotografIndir(self):
         url = input("İndirmek istediğiniz fotoğraf url >> ").strip()
