@@ -118,6 +118,17 @@ class Instagram():
         else:
             self.islemSec()
 
+    def mesajSil(self,mesaj):
+        mesaj.click()
+        time.sleep(self.beklemeSuresiBelirle(1, 2))
+        self.driver.find_element_by_xpath(
+            "/html/body/div[1]/section/div/div[2]/div/div/div[2]/div[1]/div/div/div[3]/button").click()
+        time.sleep(1)
+        self.driver.find_element_by_xpath(
+            "/html/body/div[1]/section/div/div[2]/div/div/div[2]/div/div[2]/div[3]/div[1]/button").click()
+        time.sleep(2)
+        self.driver.find_element_by_xpath("/html/body/div[4]/div/div/div/div[2]/button[1]").click()
+
     def topluMesajSilme(self):
         print("[*] Toplu mesaj silme işlemi başladı.")
         try:
@@ -125,7 +136,7 @@ class Instagram():
             time.sleep(5)
             devamEtsinMi = True
             silinenMesajlar = set()
-            islemIndex = 0
+            self.indexSifirla()
             while devamEtsinMi:
                 mesajListesi = self.driver.find_elements_by_css_selector("div.N9abW  a.rOtsg")
                 if len(mesajListesi) == 0:
@@ -135,31 +146,20 @@ class Instagram():
                     if mesaj not in silinenMesajlar:
                         silinenMesajlar.add(mesaj)
                         kullaniciAdi = mesaj.find_element_by_css_selector("._7UhW9.xLCgt.MMzan.KV-D4.fDxYl").text
-                        islemIndex = islemIndex + 1
-                        print(self.uyariOlustur(
-                            "[*] {index} -) {kullaniciAdi} ile yapılan mesajlaşma silinecek.".format(index=islemIndex,
-                                                                                                     kullaniciAdi=kullaniciAdi),
-                            1))
-                        mesaj.click()
-                        time.sleep(2)
-                        self.driver.find_element_by_xpath(
-                            "/html/body/div[1]/section/div/div[2]/div/div/div[2]/div[1]/div/div/div[3]/button").click()
-                        time.sleep(1)
-                        self.driver.find_element_by_xpath(
-                            "/html/body/div[1]/section/div/div[2]/div/div/div[2]/div/div[2]/div[3]/div[1]/button").click()
-                        time.sleep(2)
-                        self.driver.find_element_by_xpath("/html/body/div[4]/div/div/div/div[2]/button[1]").click()
-                        print(self.uyariOlustur(
-                            "[*] {index} -) {kullaniciAdi} ile yapılan mesajlaşma başarıyla silindi.".format(
-                                index=islemIndex, kullaniciAdi=kullaniciAdi), 1))
-                        time.sleep(10)
+                        print(self.uyariOlustur("[*] {index} -) {kullaniciAdi} ile yapılan mesajlaşma silinecek.".format(index=self.index,kullaniciAdi=kullaniciAdi),1))
+                        self.mesajSil(mesaj)
+                        print(self.uyariOlustur("[*] {index} -) {kullaniciAdi} ile yapılan mesajlaşma başarıyla silindi.".format(index=self.index, kullaniciAdi=kullaniciAdi), 1))
+                        self.indexArtir()
+                        time.sleep(self.beklemeSuresiBelirle(5,15))
                     break
+
+            print("[*] Toplu mesaj silme işlemi tamamlandı.")
         except Exception as error:
             print(self.uyariOlustur(
                 '[-] Toplu mesaj  aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}'.format(hata=str(error)),
                 2))
 
-        print("[*] Toplu mesaj silme işlemi tamamlandı.")
+
 
     def degerVarMi(self, yorum):
         if len(yorum) > 0:
@@ -273,7 +273,7 @@ class Instagram():
                         yorum = self.yorumUzunlukBelirle(yorum)
                         self.yorumYap(yorum)
                         print("[*] {index}.yorum yapıldı.".format(index=i + 1))
-                        time.sleep(15)
+                        time.sleep(self.beklemeSuresiBelirle(5,20))
                 except Exception as error:
                     print(error)
             elif secilenIslem == "2":
@@ -289,7 +289,7 @@ class Instagram():
                         print("[*] {index}.yorum yapıldı.".format(index=index + 1))
                         if (index + 1) == yorumSayisi:
                             break
-                        time.sleep(15)
+                        time.sleep(self.beklemeSuresiBelirle(5,20))
                 else:
                     self.gonderiTopluYorumYapma(url=url, yorumSayisi=yorumSayisi, secilenIslem=secilenIslem)
             else:
@@ -405,7 +405,6 @@ class Instagram():
             etiket = self.etiketGetir()
 
             limit = self.etiketeGoreIslemLimitiGetir(2)
-            print(etiket)
 
             kaynakGonderiSayisi = int(
                 self.metindenKarakterSil(self.driver.find_element_by_css_selector("span.g47SY").text, ','))
@@ -414,7 +413,7 @@ class Instagram():
                 "/html/body/div[1]/section/main/article/div[1]/div/div/div[1]/div[1]")
             ilkGonderi.click()
             time.sleep(1)
-            islemIndex = 0
+            self.indexSifirla()
 
             print("[*] {etiket}  etiketine göre kullanıcı takip etme işlemi başladı.".format(etiket=etiket))
             while True:
@@ -425,10 +424,10 @@ class Instagram():
                 if btn_takip.text != "Following":
                     btn_takip.click()
                     print(self.uyariOlustur(
-                        "[+] {index}-) {kullanici} takip edilmeye başlandı.".format(index=islemIndex + 1,
+                        "[+] {index}-) {kullanici} takip edilmeye başlandı.".format(index=self.index,
                                                                                     kullanici=kullaniciAdi), 1))
-                    islemIndex = islemIndex + 1
-                    if islemIndex == limit:
+                    self.indexArtir()
+                    if self.index-1 >= limit:
                         break
                     time.sleep(0.50)
                     self.gonderiIlerlet()
@@ -462,7 +461,7 @@ class Instagram():
                 "/html/body/div[1]/section/main/article/div[1]/div/div/div[1]/div[1]")
             ilkGonderi.click()
             time.sleep(1)
-            islemIndex = 0
+            self.indexSifirla()
 
             print("[*] {etiket}  etiketine göre beğeni yapma işlemi başladı.".format(etiket=etiket))
             while True:
@@ -470,11 +469,11 @@ class Instagram():
                 begeniDurum = self.begenButonuDurumGetir(btn_begen)
                 if begeniDurum != "unlike":
                     btn_begen.click()
-                    print(self.uyariOlustur("[+] {index}-) {url} gönderisi beğenildi.".format(index=islemIndex + 1,
+                    print(self.uyariOlustur("[+] {index}-) {url} gönderisi beğenildi.".format(index=self.index,
                                                                                               url=self.driver.current_url),
                                             1))
-                    islemIndex = islemIndex + 1
-                    if islemIndex == limit:
+                    self.indexArtir()
+                    if self.index-1 >= limit:
                         break
                     time.sleep(0.50)
                     self.gonderiIlerlet()
@@ -676,7 +675,7 @@ class Instagram():
                             "[*] {index} -) {kullaniciAdi} adlı kullanıcı takip edilmekten vazgeçildi.".format(
                                 index=self.index, kullaniciAdi=takipEdilenKullanıcıAdi), 1))
                         self.indexArtir()
-                        if (self.index - 1) == takipEdilenSayisi:
+                        if (self.index - 1) >= takipEdilenSayisi:
                             devamEtsinMi = False
                             break
                         time.sleep(self.beklemeSuresiGetir(5, 15))
@@ -740,7 +739,7 @@ class Instagram():
                                 "[*] {index} -) {kullaniciAdi} adlı kullanıcı takip edilmekten vazgeçildi.".format(
                                     index=self.index, kullaniciAdi=takipEdilenKullanıcıAdi), 1))
                             self.indexArtir()
-                            if self.index - 1 == takipEdilenSayisi:
+                            if self.index - 1 >= takipEdilenSayisi:
                                 devamEtsinMi = False
                                 break
                             time.sleep(self.beklemeSuresiBelirle(5, 15))
@@ -805,7 +804,7 @@ class Instagram():
                             1))
                         takipciler.add(takipciKullaniciAdi)
                         self.indexArtir()
-                        if (self.index - 1) == takipciSayisi:
+                        if (self.index - 1) >= takipciSayisi:
                             devamEtsinMi = False
                             break
                 if devamEtsinMi:
@@ -892,7 +891,6 @@ class Instagram():
                     if not self.gonderiTipiVideoMu():
                         print("[*] '" + url + "'  paylaşımını beğenen kullanıcıları takip etme işlemi başladı...")
                         takipIstekSayisi = 0
-                        islemIndex = 0
                         devamEtsinMi = True
                         if hedefBegenenSayisi is None:
                             begenenSayisi = self.driver.find_element_by_css_selector(
@@ -927,13 +925,13 @@ class Instagram():
                                         break
                                     time.sleep(self.beklemeSuresiGetir(5, 15))
 
-                                islemIndex = islemIndex + 1
+                                self.indexArtir()
                                 if hedefBegenenSayisi:
-                                    if islemIndex >= kaynakBegenenSayisi:
+                                    if self.index-1 >= kaynakBegenenSayisi:
                                         devamEtsinMi = False
                                         break
                                 else:
-                                    if islemIndex >= begenenSayisi:
+                                    if self.index-1 >= begenenSayisi:
                                         devamEtsinMi = False
                                         break
                             if devamEtsinMi:
@@ -1184,7 +1182,7 @@ class Instagram():
             elif secim == 10:
                 self.kullaniciEngelle(kullanici, secim)
             elif secim == 11:
-                self.kullaniciEngelKaldir(kullanici, secim)
+                self.kullaniciEngelle(kullanici, secim,False)
             elif secim == 15:
                 self.kullaniciTakipcileriniTakipEt(kullanici, secim)
         else:
@@ -1244,7 +1242,7 @@ class Instagram():
             if not self.hesapGizliMi():
                 takipIstekSayisi = 0;
                 devamEtsinMi = True
-                islemIndex = 0
+                self.indexSifirla()
 
                 if hedefTakipciSayisi is None:
                     takipciSayisi = self.driver.find_element_by_css_selector("a.-nal3 > span.g47SY").get_attribute(
@@ -1281,12 +1279,12 @@ class Instagram():
                         except Exception:
                             pass
 
-                        islemIndex = islemIndex + 1
+                        self.indexArtir()
                         if hedefTakipciSayisi:
-                            if islemIndex >= kaynakTakipciSayisi:
+                            if self.index-1 >= kaynakTakipciSayisi:
                                 devamEtsinMi = False
                         else:
-                            if islemIndex >= takipciSayisi:
+                            if self.index-1 >= takipciSayisi:
                                 devamEtsinMi = False
 
                     if devamEtsinMi:
@@ -1378,70 +1376,65 @@ class Instagram():
                 "[-] " + kullaniciAdi + " kullanıcısını takip etmekten vazgeçme işlemi sırasında hata:" + str(e), 2))
             self.profilSec(secim)
 
-    def kullaniciEngelle(self, kullaniciAdi, secim):
-        print("[*] '" + kullaniciAdi + "' kullanıcısı engelleniyor...")
+    def kullaniciEngelDurumDegistir(self):
+        self.driver.find_element_by_css_selector("button.wpO6b").click()
+        time.sleep(0.50)
+        self.driver.find_elements_by_css_selector("div.mt3GC > button.aOOlW")[0].click()
+        time.sleep(0.50)
+        self.driver.find_elements_by_css_selector("div.mt3GC > button.aOOlW")[0].click()
+
+    def kullaniciEngelle(self, kullanici, secim,durum=True):
         try:
-            self.driver.get(self.BASE_URL + kullaniciAdi)
+            if durum:
+                print("[*]  {kullanici} kullanıcısını engelleme işlemi başladı.".format(kullanici=kullanici))
+            else:
+                print("[*]  {kullanici} kullanıcısının engelini kaldırma işlemi başladı.".format(kullanici=kullanici))
+
+            self.driver.get(self.BASE_URL + kullanici)
             time.sleep(3)
 
             if not self.sayfaMevcutMu():
-                print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısına ulaşılamadı", 2))
+                print(self.uyariOlustur("[-] {kullanici} kullanıcısına ulaşılamadı".format(kullanici=kullanici), 2))
                 self.profilSec(secim)
 
             if self.hesapGizliMi():
-                btn = self.driver.find_element_by_css_selector('button.BY3EC')
+                btnText = str(self.driver.find_element_by_css_selector('button.BY3EC').text).lower()
+                if durum:
+                    if btnText!="unblock":
+                        self.kullaniciEngelDurumDegistir()
+                    else:
+                        print(self.uyariOlustur("[-] {kullanici} kullanıcısı zaten engellenmiş durumda".format(kullanici=kullanici), 2))
+                else:
+                    if btnText=="unblock":
+                        self.kullaniciEngelDurumDegistir()
+                    else:
+                        print(self.uyariOlustur("[-] {kullanici} kullanıcısı zaten engellenmemiş durumda.".format(kullanici=kullanici), 2))
             else:
-                btn = self.driver.find_element_by_css_selector('button._5f5mN')
+                btnText =str(self.driver.find_element_by_css_selector('span.vBF20 > button._5f5mN').text).lower()
+                if durum:
+                    if btnText != "unblock":
+                        self.kullaniciEngelDurumDegistir()
+                    else:
+                        print(self.uyariOlustur(
+                            "[-] {kullanici} kullanıcısı zaten engellenmiş durumda.".format(kullanici=kullanici), 2))
+                else:
+                    if btnText == "unblock":
+                        self.kullaniciEngelDurumDegistir()
+                    else:
+                        print(self.uyariOlustur("[-] {kullanici} kullanıcısı zaten engellenmemiş durumda.".format(kullanici=kullanici), 2))
 
-            if btn.text != "Unblock":
-                self.driver.find_element_by_css_selector(
-                    "span.glyphsSpriteMore_horizontal__outline__24__grey_9").click()
-                time.sleep(2)
-                self.driver.find_elements_by_css_selector("div.mt3GC > button")[1].click()
-                time.sleep(2)
-                self.driver.find_elements_by_css_selector("div.mt3GC > button")[0].click()
-                print(self.uyariOlustur("[+] '" + kullaniciAdi + "' kullanıcısı engellendi", 1))
-                self.profilSec(secim)
+            if durum:
+                print("[*]  {kullanici} kullanıcısını engelleme işlemi tamamlandı.".format(kullanici=kullanici))
             else:
-                print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısı zaten engellenmiş durumda", 2))
-                self.profilSec(secim)
-
-        except Exception as e:
-            print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısını engelleme işlemi sırasında hata:" + str(e),
-                                    2))
+                print("[*]  {kullanici} kullanıcısının engelini kaldırma işlemi tamamlandı.".format(kullanici=kullanici))
+            self.profilSec(secim)
+        except Exception as error:
+            if durum:
+                print(self.uyariOlustur("[-] {kullanici} kullanıcısını engelleme işlemi sırasında hata:{hata}".format(kullanici=kullanici,hata=str(error)),2))
+            else:
+                print(self.uyariOlustur("[-] {kullanici} kullanıcısının engelini kaldırma işlemi sırasında hata:{hata}".format(kullanici=kullanici,hata=str(error)), 2))
             self.profilSec(secim)
 
-    def kullaniciEngelKaldir(self, kullaniciAdi, secim):
-        print("[*] '" + kullaniciAdi + "' kullanıcısının engeli kaldırılıyor...")
-        try:
-            self.driver.get(self.BASE_URL + kullaniciAdi)
-            time.sleep(3)
-
-            if not self.sayfaMevcutMu():
-                print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısına ulaşılamadı", 2))
-                self.profilSec(secim)
-
-            if self.hesapGizliMi():
-                btn = self.driver.find_element_by_css_selector('button.BY3EC')
-            else:
-                btn = self.driver.find_element_by_css_selector('button._5f5mN')
-
-            if btn.text == "Unblock":
-                self.driver.find_element_by_css_selector(
-                    "span.glyphsSpriteMore_horizontal__outline__24__grey_9").click()
-                time.sleep(2)
-                self.driver.find_elements_by_css_selector("div.mt3GC > button")[1].click()
-                time.sleep(2)
-                self.driver.find_elements_by_css_selector("div.mt3GC > button")[0].click()
-                print(self.uyariOlustur("[+] '" + kullaniciAdi + "' kullanıcısının engeli kaldırıldı.", 1))
-                self.profilSec(secim)
-            else:
-                print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısı zaten engellenmemiş durumda", 2))
-                self.profilSec(secim)
-        except Exception as e:
-            print(self.uyariOlustur(
-                "[-] " + kullaniciAdi + " kullanıcısının engelini kaldırma işlemi sırasında hata:" + str(e), 2))
-            self.profilSec(secim)
 
     def gonderiTipiVideoMu(self, element=None):
         try:
