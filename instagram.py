@@ -49,19 +49,31 @@ class Instagram():
         print("")
         print(self.uyariOlustur("       <<< SEÇENEKLER >>>      ", 1))
         print("")
-        print(self.uyariOlustur(" 1 -) Tüm paylaşımları indir", 3))
-        print(self.uyariOlustur(" 2 -) Tüm paylaşımları beğen", 3))
-        print(self.uyariOlustur(" 3 -) Tüm paylaşımları beğenmekten vazgeç", 3))
-        print(self.uyariOlustur(" 4 -) Fotoğraf indir(tek fotoğraf)", 3))
-        print(self.uyariOlustur(" 5 -) Video indir(tek video)", 3))
-        print(self.uyariOlustur(" 6 -) Paylaşım beğen (tek paylaşım)", 3))
-        print(self.uyariOlustur(" 7 -) Paylaşım beğenmekten vazgeç(tek paylaşım)", 3))
-        print(self.uyariOlustur(" 8 -) Kullanıcı takip et", 3))
-        print(self.uyariOlustur(" 9 -) Kullanıcı takip etmekten vazgeç", 3))
-        print(self.uyariOlustur(" 10-) Kullanıcı engelle", 3))
-        print(self.uyariOlustur(" 11-) Kullanıcı engel kaldır", 3))
-        print(self.uyariOlustur(" 12-) İnstagram çıkış yap", 3))
-        print(self.uyariOlustur(" 13-) Uygulama'dan çıkış yap", 3))
+        print(self.uyariOlustur(" 1 -)  Tüm Gönderileri İndir", 3))
+        print(self.uyariOlustur(" 2 -)  Tüm Gönderileri Beğen", 3))
+        print(self.uyariOlustur(" 3 -)  Tüm Gönderileri Beğenmekten Vazgeç", 3))
+        print(self.uyariOlustur(" 4 -)  Toplu Takipten Çıkma", 3))
+        print(self.uyariOlustur(" 5 -)  Bir Gönderiye Toplu Yorum Yapma", 3))
+        print(self.uyariOlustur(" 6 -)  Takip Etmeyenleri Takipten Çıkma", 3))
+        print(self.uyariOlustur(" 7 -)  Toplu Mesaj Silme", 3))
+        print(self.uyariOlustur(" 8 -)  Öne Çıkan Hikaye İndirme", 3))
+        print(self.uyariOlustur(" 9 -)  Hikaye İndirme", 3))
+        print(self.uyariOlustur(" 10 -) Tek Gönderi İndirme", 3))
+        print(self.uyariOlustur(" 11 -) IG TV Video İndirme", 3))
+        print(self.uyariOlustur(" 12 -) Bir Kullanıcının Takipçilerini Takip Etme", 3))
+        print(self.uyariOlustur(" 13 -) Bir Dosyadaki Tüm Kullanıcıları Takip Etme", 3))
+        print(self.uyariOlustur(" 14 -) Bir Gönderiyi Beğenleri Takip Etme", 3))
+        print(self.uyariOlustur(" 15 -) Etikete Göre Gönderileri Beğenme", 3))
+        print(self.uyariOlustur(" 16 -) Etikete Göre Kullanıcıları Takip Etme", 3))
+        print(self.uyariOlustur(" 17 -) Tek Gönderi Beğenme", 3))
+        print(self.uyariOlustur(" 18 -) Tek Gönderi Beğenmekten Vazgeçme", 3))
+        print(self.uyariOlustur(" 19 -) Bir Gönderiye Yorum Yapma", 3))
+        print(self.uyariOlustur(" 20 -) Kullanıcı Takip Etme", 3))
+        print(self.uyariOlustur(" 21 -) Kullanıcı Takip Etmekten Vazgeçme", 3))
+        print(self.uyariOlustur(" 22 -) Kullanıcı Engelleme", 3))
+        print(self.uyariOlustur(" 23 -) Kullanıcı Engeli Kaldırma", 3))
+        print(self.uyariOlustur(" 24 -) İnstagram Çıkış Yapma", 3))
+        print(self.uyariOlustur(" 25 -) Uygulama'dan Çıkış Yapma", 3))
         print("")
         self.islemSec()
 
@@ -71,52 +83,132 @@ class Instagram():
             try:
                 secim = int(secim)
                 if 0 < secim < 26:
-                    self.secilenIslem(secim)
-                    if secim == 1 or secim == 2 or secim == 3 or secim == 8 or secim == 9 or secim == 10 or secim == 11 or secim == 15:
+                    self.secilenIslemiGoster(secim)
+                    if secim in [1,2,3,9,12,20,21,22,23]:
                         self.profilSec(secim)
-                    elif secim == 4:
-                        self.gonderiIndir()
-                    elif secim == 5:
-                        self.videoIndir()
-                    elif secim == 6:
-                        self.gonderiBegen()
-                    elif secim == 7:
-                        self.gonderiBegen(False)
-                    elif secim == 12:
-                        self.cikisYap()
-                    elif secim == 13:
-                        self.quit()
-                    elif secim == 14:
-                        self.kullaniciListesiSec(secim)
-                    elif secim == 16:
-                        self.gonderiBegenenleriTakipEt()
-                    elif secim == 17:
-                        self.takipEtmeyenleriTakiptenCik()
-                    elif secim == 18:
+                    elif secim==4:
                         self.topluTakiptenCik()
-                    elif secim == 19:
+                    elif secim==5:
+                        self.topluYorumYapma()
+                    elif secim==6:
+                        self.takipEtmeyenleriTakiptenCik()
+                    elif secim==7:
                         self.topluMesajSilme()
-                    elif secim == 20:
-                        self.hikayeIndir()
-                    elif secim == 21:
+                    elif secim==8:
                         self.oneCikanHikayeIndir()
-                    elif secim == 22:
-                        self.gonderiYorumYapma()
-                    elif secim == 23:
-                        self.gonderiTopluYorumYapma()
-                    elif secim == 24:
+                    elif secim in [10,11]:
+                        self.gonderiIndir()
+                    elif secim==13:
+                        self.kullaniciListesiTakipEt()
+                    elif secim==14:
+                        self.gonderiBegenenleriTakipEt()
+                    elif secim==15:
                         self.etiketeGoreBegenme()
-                    elif secim == 25:
+                    elif secim==16:
                         self.etiketeGoreTakipEtme()
+                    elif secim==17:
+                        self.gonderiBegen()
+                    elif secim==18:
+                        self.gonderiBegen(False)
+                    elif secim==19:
+                        self.gonderiYorumYapma()
+                    elif secim==24:
+                        self.cikisYap()
+                    elif secim==25:
+                        self.quit()
                 else:
                     print(self.uyariOlustur("[-] Lütfen geçerli bir seçim yapınız!", 2))
                     self.islemSec()
-            except Exception as e:
-                print(e)
-                print(self.uyariOlustur("[-] Yapılacak işlem,  başındaki sayıya göre seçilmeli.", 2))
+            except Exception:
+                print(self.uyariOlustur("[-] Yapılacak işlem , başındaki sayıya göre seçilmeli.", 2))
                 self.islemSec()
         else:
             self.islemSec()
+
+    def secilenIslemiGoster(self, secim):
+        print("")
+        secimler = {
+            1: "Seçilen İşlem >>> Tüm Gönderileri İndir",
+            2: "Seçilen İşlem >>> Tüm Gönderileri Beğen",
+            3: "Seçilen İşlem >>> Tüm Gönderileri Beğenmekten Vazgeç",
+            4: "Seçilen İşlem >>> Toplu Takipten Çıkma",
+            5: "Seçilen İşlem >>> Bir Gönderiye Toplu Yorum Yapma",
+            6: "Seçilen İşlem >>> Takip Etmeyenleri Takipten Çıkma",
+            7: "Seçilen İşlem >>> Toplu Mesaj Silme",
+            8: "Seçilen İşlem >>> Öne Çıkan Hikaye İndirme",
+            9: "Seçilen İşlem >>> Hikaye İndirme",
+            10: "Seçilen İşlem >>> Tek Gönderi İndirme",
+            11: "Seçilen İşlem >>> IG TV Video İndirme",
+            12: "Seçilen İşlem >>> Bir Kullanıcının Takipçilerini Takip Etme",
+            13: "Seçilen İşlem >>> Bir Dosyadaki Tüm Kullanıcıları Takip Etme",
+            14: "Seçilen İşlem >>> Bir Gönderiyi Beğenleri Takip Etme",
+            15: "Seçilen İşlem >>> Etikete Göre Gönderileri Beğenme",
+            16: "Seçilen İşlem >>> Etikete Göre Kullanıcıları Takip Etme",
+            17: "Seçilen İşlem >>> Tek Gönderi Beğenme",
+            18: "Seçilen İşlem >>> Tek Gönderi Beğenmekten Vazgeçme",
+            19: "Seçilen İşlem >>> Bir Gönderiye Yorum Yapma",
+            20: "Seçilen İşlem >>> Kullanıcı Takip Etme",
+            21: "Seçilen İşlem >>> Kullanıcı Takip Etmekten Vazgeçme",
+            22: "Seçilen İşlem >>> Kullanıcı Engelleme",
+            23: "Seçilen İşlem >>> Kullanıcı Engeli Kaldırma",
+            24: "Seçilen İşlem >>> İnstagram Çıkış Yapma",
+            25: "Seçilen İşlem >>> Uygulama'dan Çıkış Yapma",
+        }
+        print(self.uyariOlustur(secimler.get(secim, "Geçersiz seçim!"), 1))
+        if secim < 24:
+            print(self.uyariOlustur(" [*] Ana menüye dönmek için  'menu' komutunu giriniz", 3))
+        print("")
+
+    def anaMenuyeDonsunMu(self,deger):
+        if deger == "menu":
+            self.menu()
+
+    def profilSec(self, secim):
+        kullanici = input(" İşlem yapmak istediğiniz profilin kullanıcı adı >> ").strip()
+
+        if not kullanici:
+            self.profilSec(secim)
+
+        self.anaMenuyeDonsunMu(kullanici)
+
+        if self.kullaniciKontrol(kullanici):
+            print("[*] Tarayıcı '" + kullanici + "' profiline yönlendiriliyor...")
+            if secim == 1:
+                self.gonderileriIndir(kullanici, secim)
+            elif secim == 2:
+                self.gonderileriBegen(kullanici, secim)
+            elif secim == 3:
+                self.gonderileriBegen(kullanici, secim, False)
+            elif secim==9:
+                self.hikayeIndir(kullanici,secim)
+            elif secim==12:
+                self.kullaniciTakipcileriniTakipEt(kullanici,secim)
+            elif secim==20:
+                self.kullaniciTakipEt(kullanici, secim)
+            elif secim==21:
+                self.kullaniciTakipEt(kullanici, secim,False)
+            elif secim == 22:
+                self.kullaniciEngelle(kullanici, secim)
+            elif secim == 23:
+                self.kullaniciEngelle(kullanici, secim,False)
+        else:
+            print(self.uyariOlustur("[-] '" + kullanici + "' adında bir kullanıcı bulunamadı ", 2))
+            self.profilSec(secim)
+
+    def kullaniciProfilineYonlendir(self,kullanici):
+        self.driver.get(self.BASE_URL + kullanici)
+        time.sleep(5)
+
+    def tarayiciThreadOlustur(self):
+        t1 = threading.Thread(target=self.tarayiciBaslat)
+        t1.daemon = True
+        t1.start()
+
+    def tarayiciBaslat(self):
+        print(self.uyariOlustur("[*] Tarayıcı Başlatılıyor...", 1))
+        self.driver = webdriver.Firefox(firefox_profile=self.dilDegistir(),
+                                        executable_path="E:\\Python\\Uygulamalar\\Intagram-Bot\\Instagram-Bot\\geckodriver.exe")
+        self.driver.get(self.BASE_URL + 'accounts/login/')
 
     def mesajSil(self,mesaj):
         mesaj.click()
@@ -130,10 +222,9 @@ class Instagram():
         self.driver.find_element_by_xpath("/html/body/div[4]/div/div/div/div[2]/button[1]").click()
 
     def topluMesajSilme(self):
-        print("[*] Toplu mesaj silme işlemi başladı.")
         try:
-            self.driver.get(self.BASE_URL + 'direct/inbox/')
-            time.sleep(5)
+            print("[*] Toplu mesaj silme işlemi başladı.")
+            self.kullaniciProfilineYonlendir('direct/inbox/')
             devamEtsinMi = True
             silinenMesajlar = set()
             self.indexSifirla()
@@ -154,10 +245,12 @@ class Instagram():
                     break
 
             print("[*] Toplu mesaj silme işlemi tamamlandı.")
+            self.menu()
         except Exception as error:
             print(self.uyariOlustur(
                 '[-] Toplu mesaj  aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}'.format(hata=str(error)),
                 2))
+            self.menu()
 
 
 
@@ -216,13 +309,12 @@ class Instagram():
         else:
             return False
 
-    def gonderiTopluYorumYapma(self, url=None, yorumSayisi=None, secilenIslem=None):
+    def topluYorumYapma(self, url=None, yorumSayisi=None, secilenIslem=None):
         try:
-            if url is None and yorumSayisi is None and secilenIslem is None:
-                print(self.uyariOlustur("Seçilen İşlem >>> Bir gönderiye toplu yorum yapma", 1))
-
             if not url:
                 url = input("Yorum yapmak istediğiniz gönderi url'isini giriniz >> ").strip()
+
+                self.anaMenuyeDonsunMu(url)
 
                 if self.urlKontrol(url):
                     print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
@@ -231,19 +323,20 @@ class Instagram():
 
                     if not self.sayfaMevcutMu():
                         print(self.uyariOlustur("[-] {url} url'sine ulaşılamadı!".format(url=url), 2))
-                        self.gonderiTopluYorumYapma()
+                        self.topluYorumYapma()
 
                     if self.hesapGizliMi():
                         print(self.uyariOlustur(
                             "[-] {url} gönderisinin sahibinin hesabı gizli hesap olduğundan dolayı toplu yorum yapma işlemi gerçekleştirilemiyor".format(
                                 url=url), 2))
-                        self.gonderiTopluYorumYapma()
+                        self.topluYorumYapma()
                 else:
                     print(self.uyariOlustur("[-] Gönderi url'si girmediniz!!", 2))
-                    self.gonderiTopluYorumYapma()
+                    self.topluYorumYapma()
 
             if not yorumSayisi:
                 yorumSayisi = input("Yapmak istediğiniz yorum sayısını giriniz >> ").strip()
+                self.anaMenuyeDonsunMu(yorumSayisi)
                 if yorumSayisi.isnumeric() and int(yorumSayisi) > 0:
                     yorumSayisi = int(yorumSayisi)
                     if self.yorumLimitiAsildiMi(yorumSayisi):
@@ -252,7 +345,7 @@ class Instagram():
                             "[*] En fazla 50 yorum yapabilirsiniz.Yorum sayısı 50 olarak belirlenmiştir!", 2))
                 else:
                     print(self.uyariOlustur("[-] Yapmak istediğiniz yorum sayısını girmediniz!", 2))
-                    self.gonderiTopluYorumYapma(url=url, yorumSayisi=None, secilenIslem=None)
+                    self.topluYorumYapma(url=url, yorumSayisi=None, secilenIslem=None)
 
             if not secilenIslem:
                 print(self.uyariOlustur("       <<< SEÇENEKLER >>>      ", 1))
@@ -262,6 +355,7 @@ class Instagram():
                                       3))
                 print("")
                 secilenIslem = str(input("Uygulama ile oluşturan rastgele yorumlar seçilsin mi? >> ").strip())
+                self.anaMenuyeDonsunMu(secilenIslem)
 
             if secilenIslem == "1":
                 print(
@@ -275,7 +369,12 @@ class Instagram():
                         print("[*] {index}.yorum yapıldı.".format(index=i + 1))
                         time.sleep(self.beklemeSuresiBelirle(5,20))
                 except Exception as error:
-                    print(error)
+                    print(self.uyariOlustur(
+                        "[-] {url} gönderisine toplu yorum yapma işlemi sırasında bir hata oluştu: {hata}".format(
+                            url=url,
+                            hata=str(
+                                error)),
+                        2))
             elif secilenIslem == "2":
                 print(self.uyariOlustur(
                     "Seçilen İşlem >>> Txt dosyasından olarak oluşturduğunuz yorumlar ile işlem yapma", 1))
@@ -291,33 +390,34 @@ class Instagram():
                             break
                         time.sleep(self.beklemeSuresiBelirle(5,20))
                 else:
-                    self.gonderiTopluYorumYapma(url=url, yorumSayisi=yorumSayisi, secilenIslem=secilenIslem)
+                    self.topluYorumYapma(url=url, yorumSayisi=yorumSayisi, secilenIslem=secilenIslem)
             else:
                 print(
                     self.uyariOlustur("[-] Bir seçim yapmadınız!.Lütfen yapmak istediğiniz işlemin numarasını giriniz!",
                                       2))
                 print("")
-                self.gonderiTopluYorumYapma(url=url, yorumSayisi=yorumSayisi, secilenIslem=None)
+                self.topluYorumYapma(url=url, yorumSayisi=yorumSayisi, secilenIslem=None)
 
+            print("[*] {url}  gönderisine toplu yorum yapma işlemi tamamlandı.".format(url=url))
+            self.topluYorumYapma()
         except Exception as error:
             print(self.uyariOlustur(
                 "[-] {url} gönderisine toplu yorum yapma işlemi sırasında bir hata oluştu: {hata}".format(url=url,
                                                                                                           hata=str(
                                                                                                               error)),
                 2))
-            self.gonderiTopluYorumYapma()
+            self.topluYorumYapma()
 
-        print("[*] {url}  gönderisine toplu yorum yapma işlemi tamamlandı.".format(url=url))
+
 
     def gonderiYorumYapma(self, url=None, yorum=None):
         try:
-            if url is None and yorum is None:
-                print(self.uyariOlustur("Seçilen İşlem >>> Bir gönderiye yorum yapma", 1))
-
             if not url:
                 url = input("Yorum yapmak istediğiniz gönderi url'isini giriniz >> ").strip()
+                self.anaMenuyeDonsunMu(url)
             if not yorum:
                 yorum = input("Yorumunuzu giriniz >> ").strip()
+                self.anaMenuyeDonsunMu(yorum)
 
             if self.urlKontrol(url):
                 self.driver.get(url)
@@ -334,7 +434,6 @@ class Instagram():
                         print("[*] {url}  gönderisine yorum yapma işlemi başladı.".format(url=url))
                         self.yorumYap(yorum)
                         print("[*] {url}  gönderisine yorum yapma işlemi tamamlandı.".format(url=url))
-                        self.gonderiYorumYapma()
                     else:
                         print(
                             self.uyariOlustur("[-] Yorum girişi yapmadınız!", 2))
@@ -343,10 +442,10 @@ class Instagram():
                     print(self.uyariOlustur(
                         "[-] {url} gönderisinin sahibinin hesabı gizli hesap olduğundan dolayı yorum yapma işlemi gerçekleştirilemiyor".format(
                             url=url), 2))
-                    self.gonderiYorumYapma()
             else:
                 print(self.uyariOlustur("[-] {url} url'sine ulaşılamadı!".format(url=url), 2))
                 self.gonderiYorumYapma(url=None, yorum=yorum)
+            self.gonderiYorumYapma()
         except Exception as error:
             print(self.uyariOlustur(
                 "[-] {url} gönderisine yorum yapma işlemi sırasında bir hata oluştu: {hata}".format(url=url,
@@ -363,6 +462,7 @@ class Instagram():
     def etiketGetir(self):
         try:
             etiket = input("Bir etiket adı giriniz >> ").strip()
+            self.anaMenuyeDonsunMu(etiket)
 
             if self.degerVarMi(etiket):
                 url = "{BASE_URL}explore/tags/{etiket}".format(BASE_URL=self.BASE_URL, etiket=str(etiket))
@@ -385,10 +485,10 @@ class Instagram():
         try:
             if islemNo == 1:
                 limit = input("Beğenmek istediğiniz gönderi sayısını giriniz >> ").strip()
-
             elif islemNo == 2:
                 limit = input("Takip etmek istediğiniz kullanıcı sayısını giriniz >> ").strip()
 
+            self.anaMenuyeDonsunMu(limit)
             if limit.isnumeric() and int(limit) > 0:
                 return int(limit)
             else:
@@ -398,10 +498,14 @@ class Instagram():
             print(self.uyariOlustur(
                 "[-] Belirleyen etikete göre işlem yapma limiti belirleme işlemi yapma sırasında bir hata oluştu: {hata}".format(
                     hata=str(error)), 2))
+            if islemNo == 1:
+                self.etiketeGoreBegenme()
+            elif islemNo == 2:
+                self.etiketeGoreTakipEtme()
+
 
     def etiketeGoreTakipEtme(self):
         try:
-            print(self.uyariOlustur("Seçilen İşlem >>> Etiketlere Göre Takip Etme", 1))
             etiket = self.etiketGetir()
 
             limit = self.etiketeGoreIslemLimitiGetir(2)
@@ -431,12 +535,13 @@ class Instagram():
                         break
                     time.sleep(0.50)
                     self.gonderiIlerlet()
-                    time.sleep(10)
+                    time.sleep(self.beklemeSuresiBelirle(5,20))
                 else:
                     print(self.uyariOlustur("[*] {kullanici} zaten takip ediliyor.".format(kullanici=kullaniciAdi), 1))
                     self.gonderiIlerlet()
                     time.sleep(5)
             print("[*] {etiket}  etiketine göre kullanıcı takip etme işlemi tamamlandı.".format(etiket=etiket))
+            self.etiketeGoreTakipEtme()
         except Exception as error:
             print(self.uyariOlustur(
                 "[-] Etikete göre beğeni işlemi yapma sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
@@ -451,7 +556,6 @@ class Instagram():
 
     def etiketeGoreBegenme(self):
         try:
-            print(self.uyariOlustur("Seçilen İşlem >>> Etiketlere Göre Beğeni Yapma", 1))
             etiket = self.etiketGetir()
             limit = self.etiketeGoreIslemLimitiGetir(1)
             kaynakGonderiSayisi = int(
@@ -477,13 +581,14 @@ class Instagram():
                         break
                     time.sleep(0.50)
                     self.gonderiIlerlet()
-                    time.sleep(10)
+                    time.sleep(self.beklemeSuresiBelirle(5,15))
                 else:
                     print(self.uyariOlustur(
                         "[*] {url} gönderisi daha önce beğenildi.".format(url=self.driver.current_url), 1))
                     self.gonderiIlerlet()
                     time.sleep(5)
             print("[*] {etiket}  etiketine göre beğeni yapma işlemi tamamlandı.".format(etiket=etiket))
+            self.etiketeGoreBegenme()
         except Exception as error:
             print(self.uyariOlustur(
                 "[-] Etikete göre beğeni işlemi yapma sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
@@ -547,18 +652,9 @@ class Instagram():
         else:
             return False
 
-    def hikayeIndir(self):
+    def hikayeIndir(self,kullanici,secim):
         try:
-            print(self.uyariOlustur("Seçilen İşlem >>> Bir kullanıcının hikayelerini indirme", 1))
-
-            kullanici = input("Hikayelerini indirmek istediğiniz profilin kullanıcı adınız giriniz >> ").strip()
-            self.driver.get(self.BASE_URL + kullanici)
-            time.sleep(5)
-
-            if not self.sayfaMevcutMu():
-                print(self.uyariOlustur("[-] " + kullanici + " kullanıcısına ulaşılamadı", 2))
-                self.hikayeIndir()
-
+            self.kullaniciProfilineYonlendir(kullanici)
             if not self.hesapGizliMi():
                 if self.hikayeVarMi():
                     self.driver.find_element_by_css_selector("div.RR-M-").click()
@@ -577,18 +673,13 @@ class Instagram():
                 print(self.uyariOlustur(
                     "[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan takipçileri takip edilemiyor!".format(
                         kullanici=kullanici), 2))
-
+            self.profilSec(secim)
         except Exception as error:
             print(self.uyariOlustur(
                 "[-] Hikayeleri indirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
-            self.hikayeIndir()
+            self.profilSec(secim)
 
-    def elemanMevcutMu(self, secici, seciciTuru):
-        try:
-            self.driver.find_element_by_xpath(secici)
-            return True
-        except:
-            return False
+
 
     def indexSifirla(self):
         self.index = 1
@@ -598,8 +689,8 @@ class Instagram():
 
     def oneCikanHikayeIndir(self):
         try:
-            print(self.uyariOlustur("Seçilen İşlem >>> Bir kullanıcının öne çıkan hikayelerini indirme", 1))
             url = input("Öne çıkan hikaye url giriniz >> ").strip()
+            self.anaMenuyeDonsunMu(url)
             if self.urlKontrol(url):
                 self.driver.get(url)
                 time.sleep(5)
@@ -621,6 +712,7 @@ class Instagram():
                 print("[*] {url}  öne çıkan hikayesini indirme işlemi tamamlandı.".format(url=url))
             else:
                 print(self.uyariOlustur("[-] İndirmek istediğiniz öne çıkan hikayenin url'sine ulaşılamadı!", 2))
+            self.oneCikanHikayeIndir()
         except Exception as error:
             print(self.uyariOlustur(
                 "[-] Öne çıkan hikayeyi indirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
@@ -642,8 +734,7 @@ class Instagram():
     def topluTakiptenCik(self):
         try:
             print("[*] Toplu takipten çıkma işlemi başladı.")
-            self.driver.get(self.BASE_URL + self.aktifKullanici)
-            time.sleep(5)
+            self.kullaniciProfilineYonlendir(self.aktifKullanici)
             takipEdilenSayisi = self.driver.find_element_by_xpath(
                 "/html/body/div[1]/section/main/div/header/section/ul/li[3]/a/span").text
             takipEdilenSayisi = int(self.metindenKarakterSil(takipEdilenSayisi, ','))
@@ -651,7 +742,7 @@ class Instagram():
             btn_takipEdilenler = self.driver.find_element_by_xpath(
                 "/html/body/div[1]/section/main/div/header/section/ul/li[3]/a")
             btn_takipEdilenler.click()
-            time.sleep(5)
+            time.sleep(3)
             self.indexSifirla()
             devamEtsinMi = True
             while devamEtsinMi:
@@ -688,9 +779,11 @@ class Instagram():
                                 hata=str(error)), 2))
                         pass
                     time.sleep(3)
+            self.menu()
         except Exception as error:
             print(self.uyariOlustur(
                 "[-] Toplu takipten çıkma işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
+            self.menu()
 
     def takipEdilenSayisiGetir(self):
         takipEdilenSayisi = self.driver.find_element_by_xpath(
@@ -701,7 +794,7 @@ class Instagram():
         takipEdilenKullanıcıAdi = element.find_element_by_css_selector("a.FPmhX").get_attribute('href')
         return self.metindenKarakterSil(self.metindenKarakterSil(takipEdilenKullanıcıAdi, self.BASE_URL), '/')
 
-    def beklemeSuresiBelirle(self, baslangic, bitis):
+    def beklemeSuresiGetir(self, baslangic, bitis):
         return randint(baslangic, bitis)
 
     def takipEdilenleriGetir(self, takipciler):
@@ -734,7 +827,7 @@ class Instagram():
                                 print(self.uyariOlustur(
                                     '[-] {kullaniciAdi} kullanıcısını takipten çıkma işlemi sırasında bir hata oluştu: {hata}'.format(
                                         kullaniciAdi=takipEdilenKullanıcıAdi, hata=str(error)), 2))
-                                pass
+                                continue
                             print(self.uyariOlustur(
                                 "[*] {index} -) {kullaniciAdi} adlı kullanıcı takip edilmekten vazgeçildi.".format(
                                     index=self.index, kullaniciAdi=takipEdilenKullanıcıAdi), 1))
@@ -761,6 +854,7 @@ class Instagram():
             print(self.uyariOlustur(
                 '[-] Takip etmeyen kullanıcıları takipten çıkma işlemi sırasında bir hata oluştu: {hata}'.format(
                     hata=str(error)), 2))
+            self.menu()
 
     def popupAsagiKaydir(self, secici):
         self.driver.execute_script('''
@@ -775,12 +869,9 @@ class Instagram():
 
     def takipcileriGetir(self):
         try:
+            print("[*] Tarayıcı profilinize yönlendiriliyor.")
+            self.kullaniciProfilineYonlendir(self.aktifKullanici)
             print("[*] Takipçileri listeye ekleme işlemi başladı.")
-            print("[*] Tarayıcı profiline yönlendiriliyor.")
-            self.driver.get(self.BASE_URL + self.aktifKullanici)
-
-            time.sleep(5)
-
             takipciSayisi = self.takipciSayisiGetir()
 
             btn_takipciler = self.driver.find_element_by_xpath(
@@ -822,72 +913,70 @@ class Instagram():
         except Exception as error:
             print(self.uyariOlustur(
                 "[-] Takipçileri seçme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
+            self.menu()
 
     def takipEtmeyenleriTakiptenCik(self):
         try:
-            print(self.uyariOlustur("Seçilen İşlem >>> Takip edilip, takip etmeyen kullanıcıları takipten çıkma", 1))
-            print("")
 
             takipciler = self.takipcileriGetir()
             print("[*] Takipçileri listeye ekleme işlemi başladı.")
             self.takipEdilenleriGetir(takipciler=takipciler)
             print("[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.")
-
+            self.menu()
         except Exception as error:
             print(self.uyariOlustur(
                 "[-] Takip etmeyen kullanıcıları takipten çıkma işlemi sırasında bir hata oluştu: {hata}".format(
                     hata=str(error)), 2))
+            self.menu()
 
     def metindenKarakterSil(self, metin, silinecekKarakterler):
         return metin.replace(silinecekKarakterler, '')
         # return ''.join(karakter for karakter in metin if karakter not in silinecekKarakterler)
 
-    def gonderiBegenenleriTakipEt(self, islemSecildiMi=None, secilenIslem=None):
-        url = input("İşlem yapmak istediğiniz gönderi url >> ").strip()
+    def gonderiBegenenleriTakipEt(self, secilenIslem=None):
+        try:
+            url = input("İşlem yapmak istediğiniz gönderi url >> ").strip()
+            self.anaMenuyeDonsunMu(url)
 
-        if not url:
-            self.gonderiBegenenleriTakipEt()
-        elif url == "menu":
-            self.menu()
+            if not url:
+                self.gonderiBegenenleriTakipEt()
 
-        if self.urlKontrol(url):
-            print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
-            self.driver.get(url)
-            time.sleep(5)
+            if self.urlKontrol(url):
+                print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
+                self.driver.get(url)
+                time.sleep(5)
 
-            hedefBegenenSayisi = None
-            if islemSecildiMi is None:
-                print(self.uyariOlustur("Seçilen İşlem >>> Bir paylaşımı beğenen kullanıcıları takip etme", 1))
-                print("")
+                hedefBegenenSayisi = None
 
-            if secilenIslem is None:
-                print(self.uyariOlustur("       <<< SEÇENEKLER >>>      ", 1))
-                print(self.uyariOlustur("Tüm takipçiler listesi içerisinden işlem yapmak için 1,", 3))
-                print(self.uyariOlustur(
-                    "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz,", 3))
-                print("")
-                secilenIslem = str(input("Tüm takipçiler listesi içerisinde mi işlem yapılsın ? >> ").strip())
-
-            if secilenIslem == "1":
-                print(
-                    self.uyariOlustur("Seçilen İşlem >>> Paylaşımı beğenen tüm kullanıcıları takip etme", 1))
-            elif secilenIslem == "2":
-                print(self.uyariOlustur(
-                    "Seçilen İşlem >>> Belirtilen sayı kadar paylaşımı beğenen tüm kullanıcıları takip etme", 1))
-                hedefBegenenSayisi = input("İşlem yapmak için bir sayı giriniz >>> ").strip()
-                if hedefBegenenSayisi.isnumeric():
-                    hedefBegenenSayisi = int(hedefBegenenSayisi)
-                else:
-                    print(self.uyariOlustur("[-] Bir sayı girişi yapmadınız.Lütfen bir sayı giriniz!", 2))
+                if secilenIslem is None:
+                    print(self.uyariOlustur("       <<< SEÇENEKLER >>>      ", 1))
+                    print(self.uyariOlustur("Tüm takipçiler listesi içerisinden işlem yapmak için 1,", 3))
+                    print(self.uyariOlustur(
+                        "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz,", 3))
                     print("")
-                    self.gonderiBegenenleriTakipEt(islemSecildiMi=True, secilenIslem=secilenIslem)
-            else:
-                print(self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!", 2))
-                print("")
-                self.gonderiBegenenleriTakipEt(islemSecildiMi=None, secilenIslem=None)
+                    secilenIslem = str(input("Tüm takipçiler listesi içerisinde mi işlem yapılsın ? >> ").strip())
+                    self.anaMenuyeDonsunMu(secilenIslem)
 
-            if not self.hesapGizliMi():
-                try:
+                if secilenIslem == "1":
+                    print(
+                        self.uyariOlustur("Seçilen İşlem >>> Gönderiyi beğenen tüm kullanıcıları takip etme", 1))
+                elif secilenIslem == "2":
+                    print(self.uyariOlustur(
+                        "Seçilen İşlem >>> Belirtilen sayı kadar gönderiyi beğenen tüm kullanıcıları takip etme", 1))
+                    hedefBegenenSayisi = input("İşlem yapmak için bir sayı giriniz >>> ").strip()
+                    self.anaMenuyeDonsunMu(hedefBegenenSayisi)
+                    if hedefBegenenSayisi.isnumeric():
+                        hedefBegenenSayisi = int(hedefBegenenSayisi)
+                    else:
+                        print(self.uyariOlustur("[-] Bir sayı girişi yapmadınız.Lütfen bir sayı giriniz!", 2))
+                        print("")
+                        self.gonderiBegenenleriTakipEt( secilenIslem=secilenIslem)
+                else:
+                    print(self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!", 2))
+                    print("")
+                    self.gonderiBegenenleriTakipEt(secilenIslem=None)
+
+                if not self.hesapGizliMi():
                     if not self.gonderiTipiVideoMu():
                         print("[*] '" + url + "'  paylaşımını beğenen kullanıcıları takip etme işlemi başladı...")
                         takipIstekSayisi = 0
@@ -936,37 +1025,30 @@ class Instagram():
                                         break
                             if devamEtsinMi:
                                 self.popupAsagiKaydir(secici='div[role="dialog"]  .i0EQd > div:nth-child(1)')
-
                                 time.sleep(3)
                             else:
                                 print("[*] Takipçi seçme işlemi tamamlandı.")
-                                self.gonderiBegenenleriTakipEt()
                     else:
                         print(
                             '[*] {url} paylaşımını  beğenen kullanıcıların listesi görüntülenemediğinden dolayı takip etme işlemi yapılamıyor'.format(
                                 url=url))
-                except Exception as error:
+                else:
                     print(self.uyariOlustur(
-                        '[-] {url} paylaşımını beğenen kullanıcıların listesini getirme işlemi sırasında hata oluştu: {hata}'.format(
-                            url=url, hata=str(error)), 2))
-                    self.gonderiBegenenleriTakipEt()
-            else:
-                print(self.uyariOlustur(
-                    "[-] " + url + " paylaşımının sahibinin profili gizli hesap olduğundan dolayı, bu paylaşımı beğenen kullanıcıların listesi alınamıyor!",
-                    2))
-                self.gonderiBegenenleriTakipEt()
-        else:
+                        "[-] " + url + " paylaşımının sahibinin profili gizli hesap olduğundan dolayı, bu paylaşımı beğenen kullanıcıların listesi alınamıyor!",
+                        2))
+            self.gonderiBegenenleriTakipEt()
+        except Exception as error:
+            print(self.uyariOlustur(
+                "[-] Gönderi beğenenleri takip etme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
             self.gonderiBegenenleriTakipEt()
 
-    def kullaniciListesiSec(self, secim):
-        print(self.uyariOlustur(
-            "Seçilen İşlem >>> Txt dosyasından olarak oluşturduğunuz kullanicilar listesi ile işlem yapma", 1))
-        dosya = self.dosyaSec(secim)
+    def kullaniciListesiTakipEt(self):
+        dosya = self.dosyaSec()
         kullanicilar = self.dosyaİceriginiAl(dosya)
         if self.dosyaİcerigiAlindiMi(kullanicilar):
             self.kullanicilariTakipEt(kullanicilar, 14)
         else:
-            self.kullaniciListesiSec(secim)
+            self.kullaniciListesiTakipEt()
 
     def kullanicilariTakipEt(self, kullaniciListesi, secim):
         for kullanici in kullaniciListesi:
@@ -974,17 +1056,18 @@ class Instagram():
             time.sleep(30)
             print(kullanici)
 
-    def dosyaSec(self, secim):
+    def dosyaSec(self):
         try:
             dosyaAdi = input("Dosya yolunu giriniz >> ").strip()
+            self.anaMenuyeDonsunMu(dosyaAdi)
             if self.dosyaMi(dosyaAdi) and self.txtDosyasiMi(dosyaAdi):
                 return str(dosyaAdi)
             else:
-                print(self.uyariOlustur("[-] Lütfen geçerli  bir dosya yolu belirtin!", 2))
-                return self.dosyaSec(secim)
+                print(self.uyariOlustur("[-] Geçerli bir dosya yolu belirtmediniz.Sadece txt uzantılı dosyaları seçebilirsiniz!", 2))
+                return self.dosyaSec()
         except Exception as error:
             print(self.uyariOlustur("[-] Dosya seçme işlemi sırasında bir hata oluştu:" + str(error), 2))
-            return self.dosyaSec(secim)
+            return self.dosyaSec()
 
     def dosyaMi(self, path):
         if os.path.isfile(path):
@@ -998,48 +1081,7 @@ class Instagram():
         else:
             return False
 
-    def secilenIslem(self, secim):
-        print("")
-        if secim == 1:
-            print(self.uyariOlustur(" Seçilen İşlem >>> Bir kulllanıcının tüm paylaşımlarını indirme", 1))
-        elif secim == 2:
-            print(self.uyariOlustur(" Seçilen İşlem >>> Bir kulllanıcının tüm paylaşımlarını beğenme", 1))
-        elif secim == 3:
-            print(self.uyariOlustur(" Seçilen İşlem >>> Bir kulllanıcının tüm paylaşımlarını beğenmekten vazgeçme", 1))
-        elif secim == 4:
-            print(self.uyariOlustur(" Seçilen İşlem >>> Bir fotoğrafı indirme", 1))
-        elif secim == 5:
-            print(self.uyariOlustur(" Seçilen İşlem >>> Bir videoyu indirme", 1))
-        elif secim == 6:
-            print(self.uyariOlustur(" Seçilen İşlem >>> Bir paylaşımı beğenme", 1))
-        elif secim == 7:
-            print(self.uyariOlustur(" Seçilen İşlem >>> Bir paylaşımı beğenmekten vazgeçme", 1))
-        elif secim == 8:
-            print(self.uyariOlustur(" Seçilen İşlem >>> Bir kullanıcıyı takip etme", 1))
-        elif secim == 9:
-            print(self.uyariOlustur(" Seçilen İşlem >>> Bir kullanıcıyı takip etmekten vazgeçme", 1))
-        elif secim == 10:
-            print(self.uyariOlustur(" Seçilen İşlem >>> Bir kullanıcıyı engelleme", 1))
-        elif secim == 11:
-            print(self.uyariOlustur(" Seçilen İşlem >>> Bir kullanıcının engelini kaldırma", 1))
-        elif secim == 12:
-            print(self.uyariOlustur(" Seçilen İşlem >>> İnstagram oturumunu kapatma", 1))
-        elif secim == 13:
-            print(self.uyariOlustur(" Seçilen İşlem >>> Python uygulamasından çıkış yapma", 1))
-        if secim < 12:
-            print(self.uyariOlustur(" [*] Ana menüye dönmek için  'menu' komutunu giriniz", 3))
-        print("")
 
-    def tarayiciThreadOlustur(self):
-        t1 = threading.Thread(target=self.tarayiciBaslat)
-        t1.daemon = True
-        t1.start()
-
-    def tarayiciBaslat(self):
-        print(self.uyariOlustur("[*] Tarayıcı Başlatılıyor...", 1))
-        self.driver = webdriver.Firefox(firefox_profile=self.dilDegistir(),
-                                        executable_path="E:\\Python\\Uygulamalar\\Intagram-Bot\\Instagram-Bot\\geckodriver.exe")
-        self.driver.get(self.BASE_URL + 'accounts/login/')
 
     def bildirimThreadOlustur(self):
         t1 = threading.Thread(target=self.bildirimPopupKapat)
@@ -1158,51 +1200,17 @@ class Instagram():
     def inputTemizle(self, inpt):
         inpt.clear()
 
-    def profilSec(self, secim):
-        kullanici = input(" İşlem yapmak istediğiniz profilin kullanıcı adı >> ")
 
-        if kullanici == "menu":
-            self.menu()
-
-        if not kullanici:
-            self.profilSec(secim)
-
-        if self.kullaniciKontrol(kullanici):
-            print("[*] Tarayıcı '" + kullanici + "' profiline yönlendiriliyor...")
-            if secim == 1:
-                self.gonderileriIndir(kullanici, secim)
-            elif secim == 2:
-                self.gonderileriBegen(kullanici, secim)
-            elif secim == 3:
-                self.gonderileriBegen(kullanici, secim, False)
-            elif secim == 8:
-                self.kullaniciTakipEt(kullanici, secim)
-            elif secim == 9:
-                self.kullaniciTakipEt(kullanici, secim,False)
-            elif secim == 10:
-                self.kullaniciEngelle(kullanici, secim)
-            elif secim == 11:
-                self.kullaniciEngelle(kullanici, secim,False)
-            elif secim == 15:
-                self.kullaniciTakipcileriniTakipEt(kullanici, secim)
-        else:
-            print(self.uyariOlustur("[-] '" + kullanici + "' adında bir kullanıcı bulunamadı ", 2))
-            self.profilSec(secim)
 
     def hedefKaynaktanBuyukMu(self, hedef, kaynak):
         if hedef > kaynak:
             hedef = kaynak
         return hedef
 
-    def kullaniciTakipcileriniTakipEt(self, kullaniciAdi, secim, islemSecildiMi=None, secilenIslem=None):
+    def kullaniciTakipcileriniTakipEt(self, kullanici, secim,secilenIslem=None):
         try:
-            self.driver.get(self.BASE_URL + kullaniciAdi)
-            time.sleep(4)
+            self.kullaniciProfilineYonlendir(kullanici)
             hedefTakipciSayisi = None
-            if islemSecildiMi is None:
-                print(
-                    self.uyariOlustur("Seçilen İşlem >>> Bir kullanıcının takipçilerini takip etme", 1))
-                print("")
 
             if secilenIslem is None:
                 print(self.uyariOlustur("       <<< SEÇENEKLER >>>      ", 1))
@@ -1211,6 +1219,7 @@ class Instagram():
                     "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz,", 3))
                 print("")
                 secilenIslem = str(input("Tüm takipçiler listesi içerisinde mi işlem yapılsın ? >> ").strip())
+                self.anaMenuyeDonsunMu(secilenIslem)
 
             if secilenIslem == "1":
                 print(
@@ -1221,23 +1230,19 @@ class Instagram():
                     "Seçilen İşlem >>> Belirtilen sayı kadar takipçiler listesi içerisindeki kullanıcıları takip etme",
                     1))
                 hedefTakipciSayisi = input("İşlem yapmak için bir sayı giriniz >>> ").strip()
+                self.anaMenuyeDonsunMu(hedefTakipciSayisi)
                 if hedefTakipciSayisi.isnumeric():
                     hedefTakipciSayisi = int(hedefTakipciSayisi)
                 else:
                     print(self.uyariOlustur("[-] Bir sayı girişi yapmadınız.Lütfen bir sayı giriniz!", 2))
                     print("")
-                    self.kullaniciTakipcileriniTakipEt(kullaniciAdi, secim, islemSecildiMi=True,
-                                                       secilenIslem=secilenIslem)
+                    self.kullaniciTakipcileriniTakipEt(kullanici, secim,  secilenIslem=secilenIslem)
             else:
                 print(self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!", 2))
                 print("")
-                self.kullaniciTakipcileriniTakipEt(kullaniciAdi, secim, islemSecildiMi=None, secilenIslem=None)
+                self.kullaniciTakipcileriniTakipEt(kullanici, secim, secilenIslem=None)
 
-            print("[*] '" + kullaniciAdi + "' kullanıcısının takipçilerini takip etme işlemi başladı...")
-
-            if not self.sayfaMevcutMu():
-                print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısına ulaşılamadı", 2))
-                self.profilSec(secim)
+            print("[*] '" + kullanici + "' kullanıcısının takipçilerini takip etme işlemi başladı...")
 
             if not self.hesapGizliMi():
                 takipIstekSayisi = 0;
@@ -1276,7 +1281,7 @@ class Instagram():
                                     devamEtsinMi = False
                                     break
                                 time.sleep(self.beklemeSuresiGetir(5, 15))
-                        except Exception:
+                        except:
                             pass
 
                         self.indexArtir()
@@ -1290,15 +1295,15 @@ class Instagram():
                     if devamEtsinMi:
                         self.popupAsagiKaydir(secici='div[role="dialog"] .isgrP')
                         time.sleep(3)
-                print("[*] '" + kullaniciAdi + "' kullanıcısının takipçilerini takip etme işlemi tamamlandı.")
+                print("[*] '" + kullanici + "' kullanıcısının takipçilerini takip etme işlemi tamamlandı.")
             else:
                 print(self.uyariOlustur(
-                    "[-] " + kullaniciAdi + " adlı kişinin hesabı gizli hesap olduğundan takipçileri takip edilemiyor!",
+                    "[-] " + kullanici + " adlı kişinin hesabı gizli hesap olduğundan takipçileri takip edilemiyor!",
                     2))
-                self.profilSec(secim)
+            self.profilSec(secim)
         except Exception as e:
             print(self.uyariOlustur(
-                "[-] " + kullaniciAdi + " kullanıcısının takipçilerini takip etme işlemi sırasında hata:" + str(e), 2))
+                "[-] " + kullanici + " kullanıcısının takipçilerini takip etme işlemi sırasında hata:" + str(e), 2))
             self.profilSec(secim)
 
     def kullaniciKontrol(self, kullaniciadi):
@@ -1358,23 +1363,20 @@ class Instagram():
 
     def kullaniciTakipEt(self, kullanici, secim,durum=True):
         try:
+            self.kullaniciProfilineYonlendir(kullanici)
             if durum:
                 print("[*] {kullanici} kullanıcısını takip etme işlemi başladı...".format(kullanici=kullanici))
             else:
                 print("[*] {kullanici} kullanıcısını takipten çıkma işlemi başladı...".format(kullanici=kullanici))
-            self.driver.get(self.BASE_URL + kullanici)
-            time.sleep(5)
 
-            if not self.sayfaMevcutMu():
-                print(self.uyariOlustur("[-] {kullanici} kullanıcısına ulaşılamadı".format(kullanici=kullanici), 2))
-                if secim != 14:
-                    self.profilSec(secim)
+
             self.kullaniciTakipDurumDegistir(kullanici=kullanici,durum=durum)
             if durum:
                 print("[*] {kullanici} kullanıcısını takip etme işlemi tamamlandı...".format(kullanici=kullanici))
             else:
                 print("[*] {kullanici} kullanıcısını takipten çıkma işlemi tamamlandı...".format(kullanici=kullanici))
-            self.profilSec(secim)
+            if secim != 14:
+                self.profilSec(secim)
         except Exception as error:
             if durum:
                 print(self.uyariOlustur("[-] {kullanici} kullanıcısını takip etme işlemi sırasında hata:{hata}".format(kullanici=kullanici,hata=str(error)),2))
@@ -1395,17 +1397,11 @@ class Instagram():
 
     def kullaniciEngelle(self, kullanici, secim,durum=True):
         try:
+            self.kullaniciProfilineYonlendir(kullanici)
             if durum:
                 print("[*]  {kullanici} kullanıcısını engelleme işlemi başladı.".format(kullanici=kullanici))
             else:
                 print("[*]  {kullanici} kullanıcısının engelini kaldırma işlemi başladı.".format(kullanici=kullanici))
-
-            self.driver.get(self.BASE_URL + kullanici)
-            time.sleep(3)
-
-            if not self.sayfaMevcutMu():
-                print(self.uyariOlustur("[-] {kullanici} kullanıcısına ulaşılamadı".format(kullanici=kullanici), 2))
-                self.profilSec(secim)
 
             if self.hesapGizliMi():
                 btnText = str(self.driver.find_element_by_css_selector('button.BY3EC').text).lower()
@@ -1533,8 +1529,7 @@ class Instagram():
 
     def gonderileriIndir(self, kullanici, secim):
         try:
-            self.driver.get(self.BASE_URL + kullanici)
-            time.sleep(5)
+            self.kullaniciProfilineYonlendir(kullanici)
             if not self.hesapGizliMi():
                 print("[*] {kullanici}  adlı kullanıcının gönderilerini indirme işlemi başladı".format(
                     kullanici=kullanici))
@@ -1567,13 +1562,12 @@ class Instagram():
                 self.klasorDegistir("../")
                 print("[*] {kullanici}  adlı kullanıcının gönderilerini indirme işlemi tamamlandı.".format(
                     kullanici=kullanici))
-                self.profilSec(secim)
             else:
                 print(self.uyariOlustur(
                     "[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan gönderileri indirme işlemi yapılamıyor!".format(
                         kullanici=kullanici), 2))
-                self.profilSec(secim)
 
+            self.profilSec(secim)
         except Exception as error:
             print(self.uyariOlustur(
                 "[-] {kullanici} kullanıcısının gönderilerini indirme işlemi sırasında bir hata oluştu:{hata}".format(
@@ -1583,11 +1577,10 @@ class Instagram():
     def gonderiIndir(self):
         try:
             url = input("İndirmek istediğiniz gönderi url >> ").strip()
+            self.anaMenuyeDonsunMu(url)
             if not url:
                 print(self.uyariOlustur("[-] Gönderi url'si girmediniz!!", 2))
                 self.gonderiIndir()
-            elif url == "menu":
-                self.menu()
 
             if self.urlKontrol(url):
                 print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
@@ -1609,14 +1602,11 @@ class Instagram():
                             self.dosyaIndir(url, veriTuru)
                     print("[*] {url} adresindeki gönderinin indirme işlemi tamamlandı.".format(url=url))
                     self.klasorDegistir("../")
-                    self.gonderiIndir()
                 else:
                     print(self.uyariOlustur(
                         "[-] {url} paylaşımının sahibinin profili gizli hesap olduğundan indirme işlemi yapılamıyor!".format(
                             url=url), 2))
-                    self.gonderiIndir()
-            else:
-                self.gonderiIndir()
+            self.gonderiIndir()
         except Exception as error:
             print(
                 self.uyariOlustur("[-] gönderi indirme işlemi sırasında bir hata oluştu:{hata}".format(hata=error), 2))
@@ -1631,8 +1621,7 @@ class Instagram():
 
     def gonderileriBegen(self, kullanici, secim, durum=True):
         try:
-            self.driver.get(self.BASE_URL + kullanici)
-            time.sleep(5)
+            self.kullaniciProfilineYonlendir(kullanici)
             if not self.hesapGizliMi():
                 print("[*] {kullanici}  adlı kullanıcının gönderilerini beğenme işlemi başladı".format(
                     kullanici=kullanici))
@@ -1702,11 +1691,11 @@ class Instagram():
             else:
                 url = input("Beğenmekten vazgeçmek istediğiniz gönderi url >> ").strip()
 
+            self.anaMenuyeDonsunMu(url)
             if not url:
                 print(self.uyariOlustur("[-] Gönderi url'si girmediniz!!", 2))
                 self.gonderiBegen(durum)
-            elif url == "menu":
-                self.menu()
+
             if self.urlKontrol(url):
                 print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
                 self.driver.get(url)
@@ -1735,13 +1724,12 @@ class Instagram():
                                 "[+] {url} gönderisi beğenilmekten vazgeçildi.".format(url=self.driver.current_url), 1))
                         else:
                             print(self.uyariOlustur(
-                                "[*] {url} gönderisi zaten beğebilmedi.".format(url=self.driver.current_url), 1))
+                                "[*] {url} gönderisi zaten beğenilmedi.".format(url=self.driver.current_url), 1))
                     if durum:
                         print("[*] {url} adresindeki gönderinin beğenme işlemi tamamlandı.".format(url=url))
                     else:
                         print(
                             "[*] {url} adresindeki gönderinin beğenmekten vazgeçme işlemi tamamlandı.".format(url=url))
-                    self.gonderiBegen(durum)
                 else:
                     if durum:
                         print(self.uyariOlustur(
@@ -1751,9 +1739,7 @@ class Instagram():
                         print(self.uyariOlustur(
                             "[-] {url} gönderisinin sahibinin profili gizli hesap olduğundan beğenmektez vazgeçme işlemi yapılamıyor!".format(
                                 url=url), 2))
-                    self.gonderiBegen(durum)
-            else:
-                self.gonderiBegen(durum)
+            self.gonderiBegen(durum)
         except Exception as error:
             if durum:
                 print(
@@ -1818,7 +1804,8 @@ class Instagram():
             exit()
         except Exception as e:
             print(self.uyariOlustur("[-] Uygulamadan çıkış sırasında hata oluştu:" + str(e), 2))
-            self.menu()
+            self.driver.quit()
+            exit()
 
 try:
     instagram = Instagram()
