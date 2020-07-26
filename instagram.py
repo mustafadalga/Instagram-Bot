@@ -1178,7 +1178,7 @@ class Instagram():
             elif secim == 8:
                 self.kullaniciTakipEt(kullanici, secim)
             elif secim == 9:
-                self.kullaniciTakipVazgec(kullanici, secim)
+                self.kullaniciTakipEt(kullanici, secim,False)
             elif secim == 10:
                 self.kullaniciEngelle(kullanici, secim)
             elif secim == 11:
@@ -1308,73 +1308,83 @@ class Instagram():
         else:
             return True
 
-    def kullaniciTakipEt(self, kullaniciAdi, secim):
-        print("[*] '" + kullaniciAdi + "' kullanıcısını takip etme işlemine başladı...")
+    def kullaniciTakipDurumDegistir(self,kullanici,durum):
+        if self.hesapGizliMi():
+            btn_takip = self.driver.find_element_by_css_selector("button.BY3EC")
+            btn_text = str(btn_takip.text).lower()
+            if durum:
+                if btn_text in ["follow","follow back"]:
+                    btn_takip.click()
+                    print(self.uyariOlustur(
+                        "[+] {kullanici} kullanıcısına takip isteği gönderildi".format(kullanici=kullanici), 1))
+                elif btn_text == "requested":
+                    print(self.uyariOlustur(
+                        "[*] {kullanici} kullanıcısına takip isteği zaten gönderildi".format(kullanici=kullanici),
+                        1))
+                elif btn_text == "unblock":
+                    print(self.uyariOlustur(
+                        "[-] {kullanici} kullanıcısı engelli durumda olduğu için takip isteği atılamıyor.".format(
+                            kullanici=kullanici), 1))
+            else:
+                print(self.uyariOlustur(
+                    "[-] {kullanici} kullanıcısını zaten takip etmiyorsunuz.".format(
+                        kullanici=kullanici), 1))
+        else:
+            btn_takip = self.driver.find_element_by_css_selector('span.vBF20 > button._5f5mN')
+            btn_text = str(btn_takip.text).lower()
+            if durum:
+                if btn_text in ["follow","follow back"]:
+                    btn_takip.click()
+                    print(self.uyariOlustur(
+                        "[+] {kullanici} kullanıcısı takip edilmeye başlandı.".format(kullanici=kullanici), 1))
+                elif btn_text == "unblock":
+                    print(self.uyariOlustur(
+                        "[-] {kullanici} kullanıcısı engelli durumda olduğu için takip isteği atılamıyor.".format(
+                            kullanici=kullanici), 1))
+                else:
+                    ariaLabel = btn_takip.find_element_by_tag_name("span").get_attribute("aria-label")
+                    if ariaLabel == "Following":
+                        print(self.uyariOlustur(
+                            "[-] {kullanici} kullanıcısını zaten takip ediyorsunuz.".format(
+                                kullanici=kullanici), 1))
+            else:
+                ariaLabel = btn_takip.find_element_by_tag_name("span").get_attribute("aria-label")
+                if ariaLabel == "Following":
+                    btn_takip.click()
+                    time.sleep(0.50)
+                    self.driver.find_elements_by_css_selector("div.mt3GC >button.aOOlW")[0].click()
+                    print(self.uyariOlustur(
+                        "[+] {kullanici} kullanıcısı takip edilmekten vazgeçildi.".format(kullanici=kullanici), 1))
+
+    def kullaniciTakipEt(self, kullanici, secim,durum=True):
         try:
-            self.driver.get(self.BASE_URL + kullaniciAdi)
+            if durum:
+                print("[*] {kullanici} kullanıcısını takip etme işlemi başladı...".format(kullanici=kullanici))
+            else:
+                print("[*] {kullanici} kullanıcısını takipten çıkma işlemi başladı...".format(kullanici=kullanici))
+            self.driver.get(self.BASE_URL + kullanici)
             time.sleep(5)
 
             if not self.sayfaMevcutMu():
-                print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısına ulaşılamadı", 2))
+                print(self.uyariOlustur("[-] {kullanici} kullanıcısına ulaşılamadı".format(kullanici=kullanici), 2))
                 if secim != 14:
                     self.profilSec(secim)
-
-            if self.hesapGizliMi():
-                btn_takip = self.driver.find_element_by_css_selector("button.BY3EC")
+            self.kullaniciTakipDurumDegistir(kullanici=kullanici,durum=durum)
+            if durum:
+                print("[*] {kullanici} kullanıcısını takip etme işlemi tamamlandı...".format(kullanici=kullanici))
             else:
-                btn_takip = self.driver.find_element_by_css_selector('button._5f5mN')
-            if (btn_takip.text == 'Follow'):
-                btn_takip.click()
-                if self.hesapGizliMi():
-                    print(self.uyariOlustur("[+] " + kullaniciAdi + " kullanıcısına takip isteği gönderildi", 1))
-                else:
-                    print(self.uyariOlustur("[+] " + kullaniciAdi + " kullanıcısı takip edilmeye başlandı", 1))
-
-                if secim != 14:
-                    self.profilSec(secim)
-            elif btn_takip.text == "Requested":
-                print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısına takip isteği zaten gönderildi", 2))
-                if secim != 14:
-                    self.profilSec(secim)
+                print("[*] {kullanici} kullanıcısını takipten çıkma işlemi tamamlandı...".format(kullanici=kullanici))
+            self.profilSec(secim)
+        except Exception as error:
+            if durum:
+                print(self.uyariOlustur("[-] {kullanici} kullanıcısını takip etme işlemi sırasında hata:{hata}".format(kullanici=kullanici,hata=str(error)),2))
             else:
-                print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısını zaten takip ediyorsun", 2))
-                if secim != 14:
-                    self.profilSec(secim)
-        except Exception as e:
-            print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısını takip etme işlemi sırasında hata:" + str(e),
-                                    2))
+                print(self.uyariOlustur(
+                    "[-] {kullanici} kullanıcısını takip etmekten vazgeçme işlemi sırasında hata:{hata}".format(kullanici=kullanici,
+                                                                                                   hata=str(error)), 2))
             if secim != 14:
                 self.profilSec(secim)
 
-    def kullaniciTakipVazgec(self, kullaniciAdi, secim):
-        print("[*] '" + kullaniciAdi + "' kullanıcısı takip etmekten vazgeçiliyor...")
-        try:
-            self.driver.get(self.BASE_URL + kullaniciAdi)
-            time.sleep(5)
-
-            if not self.sayfaMevcutMu():
-                print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısına ulaşılamadı", 2))
-                self.profilSec(secim)
-
-            if self.hesapGizliMi():
-                btn_takip = self.driver.find_element_by_css_selector("button.BY3EC")
-            else:
-                btn_takip = self.driver.find_element_by_css_selector('button._5f5mN')
-
-            if btn_takip.text == "Following":
-                btn_takip.click()
-                time.sleep(5)
-                btn_popup = self.driver.find_element_by_css_selector('button.aOOlW')
-                btn_popup.click()
-                print(self.uyariOlustur("[+] " + kullaniciAdi + " kullanıcısı takip edilmekten vazgeçildi", 1))
-                self.profilSec(secim)
-            else:
-                print(self.uyariOlustur("[-] " + kullaniciAdi + " kullanıcısını zaten takip etmiyorsun", 2))
-                self.profilSec(secim)
-        except Exception as e:
-            print(self.uyariOlustur(
-                "[-] " + kullaniciAdi + " kullanıcısını takip etmekten vazgeçme işlemi sırasında hata:" + str(e), 2))
-            self.profilSec(secim)
 
     def kullaniciEngelDurumDegistir(self):
         self.driver.find_element_by_css_selector("button.wpO6b").click()
@@ -1809,7 +1819,6 @@ class Instagram():
         except Exception as e:
             print(self.uyariOlustur("[-] Uygulamadan çıkış sırasında hata oluştu:" + str(e), 2))
             self.menu()
-
 
 try:
     instagram = Instagram()
