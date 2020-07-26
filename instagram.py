@@ -261,7 +261,7 @@ class Instagram():
             return False
 
     def yorumUzunlukBelirle(self, yorum):
-        return yorum[0:250]
+        return yorum[0:randint(5,100)]
 
     def yorumYap(self, yorum):
         try:
