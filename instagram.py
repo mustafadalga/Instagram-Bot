@@ -412,7 +412,6 @@ class Instagram():
             self.topluYorumYapma()
 
 
-
     def gonderiYorumYapma(self, url=None, yorum=None):
         try:
             if not url:
@@ -882,7 +881,7 @@ class Instagram():
             btn_takipciler = self.driver.find_element_by_xpath(
                 "/html/body/div[1]/section/main/div/header/section/ul/li[2]/a")
             btn_takipciler.click()
-            time.sleep(5)
+            time.sleep(3)
             takipciler = set()
             self.indexSifirla()
             devamEtsinMi = True
@@ -981,7 +980,7 @@ class Instagram():
 
                 if not self.hesapGizliMi():
                     if not self.gonderiTipiVideoMu():
-                        print("[*] '" + url + "'  gönderisini beğenen kullanıcıları takip etme işlemi başladı...")
+                        print("[*] {url}  gönderisini beğenen kullanıcıları takip etme işlemi başladı...".format(url=url))
                         takipIstekSayisi = 0
                         devamEtsinMi = True
                         if hedefBegenenSayisi is None:
@@ -1056,8 +1055,7 @@ class Instagram():
     def kullanicilariTakipEt(self, kullaniciListesi, secim):
         for kullanici in kullaniciListesi:
             self.kullaniciTakipEt(kullanici.strip(), secim)
-            time.sleep(30)
-            print(kullanici)
+            time.sleep(self.beklemeSuresiGetir(10,45))
 
     def dosyaSec(self):
         try:
@@ -1069,7 +1067,7 @@ class Instagram():
                 print(self.uyariOlustur("[-] Geçerli bir dosya yolu belirtmediniz.Sadece txt uzantılı dosyaları seçebilirsiniz!", 2))
                 return self.dosyaSec()
         except Exception as error:
-            print(self.uyariOlustur("[-] Dosya seçme işlemi sırasında bir hata oluştu:" + str(error), 2))
+            print(self.uyariOlustur("[-] Dosya seçme işlemi sırasında bir hata oluştu:{hata}".format(hata=str(error)), 2))
             return self.dosyaSec()
 
     def dosyaMi(self, path):
@@ -1097,7 +1095,7 @@ class Instagram():
                 time.sleep(5)
                 btn = self.driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]")
                 self.driver.execute_script("arguments[0].click();", btn)
-        except Exception as error:
+        except:
             pass
 
     def dilDegistir(self):
@@ -1156,8 +1154,8 @@ class Instagram():
                 self.inputTemizle(usernameInput)
                 self.inputTemizle(passwordInput)
                 self.girisYap()
-        except Exception as e:
-            print(self.uyariOlustur("[-] Kullanıcı girişi sırasında hata:" + str(e), 2))
+        except Exception as error:
+            print(self.uyariOlustur("[-] Kullanıcı girişi sırasında hata:{hata}".format(hata=str(error)), 2))
 
     def girisKontrol(self):
         if "The username you entered doesn't belong to an account. Please check your username and try again." in self.driver.page_source:
@@ -1245,7 +1243,7 @@ class Instagram():
                 print("")
                 self.kullaniciTakipcileriniTakipEt(kullanici, secim, secilenIslem=None)
 
-            print("[*] '" + kullanici + "' kullanıcısının takipçilerini takip etme işlemi başladı...")
+            print("[*] {kullanici} kullanıcısının takipçilerini takip etme işlemi başladı...".format(kullanici=kullanici))
 
             if not self.hesapGizliMi():
                 takipIstekSayisi = 0;
@@ -1298,15 +1296,15 @@ class Instagram():
                     if devamEtsinMi:
                         self.popupAsagiKaydir(secici='div[role="dialog"] .isgrP')
                         time.sleep(3)
-                print("[*] '" + kullanici + "' kullanıcısının takipçilerini takip etme işlemi tamamlandı.")
+                print("[*] {kullanici} kullanıcısının takipçilerini takip etme işlemi tamamlandı.".format(kullanici=kullanici))
             else:
                 print(self.uyariOlustur(
-                    "[-] " + kullanici + " adlı kişinin hesabı gizli hesap olduğundan takipçileri takip edilemiyor!",
+                    "[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan takipçileri takip edilemiyor!".format(kullanici=kullanici),
                     2))
             self.profilSec(secim)
-        except Exception as e:
+        except Exception as error:
             print(self.uyariOlustur(
-                "[-] " + kullanici + " kullanıcısının takipçilerini takip etme işlemi sırasında hata:" + str(e), 2))
+                "[-] {kullanici} kullanıcısının takipçilerini takip etme işlemi sırasında hata:{hata}".format(kullanici=kullanici,hata=str(error)), 2))
             self.profilSec(secim)
 
     def kullaniciKontrol(self, kullaniciadi):
@@ -1744,11 +1742,11 @@ class Instagram():
         except Exception as error:
             if durum:
                 print(
-                    self.uyariOlustur("[-] gönderi beğenme işlemi sırasında bir hata oluştu:{hata}".format(hata=error),
+                    self.uyariOlustur("[-] Gönderi beğenme işlemi sırasında bir hata oluştu:{hata}".format(hata=error),
                                       2))
             else:
                 print(self.uyariOlustur(
-                    "[-] gönderi beğenmekten vazgeçme işlemi sırasında bir hata oluştu:{hata}".format(hata=error), 2))
+                    "[-] Gönderi beğenmekten vazgeçme işlemi sırasında bir hata oluştu:{hata}".format(hata=error), 2))
             self.gonderiBegen(durum)
 
     def urlKontrol(self, url):
@@ -1774,11 +1772,11 @@ class Instagram():
             os.mkdir(klasor)
             print(self.uyariOlustur("[+] '" + klasor + "' adında klasör oluşturuldu", 1))
             self.klasorDegistir(klasor)
-            print("[*] '" + klasor + "' klasörüne geçiş yapıldı")
+            print("[*] {klasor} klasörüne geçiş yapıldı".format(klasor=klasor))
         else:
-            print("[*] " + klasor + " adında klasör zaten mevcut")
+            print("[*] {klasor} adında klasör zaten mevcut".format(klasor=klasor))
             self.klasorDegistir(klasor)
-            print("[*] '" + klasor + "' klasörüne geçiş yapıldı")
+            print("[*] {klasor} klasörüne geçiş yapıldı".format(klasor=klasor))
 
     def klasorDegistir(self, klasor):
         os.chdir(klasor)
