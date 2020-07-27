@@ -172,7 +172,7 @@ class Instagram():
         self.anaMenuyeDonsunMu(kullanici)
 
         if self.kullaniciKontrol(kullanici):
-            print("[*] Tarayıcı '" + kullanici + "' profiline yönlendiriliyor...")
+            print("[*] Tarayıcı {kullanici} profiline yönlendiriliyor...".format(kullanici=kullanici))
             if secim == 1:
                 self.gonderileriIndir(kullanici, secim)
             elif secim == 2:
@@ -192,7 +192,7 @@ class Instagram():
             elif secim == 23:
                 self.kullaniciEngelle(kullanici, secim,False)
         else:
-            print(self.uyariOlustur("[-] '" + kullanici + "' adında bir kullanıcı bulunamadı ", 2))
+            print(self.uyariOlustur("[-] {kullanici} adında bir kullanıcı bulunamadı ".format(kullanici=kullanici), 2))
             self.profilSec(secim)
 
     def kullaniciProfilineYonlendir(self,kullanici):
@@ -300,7 +300,7 @@ class Instagram():
                         icerik.add(satir)
             return icerik
         except Exception as error:
-            print(self.uyariOlustur("[-] Seçilen dosyanın yüklenme işlemi sırasında bir hata oluştu:" + str(error), 2))
+            print(self.uyariOlustur("[-] Seçilen dosyanın yüklenme işlemi sırasında bir hata oluştu:{hata}".format(hata=str(error)), 2))
             return False
 
     def dosyaİcerigiAlindiMi(self, icerik):
@@ -718,13 +718,18 @@ class Instagram():
                 "[-] Öne çıkan hikayeyi indirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
             self.oneCikanHikayeIndir()
 
+    def dosyaAdiOlustur(self,veriTuru):
+        dt=str(datetime.datetime.now()).replace(":", "_").replace(" ", "")
+        if veriTuru == 1:
+            isim="{index}_{tarih}.jpg".format(index=str(self.index),tarih=dt)
+        elif veriTuru == 2:
+            isim = "{index}_{tarih}.mp4".format(index=str(self.index), tarih=dt)
+        return isim
+
     def dosyaIndir(self, url, veriTuru):
         try:
-            if veriTuru == 1:
-                isim = str(self.index) + "_" + str(datetime.datetime.now()).replace(":", "_").replace(" ", "") + ".jpg"
-            elif veriTuru == 2:
-                isim = str(self.index) + "_" + str(datetime.datetime.now()).replace(":", "_").replace(" ", "") + ".mp4"
-            urllib.request.urlretrieve(url, isim)
+            dosyaAdi=self.dosyaAdiOlustur(veriTuru)
+            urllib.request.urlretrieve(url, dosyaAdi)
             print(self.uyariOlustur("[+] {url} indirildi".format(url=url), 1))
             self.indexArtir()
         except Exception as error:
@@ -978,7 +983,7 @@ class Instagram():
 
                 if not self.hesapGizliMi():
                     if not self.gonderiTipiVideoMu():
-                        print("[*] '" + url + "'  paylaşımını beğenen kullanıcıları takip etme işlemi başladı...")
+                        print("[*] '" + url + "'  gönderisini beğenen kullanıcıları takip etme işlemi başladı...")
                         takipIstekSayisi = 0
                         devamEtsinMi = True
                         if hedefBegenenSayisi is None:
@@ -1030,11 +1035,11 @@ class Instagram():
                                 print("[*] Takipçi seçme işlemi tamamlandı.")
                     else:
                         print(
-                            '[*] {url} paylaşımını  beğenen kullanıcıların listesi görüntülenemediğinden dolayı takip etme işlemi yapılamıyor'.format(
+                            '[*] {url} gönderisini  beğenen kullanıcıların listesi görüntülenemediğinden dolayı takip etme işlemi yapılamıyor'.format(
                                 url=url))
                 else:
                     print(self.uyariOlustur(
-                        "[-] " + url + " paylaşımının sahibinin profili gizli hesap olduğundan dolayı, bu paylaşımı beğenen kullanıcıların listesi alınamıyor!",
+                        "[-] " + url + " gönderisinin sahibinin profili gizli hesap olduğundan dolayı, bu gönderiyi beğenen kullanıcıların listesi alınamıyor!",
                         2))
             self.gonderiBegenenleriTakipEt()
         except Exception as error:
@@ -1604,7 +1609,7 @@ class Instagram():
                     self.klasorDegistir("../")
                 else:
                     print(self.uyariOlustur(
-                        "[-] {url} paylaşımının sahibinin profili gizli hesap olduğundan indirme işlemi yapılamıyor!".format(
+                        "[-] {url} gönderisinin sahibinin profili gizli hesap olduğundan indirme işlemi yapılamıyor!".format(
                             url=url), 2))
             self.gonderiIndir()
         except Exception as error:
