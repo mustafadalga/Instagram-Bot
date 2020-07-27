@@ -199,6 +199,10 @@ class Instagram():
         self.driver.get(self.BASE_URL + kullanici)
         time.sleep(5)
 
+    def urlYonlendir(self,url):
+        self.driver.get(url)
+        time.sleep(5)
+
     def tarayiciThreadOlustur(self):
         t1 = threading.Thread(target=self.tarayiciBaslat)
         t1.daemon = True
@@ -318,8 +322,7 @@ class Instagram():
 
                 if self.urlKontrol(url):
                     print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
-                    self.driver.get(url)
-                    time.sleep(3)
+                    self.urlYonlendir(url)
 
                     if not self.sayfaMevcutMu():
                         print(self.uyariOlustur("[-] {url} url'sine ulaşılamadı!".format(url=url), 2))
@@ -420,8 +423,7 @@ class Instagram():
                 self.anaMenuyeDonsunMu(yorum)
 
             if self.urlKontrol(url):
-                self.driver.get(url)
-                time.sleep(5)
+                self.urlYonlendir(url)
 
                 if not self.sayfaMevcutMu():
                     print(
@@ -467,8 +469,7 @@ class Instagram():
             if self.degerVarMi(etiket):
                 url = "{BASE_URL}explore/tags/{etiket}".format(BASE_URL=self.BASE_URL, etiket=str(etiket))
                 print("[*] {url}  sayfasına yönlendiriliyor...".format(url=url))
-                self.driver.get(url)
-                time.sleep(5)
+                self.urlYonlendir(url)
                 if not self.sayfaMevcutMu():
                     print(self.uyariOlustur("[-] {etiket} etiketine ait bir gönderi bulunamadı!".format(etiket=etiket),
                                             2))
@@ -692,8 +693,7 @@ class Instagram():
             url = input("Öne çıkan hikaye url giriniz >> ").strip()
             self.anaMenuyeDonsunMu(url)
             if self.urlKontrol(url):
-                self.driver.get(url)
-                time.sleep(5)
+                self.urlYonlendir(url)
 
                 if not self.sayfaMevcutMu():
                     print(self.uyariOlustur("[-] İndirmek istediğiniz öne çıkan hikayenin url'sine ulaşılamadı!", 2))
@@ -948,9 +948,7 @@ class Instagram():
 
             if self.urlKontrol(url):
                 print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
-                self.driver.get(url)
-                time.sleep(5)
-
+                self.urlYonlendir(url)
                 hedefBegenenSayisi = None
 
                 if secilenIslem is None:
@@ -1589,8 +1587,7 @@ class Instagram():
 
             if self.urlKontrol(url):
                 print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
-                self.driver.get(url)
-                time.sleep(5)
+                self.urlYonlendir(url)
                 if not self.hesapGizliMi():
                     print("[*] {url} adresindeki gönderinin indirme işlemi başladı.".format(url=url))
                     kullanici = self.driver.find_element_by_xpath(
@@ -1703,8 +1700,7 @@ class Instagram():
 
             if self.urlKontrol(url):
                 print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
-                self.driver.get(url)
-                time.sleep(5)
+                self.urlYonlendir(url)
                 if not self.hesapGizliMi():
                     if durum:
                         print("[*] {url} adresindeki gönderinin beğenme işlemi başladı...".format(url=url))
