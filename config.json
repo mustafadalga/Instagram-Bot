@@ -1,0 +1,630 @@
+{
+    "driver_language": "'intl.accept_languages', 'en-US, en'",
+    "driver_path": "C:\\geckodriver.exe",
+    "language": "tr",
+    "languages": {
+        "en": {},
+        "tr": {
+            "cikisYap": {
+                "warnings": {
+                    "warning1": "[*] İnstagramdan çıkış yapılıyor...",
+                    "warning2": "[*] İnstagramdan çıkış yapıldı...",
+                    "warning3": "[-] İnstagramdan çıkış işlemi sırasında hata:"
+                }
+            },
+            "exit": {
+                "warnings": {
+                    "warning1": "\n [*] Python uygulamasından çıkış yapılıyor..."
+                }
+            },
+            "gonderiBegen": {
+                "inputs": {
+                    "input1": "Beğenmek istediğiniz gönderi url >> ",
+                    "input2": "Beğenmekten vazgeçmek istediğiniz gönderi url >> "
+                },
+                "warnings": {
+                    "warning1": "[*] {url}  gönderisine yönlendiriliyor...",
+                    "warning10": "[-] {url} gönderisinin sahibinin profili gizli hesap olduğundan beğeni işlemi yapılamıyor!",
+                    "warning11": "[-] {url} gönderisinin sahibinin profili gizli hesap olduğundan beğenmektez vazgeçme işlemi yapılamıyor!",
+                    "warning12": "[-] Gönderi beğenme işlemi sırasında bir hata oluştu:{hata}",
+                    "warning13": "[-] Gönderi beğenmekten vazgeçme işlemi sırasında bir hata oluştu:{hata}",
+                    "warning2": "[*] {url} adresindeki gönderinin beğenme işlemi başladı...",
+                    "warning3": "[*] {url} adresindeki gönderinin beğenmekten vazgeçme işlemi başladı...",
+                    "warning4": "[+] {url} gönderisi beğenildi.",
+                    "warning5": "[*] {url} gönderisi daha önce beğenildi.",
+                    "warning6": "[+] {url} gönderisi beğenilmekten vazgeçildi.",
+                    "warning7": "[*] {url} gönderisi zaten beğenilmedi.",
+                    "warning8": "[*] {url} adresindeki gönderinin beğenme işlemi tamamlandı.",
+                    "warning9": "[*] {url} adresindeki gönderinin beğenmekten vazgeçme işlemi tamamlandı."
+                }
+            },
+            "gonderileriBegen": {
+                "warnings": {
+                    "warning1": "[*] {kullanici}  adlı kullanıcının gönderilerini beğenme işlemi başladı",
+                    "warning10": "[-] {kullanici} kullanıcısının gönderilerini beğenmekten vazgeçme işlemi sırasında bir hata oluştu:{hata}",
+                    "warning2": "[+] {index}-) {url} gönderisi beğenildi.",
+                    "warning3": "[*] {url} gönderisi daha önce beğenildi.",
+                    "warning4": "[+] {index}-) {url} gönderisi beğenilmekten vazgeçildi.",
+                    "warning5": "[*] {url} gönderisi zaten beğenilmedi.",
+                    "warning6": "[*] {kullanici}  adlı kullanıcının gönderilerini beğenme işlemi tamamlandı.",
+                    "warning7": "[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan gönderileri beğenme işlemi yapılamıyor!",
+                    "warning8": "[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan gönderileri beğenmekten vazgeçme işlemi yapılamıyor!",
+                    "warning9": "[-] {kullanici} kullanıcısının gönderilerini beğenme işlemi sırasında bir hata oluştu:{hata}"
+                }
+            },
+            "klasorOlustur": {
+                "warnings": {
+                    "warning1": "[+] {klasor} adında klasör oluşturuldu",
+                    "warning2": "[*] {klasor} klasörüne geçiş yapıldı",
+                    "warning3": "[*] {klasor} adında klasör zaten mevcut",
+                    "warning4": "[*] {klasor} klasörüne geçiş yapıldı"
+                }
+            },
+            "menu": [
+                "       <<< SEÇENEKLER >>>      ",
+                "      ",
+                "      ",
+                "1 -)  Tüm Gönderileri İndir",
+                "10 -) Tek Gönderi İndirme",
+                "11 -) IG TV Video İndirme",
+                "12 -) Bir Kullanıcının Takipçilerini Takip Etme",
+                "13 -) Bir Dosyadaki Tüm Kullanıcıları Takip Etme",
+                "14 -) Bir Gönderiyi Beğenleri Takip Etme",
+                "15 -) Etikete Göre Kullanıcıları Takip Etme",
+                "16 -) Etikete Göre Gönderileri Beğenme",
+                "17 -) Tek Gönderi Beğenme",
+                "18 -) Tek Gönderi Beğenmekten Vazgeçme",
+                "19 -) Bir Gönderiye Yorum Yapma",
+                "2 -)  Tüm Gönderileri Beğen",
+                "20 -) Kullanıcı Takip Etme",
+                "21 -) Kullanıcı Takip Etmekten Vazgeçme",
+                "22 -) Kullanıcı Engelleme",
+                "23 -) Kullanıcı Engeli Kaldırma",
+                "24 -) İnstagram Çıkış Yapma",
+                "25 -) Uygulama'dan Çıkış Yapma",
+                "3 -)  Tüm Gönderileri Beğenmekten Vazgeç",
+                "4 -)  Toplu Takipten Çıkma",
+                "5 -)  Bir Gönderiye Toplu Yorum Yapma",
+                "6 -)  Takip Etmeyenleri Takipten Çıkma",
+                "7 -)  Toplu Mesaj Silme",
+                "8 -)  Öne Çıkan Hikaye İndirme",
+                "9 -)  Hikaye İndirme"
+            ],
+            "quit": {
+                "warnings": {
+                    "warning1": "[*] Uygulamadan çıkış yapılıyor...",
+                    "warning2": "[*] Uygulamadan çıkış yapıldı...",
+                    "warning3": "[-] Uygulamadan çıkış sırasında hata oluştu:"
+                }
+            },
+            "urlGecerliMi": {
+                "warnings": {
+                    "warning1": "[-] Geçerli bir url girişi yapmadınız!"
+                }
+            },
+            "urlGirildiMi": {
+                "warnings": {
+                    "warning1": "[-] Bir url girişi yapmasınız!"
+                }
+            },
+            "warnings": {
+                "aktifKullaniciGetir": {
+                    "warnings": {
+                        "warning1": "[-] Aktif kullanıcı adı getirme işlemi sırasında bir hata oluştu: {hata}"
+                    }
+                },
+                "AlbumIcerikSayisiGetir": {
+                    "warnings": {
+                        "warning1": "[-] {url} gönderisinin album içerik sayısını getirme işlemi sırasında hata:{hata}"
+                    }
+                },
+                "albumIcerikUrlGetir": {
+                    "warnings": {
+                        "warning1": "[-] Gönderi url'si getirme işlemi sırasında bir hata oluştu: {hata}"
+                    }
+                },
+                "dosyaIndir": {
+                    "warnings": {
+                        "warning1": "[+] {url} indirildi",
+                        "warning2": "[-] dosya indirme işlemi sırasında bir hata oluştu: {hata}"
+                    }
+                },
+                "dosyaİceriginiAl": {
+                    "warning1": "[-] Seçilen dosyanın yüklenme işlemi sırasında bir hata oluştu:{hata}"
+                },
+                "dosyaSec": {
+                    "inputs": {
+                        "input1": "Dosya yolunu giriniz >> "
+                    },
+                    "warnings": {
+                        "warning1": "[-] Geçerli bir dosya yolu belirtmediniz.Sadece txt uzantılı dosyaları seçebilirsiniz!",
+                        "warning2": "[-] Dosya seçme işlemi sırasında bir hata oluştu:{hata}"
+                    }
+                },
+                "etiketeGoreBegenme": {
+                    "warnings": {
+                        "warning1": "[*] {etiket}  etiketine göre beğeni yapma işlemi başladı.",
+                        "warning2": "[+] {index}-) {url} gönderisi beğenildi.",
+                        "warning3": "[*] {url} gönderisi daha önce beğenildi.",
+                        "warning4": "[*] {etiket}  etiketine göre beğeni yapma işlemi tamamlandı.",
+                        "warning5": "[-] Etikete göre beğeni işlemi yapma sırasında bir hata oluştu: {hata}"
+                    }
+                },
+                "etiketeGoreIslemLimitiGetir": {
+                    "inputs": {
+                        "input1": "Beğenmek istediğiniz gönderi sayısını giriniz >> ",
+                        "input2": "Takip etmek istediğiniz kullanıcı sayısını giriniz >> "
+                    },
+                    "warnings": {
+                        "warning1": "[-] Bir sayı girişi yapmadınız!",
+                        "warning2": "[-] Belirleyen etikete göre işlem yapma limiti belirleme işlemi yapma sırasında bir hata oluştu: {hata}"
+                    }
+                },
+                "etiketeGoreTakipEtme": {
+                    "warnings": {
+                        "warning1": "[*] {etiket}  etiketine göre kullanıcı takip etme işlemi başladı.",
+                        "warning2": "[+] {index}-) {kullanici} takip edilmeye başlandı.",
+                        "warning3": "[*] {kullanici} zaten takip ediliyor.",
+                        "warning4": "[*] {etiket}  etiketine göre kullanıcı takip etme işlemi tamamlandı.",
+                        "warning5": "[-] Etikete göre beğeni işlemi yapma sırasında bir hata oluştu: {hata}"
+                    }
+                },
+                "etiketGetir": {
+                    "inputs": {
+                        "input1": "Bir etiket adı giriniz >> "
+                    },
+                    "warnings": {
+                        "warning1": "[*] {url}  sayfasına yönlendiriliyor...",
+                        "warning2": "[-] {etiket} etiketine ait bir gönderi bulunamadı!",
+                        "warning3": "[-] Bir etiket girişi yapmadınız!",
+                        "warning4": "[-] Etiket belirleme işlemi yapma sırasında bir hata oluştu: {hata}"
+                    }
+                },
+                "girisDogrulama": {
+                    "inputs": {
+                        "input1": "Telefonunuza gönderilen kodu giriniz >> "
+                    },
+                    "warnings": {
+                        "warning1": "[-] Lütfen güvenlik kodunu giriniz!",
+                        "warning2": "[-] Lütfen güvenlik kodunu kontrol edin ve tekrar deneyin.",
+                        "warning3": "[+] Giriş işlemi başarılı",
+                        "warning4": "[-] Giriş Yapılamıyor..."
+                    }
+                },
+                "girisKontrol": {
+                    "warnings": {
+                        "warning1": "[-] Girdiğiniz kullanıcı adı bir hesaba ait değil. Lütfen kullanıcı adınızı kontrol edin ve tekrar deneyin.",
+                        "warning2": "[-] Üzgünüz, parolanız hatalıydı. Lütfen parolanızı tekrar kontrol edin.",
+                        "warning3": "[+] Giriş işlemi başarılı",
+                        "warning4": "[-] Giriş işlemi başarısız"
+                    }
+                },
+                "girisYap": {
+                    "inputs": {
+                        "input1": "Kullanıcı adınız >> ",
+                        "input2": "Parolanız >> "
+                    },
+                    "warnings": {
+                        "warning1": "<<< Instagram Giriş Yap >>>>",
+                        "warning2": "[-] Lütfen kullanıcı adınızı ve parolanızı giriniz!",
+                        "warning3": "[-] Lütfen kullanıcı adınızı giriniz!",
+                        "warning4": "[-] Lütfen parolanızı giriniz!",
+                        "warning5": "[*] Kullanıcı girişi yapılıyor...",
+                        "warning6": "[-] Kullanıcı girişi sırasında hata:{hata}"
+                    }
+                },
+                "gonderiBegenenleriTakipEt": {
+                    "inputs": {
+                        "input1": "İşlem yapmak istediğiniz gönderi url >> ",
+                        "input2": "Tüm takipçiler listesi içerisinde mi işlem yapılsın ? >> ",
+                        "input3": "İşlem yapmak için bir sayı giriniz >>> "
+                    },
+                    "warnings": {
+                        "warning1": "[*] {url}  gönderisine yönlendiriliyor...",
+                        "warning10": "[*] {url} gönderisini  beğenen kullanıcıların listesi görüntülenemediğinden dolayı takip etme işlemi yapılamıyor",
+                        "warning11": "[-] {url} gönderisinin sahibinin profili gizli hesap olduğundan dolayı, bu gönderiyi beğenen kullanıcıların listesi alınamıyor!",
+                        "warning12": "[-] Gönderi beğenenleri takip etme işlemi sırasında bir hata oluştu: {hata}",
+                        "warning2": [
+                            "       <<< SEÇENEKLER >>>      ",
+                            "",
+                            "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz",
+                            "Tüm takipçiler listesi içerisinden işlem yapmak için 1,"
+                        ],
+                        "warning3": "Seçilen İşlem >>> Gönderiyi beğenen tüm kullanıcıları takip etme",
+                        "warning4": "Seçilen İşlem >>> Belirtilen sayı kadar gönderiyi beğenen tüm kullanıcıları takip etme",
+                        "warning5": "[-] Bir sayı girişi yapmadınız.Lütfen bir sayı giriniz!",
+                        "warning6": "[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
+                        "warning7": "[*] {url}  gönderisini beğenen kullanıcıları takip etme işlemi başladı...",
+                        "warning8": "[*] {index} -) {kullaniciAdi} kullanıcısı takip edilme işlemi başladı.",
+                        "warning9": "[*] Takipçi seçme işlemi tamamlandı."
+                    }
+                },
+                "gonderiIndir": {
+                    "inputs": {
+                        "input1": "İndirmek istediğiniz gönderi url >> "
+                    },
+                    "warnings": {
+                        "warning1": "[*] {url}  gönderisine yönlendiriliyor...",
+                        "warning2": "[*] {url} adresindeki gönderinin indirme işlemi başladı.",
+                        "warning3": "[*] {url} adresindeki gönderinin indirme işlemi tamamlandı.",
+                        "warning4": "[-] {url} gönderisinin sahibinin profili gizli hesap olduğundan indirme işlemi yapılamıyor!",
+                        "warning5": "[-] gönderi indirme işlemi sırasında bir hata oluştu:{hata}"
+                    }
+                },
+                "gonderileriIndir": {
+                    "warnings": {
+                        "warning1": "[*] {kullanici}  adlı kullanıcının gönderilerini indirme işlemi başladı",
+                        "warning2": "[*] {kullanici}  adlı kullanıcının gönderilerini indirme işlemi tamamlandı.",
+                        "warning3": "[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan gönderileri indirme işlemi yapılamıyor!",
+                        "warning4": "[-] {kullanici} kullanıcısının gönderilerini indirme işlemi sırasında bir hata oluştu:{hata}"
+                    }
+                },
+                "gonderiUrlGetir": {
+                    "warnings": {
+                        "warning1": "[-] Gönderi url'si getirme işlemi sırasında bir hata oluştu: {hata}"
+                    }
+                },
+                "gonderiVarMi": {
+                    "warnings": {
+                        "warning1": "[-] {kullanici} adlı kullanıcının gönderileri bulunmamaktadır."
+                    }
+                },
+                "gonderiYorumYapma": {
+                    "inputs": {
+                        "input1": "Yorum yapmak istediğiniz gönderi url'isini giriniz >> ",
+                        "input2": "Yorumunuzu giriniz >> "
+                    },
+                    "warnings": {
+                        "warning1": "[-] Yorum girişi yapmadınız!",
+                        "warning2": "[*] {url}  gönderisine yönlendiriliyor...",
+                        "warning3": "[-] Yorum yapmak istediğiniz öne çıkan hikayenin url'sine ulaşılamadı!",
+                        "warning4": "[*] {url}  gönderisine yorum yapma işlemi başladı.",
+                        "warning5": "[*] {url}  gönderisine yorum yapma işlemi tamamlandı.",
+                        "warning6": "[-] {url} gönderisinin sahibinin hesabı gizli hesap olduğundan dolayı yorum yapma işlemi gerçekleştirilemiyor",
+                        "warning7": "[-] {url} gönderisine yorum yapma işlemi sırasında bir hata oluştu: {hata}"
+                    }
+                },
+                "hikayeIndir": {
+                    "warnings": {
+                        "warning1": "[*] {kullanici} kullanıcısının hikayelerini indirme işlemi başladı.",
+                        "warning2": "[*] {kullanici} kullanıcısının hikayelerini indirme işlemi tamamlandı.",
+                        "warning3": "[-] Hikaye bulunamadı!",
+                        "warning4": "[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan takipçileri takip edilemiyor!",
+                        "warning5": "[-] Hikayeleri indirme işlemi sırasında bir hata oluştu: {hata}"
+                    }
+                },
+                "hikayeleriGetir": {
+                    "warnings": {
+                        "warning1": "[-] Hikayeleri getirme işlemi sırasında bir hata oluştu: {hata}"
+                    }
+                },
+                "hikayeSayisiGetir": {
+                    "warnings": {
+                        "warning1": "[-] Hikaye sayısı getirme işlemi sırasında bir hata oluştu: {hata}"
+                    }
+                },
+                "hikayeVarMi": {
+                    "warnings": {
+                        "warning1": "[-] Hikaye olup olmadığı işleminin kontrolü sırasına bir hata oluştu: {hata}"
+                    }
+                },
+                "islemSec": {
+                    "inputs": {
+                        "input1": " İşlem yapmak için bir seçim yapınız >> "
+                    },
+                    "warnings": {
+                        "warning1": "[-] Lütfen geçerli bir seçim yapınız!",
+                        "warning2": "[-] Yapılacak işlem , başındaki sayıya göre seçilmeli."
+                    }
+                },
+                "kullaniciEngelle": {
+                    "warnings": {
+                        "warning1": "[*]  {kullanici} kullanıcısını engelleme işlemi başladı.",
+                        "warning10": "[-] {kullanici} kullanıcısının engelini kaldırma işlemi sırasında hata:{hata}",
+                        "warning2": "[*]  {kullanici} kullanıcısının engelini kaldırma işlemi başladı.",
+                        "warning3": "[-] {kullanici} kullanıcısı zaten engellenmiş durumda",
+                        "warning4": "[-] {kullanici} kullanıcısı zaten engellenmemiş durumda.",
+                        "warning5": "[-] {kullanici} kullanıcısı zaten engellenmiş durumda.",
+                        "warning6": "[-] {kullanici} kullanıcısı zaten engellenmemiş durumda.",
+                        "warning7": "[*]  {kullanici} kullanıcısını engelleme işlemi tamamlandı.",
+                        "warning8": "[*]  {kullanici} kullanıcısının engelini kaldırma işlemi tamamlandı.",
+                        "warning9": "[-] {kullanici} kullanıcısını engelleme işlemi sırasında hata:{hata}"
+                    }
+                },
+                "kullaniciTakipcileriniTakipEt": {
+                    "inputs": {
+                        "input1": "Tüm takipçiler listesi içerisinde mi işlem yapılsın ? >> ",
+                        "input2": "İşlem yapmak için bir sayı giriniz >>> "
+                    },
+                    "warnings": {
+                        "warning1": [
+                            "       <<< SEÇENEKLER >>>      ",
+                            "",
+                            "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz.",
+                            "Tüm takipçiler listesi içerisinden işlem yapmak için 1,"
+                        ],
+                        "warning10": "[-] {kullanici} kullanıcısının takipçilerini takip etme işlemi sırasında hata:{hata}",
+                        "warning2": "Seçilen İşlem >>> Tüm takipçiler listesi içerisindeki kullanıcıları takip etme",
+                        "warning3": "Seçilen İşlem >>> Belirtilen sayı kadar takipçiler listesi içerisindeki kullanıcıları takip etme",
+                        "warning4": "[-] Bir sayı girişi yapmadınız.Lütfen bir sayı giriniz!",
+                        "warning5": "[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
+                        "warning6": "[*] {kullanici} kullanıcısının takipçilerini takip etme işlemi başladı...",
+                        "warning7": "[*] {index} -) {takipci} takip edilme işlemi başladı.",
+                        "warning8": "[*] {kullanici} kullanıcısının takipçilerini takip etme işlemi tamamlandı.",
+                        "warning9": "[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan takipçileri takip edilemiyor!"
+                    }
+                },
+                "kullaniciTakipDurumDegistir": {
+                    "warnings": {
+                        "warning1": "[+] {kullanici} kullanıcısına takip isteği gönderildi",
+                        "warning2": "[*] {kullanici} kullanıcısına takip isteği zaten gönderildi",
+                        "warning3": "[-] {kullanici} kullanıcısı engelli durumda olduğu için takip isteği atılamıyor.",
+                        "warning4": "[-] {kullanici} kullanıcısını zaten takip etmiyorsunuz.",
+                        "warning5": "[+] {kullanici} kullanıcısı takip edilmeye başlandı.",
+                        "warning6": "[-] {kullanici} kullanıcısı engelli durumda olduğu için takip isteği atılamıyor.",
+                        "warning7": "[-] {kullanici} kullanıcısını zaten takip ediyorsunuz.",
+                        "warning8": "[+] {kullanici} kullanıcısı takip edilmekten vazgeçildi."
+                    }
+                },
+                "kullaniciTakipEt": {
+                    "warnings": {
+                        "warning1": "[*] {kullanici} kullanıcısını takip etme işlemi başladı...",
+                        "warning2": "[*] {kullanici} kullanıcısını takipten çıkma işlemi başladı...",
+                        "warning3": "[*] {kullanici} kullanıcısını takip etme işlemi tamamlandı...",
+                        "warning4": "[*] {kullanici} kullanıcısını takipten çıkma işlemi tamamlandı...",
+                        "warning5": "[-] {kullanici} kullanıcısını takip etme işlemi sırasında hata:{hata}",
+                        "warning6": "[-] {kullanici} kullanıcısını takip etmekten vazgeçme işlemi sırasında hata:{hata}"
+                    }
+                },
+                "oneCikanHikayeIndir": {
+                    "inputs": {
+                        "input1": "Öne çıkan hikaye url giriniz >> "
+                    },
+                    "warnings": {
+                        "warning1": "[*] {url}  gönderisine yönlendiriliyor...",
+                        "warning2": "[-] İndirmek istediğiniz öne çıkan hikayenin url'sine ulaşılamadı!",
+                        "warning3": "[*] {url}  öne çıkan hikayesini indirme işlemi başladı",
+                        "warning4": "[*] {url}  öne çıkan hikayesini indirme işlemi tamamlandı.",
+                        "warning5": "[-] Öne çıkan hikayeyi indirme işlemi sırasında bir hata oluştu: {hata}"
+                    }
+                },
+                "profilSec": {
+                    "inputs": {
+                        "input1": " İşlem yapmak istediğiniz profilin kullanıcı adı >> "
+                    },
+                    "warnings": {
+                        "warning1": "[*] Tarayıcı {kullanici} profiline yönlendiriliyor...",
+                        "warning2": "[-] {kullanici} adında bir kullanıcı bulunamadı "
+                    }
+                },
+                "rastgeleYorumGetir": {
+                    "warning1": "[-] Rastgele yorum getirme işlemi sırasında bir hata oluştu: {hata}"
+                },
+                "secilenIslemiGoster": {
+                    "secimler": {
+                        "1": "Seçilen İşlem >>> Tüm Gönderileri İndir",
+                        "2": "Seçilen İşlem >>> Tüm Gönderileri Beğen",
+                        "3": "Seçilen İşlem >>> Tüm Gönderileri Beğenmekten Vazgeç",
+                        "4": "Seçilen İşlem >>> Toplu Takipten Çıkma",
+                        "5": "Seçilen İşlem >>> Bir Gönderiye Toplu Yorum Yapma",
+                        "6": "Seçilen İşlem >>> Takip Etmeyenleri Takipten Çıkma",
+                        "7": "Seçilen İşlem >>> Toplu Mesaj Silme",
+                        "8": "Seçilen İşlem >>> Öne Çıkan Hikaye İndirme",
+                        "9": "Seçilen İşlem >>> Hikaye İndirme",
+                        "10": "Seçilen İşlem >>> Tek Gönderi İndirme",
+                        "11": "Seçilen İşlem >>> IG TV Video İndirme",
+                        "12": "Seçilen İşlem >>> Bir Kullanıcının Takipçilerini Takip Etme",
+                        "13": "Seçilen İşlem >>> Bir Dosyadaki Tüm Kullanıcıları Takip Etme",
+                        "14": "Seçilen İşlem >>> Bir Gönderiyi Beğenleri Takip Etme",
+                        "15": "Seçilen İşlem >>> Etikete Göre Kullanıcıları Takip Etme",
+                        "16": "Seçilen İşlem >>> Etikete Göre Gönderileri Beğenme",
+                        "17": "Seçilen İşlem >>> Tek Gönderi Beğenme",
+                        "18": "Seçilen İşlem >>> Tek Gönderi Beğenmekten Vazgeçme",
+                        "19": "Seçilen İşlem >>> Bir Gönderiye Yorum Yapma",
+                        "20": "Seçilen İşlem >>> Kullanıcı Takip Etme",
+                        "21": "Seçilen İşlem >>> Kullanıcı Takip Etmekten Vazgeçme",
+                        "22": "Seçilen İşlem >>> Kullanıcı Engelleme",
+                        "23": "Seçilen İşlem >>> Kullanıcı Engeli Kaldırma",
+                        "24": "Seçilen İşlem >>> İnstagram Çıkış Yapma",
+                        "25": "Seçilen İşlem >>> Uygulama'dan Çıkış Yapma"
+                    },
+                    "warnings": {
+                        "warning1": "Geçersiz seçim!",
+                        "warning2": "[*] Ana menüye dönmek için  'menu' komutunu giriniz"
+                    }
+                },
+                "takipcileriGetir": {
+                    "warnings": {
+                        "warning1": "[*] Tarayıcı profilinize yönlendiriliyor.",
+                        "warning2": "[*] Takipçileri listeye ekleme işlemi başladı.",
+                        "warning3": "[*] {index} -) {takipci} takipcisi listeye eklendi.",
+                        "warning4": "[-] Popup aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}",
+                        "warning5": "[-] Takipçileri seçme işlemi sırasında bir hata oluştu: {hata}"
+                    }
+                },
+                "takipEdilenleriGetir": {
+                    "warnings": {
+                        "warning1": "[*] Takip etmeyen kullanıcıları takipten çıkma işlemi başladı.",
+                        "warning2": "[-] {kullaniciAdi} kullanıcısını takipten çıkma işlemi sırasında bir hata oluştu: {hata}",
+                        "warning3": "[*] {index} -) {kullaniciAdi} adlı kullanıcı takip edilmekten vazgeçildi.",
+                        "warning4": "[-] Popup aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}",
+                        "warning5": "[-] Takip etmeyen kullanıcıları takipten çıkma işlemi sırasında bir hata oluştu: {hata}"
+                    }
+                },
+                "takipEtmeyenleriTakiptenCik": {
+                    "warnings": {
+                        "warning1": "[*] Takipçileri listeye ekleme işlemi başladı.",
+                        "warning2": "[*] Takipçileri listeye ekleme işlemi başladı.",
+                        "warning3": "[-] Takip etmeyen kullanıcıları takipten çıkma işlemi sırasında bir hata oluştu: {hata}"
+                    }
+                },
+                "tarayiciBaslat": {
+                    "warning1": "[*] Tarayıcı Başlatılıyor..."
+                },
+                "topluMesajSilme": {
+                    "warning1": "[*] Toplu mesaj silme işlemi başladı.",
+                    "warning2": "[*] Mesaj kutusunda mesaj bulunmamaktadır.",
+                    "warning3": "[*] {index} -) {kullaniciAdi} ile yapılan mesajlaşma silinecek.",
+                    "warning4": "[*] {index} -) {kullaniciAdi} ile yapılan mesajlaşma başarıyla silindi.",
+                    "warning5": "[*] Toplu mesaj silme işlemi tamamlandı.",
+                    "warning6": "[-] Toplu mesaj  aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}"
+                },
+                "topluTakiptenCik": {
+                    "warnings": {
+                        "warning1": "[*] Toplu takipten çıkma işlemi başladı.",
+                        "warning2": "[-] {kullaniciAdi} kullanıcısını takipten çıkma işlemi sırasında bir hata oluştu: {hata}",
+                        "warning3": "[*] {index} -) {kullaniciAdi} adlı kullanıcı takip edilmekten vazgeçildi.",
+                        "warning4": "[-] Popup aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}",
+                        "warning5": "[-] Toplu takipten çıkma işlemi sırasında bir hata oluştu: {hata}"
+                    }
+                },
+                "topluYorumYapma": {
+                    "inputs": {
+                        "input1": "Yorum yapmak istediğiniz gönderi url'sini giriniz >> ",
+                        "input2": "Yapmak istediğiniz yorum sayısını giriniz >> ",
+                        "input3": "Uygulama ile oluşturan rastgele yorumlar seçilsin mi? >> "
+                    },
+                    "warnings": {
+                        "warning1": "[*] {url}  gönderisine yönlendiriliyor...",
+                        "warning10": "Seçilen İşlem >>> Txt dosyasından olarak oluşturduğunuz yorumlar ile işlem yapma",
+                        "warning11": "[*] {url}  gönderisine toplu yorum yapma işlemi başladı.",
+                        "warning12": "[*] {index}.yorum yapıldı.",
+                        "warning13": "[-] Bir seçim yapmadınız!.Lütfen yapmak istediğiniz işlemin numarasını giriniz!",
+                        "warning14": "[*] {url}  gönderisine toplu yorum yapma işlemi tamamlandı.",
+                        "warning15": "[-] {url} gönderisine toplu yorum yapma işlemi sırasında bir hata oluştu: {hata}",
+                        "warning2": "[-] {url} url'sine ulaşılamadı!",
+                        "warning3": "[-] {url} gönderisinin sahibinin hesabı gizli hesap olduğundan dolayı toplu yorum yapma işlemi gerçekleştirilemiyor",
+                        "warning4": "[*] En fazla 50 yorum yapabilirsiniz.Yorum sayısı 50 olarak belirlenmiştir!",
+                        "warning5": "[-] Yapmak istediğiniz yorum sayısını girmediniz!",
+                        "warning6": [
+                            "       <<< SEÇENEKLER >>>      ",
+                            " ",
+                            "Txt dosyasından olarak oluşturduğunuz yorumlar ile işlem yapmak için 2 giriniz.",
+                            "Uygulama ile oluşturan rastgele yorumlar ile işlem yapmak için 1,"
+                        ],
+                        "warning7": "Seçilen İşlem >>> Uygulama ile oluşturan rastgele yorumlar ile işlem yapma",
+                        "warning8": "[*] {url}  gönderisine toplu yorum yapma işlemi başladı.",
+                        "warning9": "[*] {index}.yorum yapıldı."
+                    }
+                },
+                "yorumYap": {
+                    "warning1": "[-] {url} gönderisine yorum yapma işlemi sırasında bir hata oluştu: {hata}"
+                }
+            }
+        }
+    },
+    "time": {
+        "albumUrlGetir": 1,
+        "bildirimPopupKapat": 5,
+        "etiketeGoreBegenme": {
+            "sleep1": 1,
+            "sleep2": 0.5,
+            "sleep3": [
+                15,
+                5
+            ],
+            "sleep4": 5
+        },
+        "etiketeGoreTakipEtme": {
+            "sleep1": 1,
+            "sleep2": 0.5,
+            "sleep3": [
+                20,
+                5
+            ],
+            "sleep4": 5
+        },
+        "girisDogrulama": {
+            "sleep1": 5,
+            "sleep2": 5
+        },
+        "girisYap": {
+            "sleep1": 15,
+            "sleep2": 5
+        },
+        "gonderiBegenDurumDegistir": {
+            "sleep1": 0.5,
+            "sleep2": [
+                15,
+                5
+            ]
+        },
+        "gonderiBegenenleriTakipEt": {
+            "sleep1": 5,
+            "sleep2": [
+                15,
+                5
+            ],
+            "sleep3": 3
+        },
+        "gonderileriBegen": {
+            "sleep1": 1,
+            "sleep2": 5,
+            "sleep3": 5
+        },
+        "gonderileriIndir": {
+            "sleep1": 1,
+            "sleep2": 3
+        },
+        "hikayeIndir": 3,
+        "hikayeleriGetir": 1,
+        "kullaniciEngelDurumDegistir": {
+            "sleep1": 0.5,
+            "sleep2": 0.5
+        },
+        "kullanicilariTakipEt": [
+            10,
+            40
+        ],
+        "kullaniciProfilineYonlendir": 5,
+        "kullaniciTakipcileriniTakipEt": {
+            "sleep1": 5,
+            "sleep2": [
+                15,
+                5
+            ],
+            "sleep3": 3
+        },
+        "kullaniciTakipDurumDegistir": 0.5,
+        "mesajSil": {
+            "sleep1": [
+                1,
+                2
+            ],
+            "sleep2": 1,
+            "sleep3": 2
+        },
+        "oneCikanHikayeIndir": 1,
+        "takipcileriGetir": {
+            "sleep1": 3,
+            "sleep2": 3
+        },
+        "takipEdilenleriGetir": {
+            "sleep1": 5,
+            "sleep2": 2,
+            "sleep3": [
+                15,
+                5
+            ],
+            "sleep4": 3
+        },
+        "topluMesajSilme": [
+            15,
+            5
+        ],
+        "topluTakiptenCik": {
+            "sleep1": 3,
+            "sleep2": 2,
+            "sleep3": [
+                15,
+                5
+            ],
+            "sleep4": 3
+        },
+        "topluYorumYapma": [
+            20,
+            5
+        ],
+        "urlYonlendir": 5
+    }
+}
