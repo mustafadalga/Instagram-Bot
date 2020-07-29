@@ -89,8 +89,8 @@ class Instagram():
         print(self.uyariOlustur(" 12 -) Bir Kullanıcının Takipçilerini Takip Etme", 3))
         print(self.uyariOlustur(" 13 -) Bir Dosyadaki Tüm Kullanıcıları Takip Etme", 3))
         print(self.uyariOlustur(" 14 -) Bir Gönderiyi Beğenleri Takip Etme", 3))
-        print(self.uyariOlustur(" 15 -) Etikete Göre Gönderileri Beğenme", 3))
-        print(self.uyariOlustur(" 16 -) Etikete Göre Kullanıcıları Takip Etme", 3))
+        print(self.uyariOlustur(" 15 -) Etikete Göre Kullanıcıları Takip Etme", 3))
+        print(self.uyariOlustur(" 16 -) Etikete Göre Gönderileri Beğenme", 3))
         print(self.uyariOlustur(" 17 -) Tek Gönderi Beğenme", 3))
         print(self.uyariOlustur(" 18 -) Tek Gönderi Beğenmekten Vazgeçme", 3))
         print(self.uyariOlustur(" 19 -) Bir Gönderiye Yorum Yapma", 3))
@@ -128,10 +128,10 @@ class Instagram():
                         self.kullaniciListesiTakipEt()
                     elif secim==14:
                         self.gonderiBegenenleriTakipEt()
-                    elif secim==15:
-                        self.etiketeGoreBegenme()
-                    elif secim==16:
+                    elif secim == 15:
                         self.etiketeGoreTakipEtme()
+                    elif secim==16:
+                        self.etiketeGoreBegenme()
                     elif secim==17:
                         self.gonderiBegen()
                     elif secim==18:
@@ -168,8 +168,8 @@ class Instagram():
             12: "Seçilen İşlem >>> Bir Kullanıcının Takipçilerini Takip Etme",
             13: "Seçilen İşlem >>> Bir Dosyadaki Tüm Kullanıcıları Takip Etme",
             14: "Seçilen İşlem >>> Bir Gönderiyi Beğenleri Takip Etme",
-            15: "Seçilen İşlem >>> Etikete Göre Gönderileri Beğenme",
-            16: "Seçilen İşlem >>> Etikete Göre Kullanıcıları Takip Etme",
+            15: "Seçilen İşlem >>> Etikete Göre Kullanıcıları Takip Etme",
+            16: "Seçilen İşlem >>> Etikete Göre Gönderileri Beğenme",
             17: "Seçilen İşlem >>> Tek Gönderi Beğenme",
             18: "Seçilen İşlem >>> Tek Gönderi Beğenmekten Vazgeçme",
             19: "Seçilen İşlem >>> Bir Gönderiye Yorum Yapma",
