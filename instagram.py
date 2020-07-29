@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-import time
-import datetime
+from time import sleep
+from datetime import datetime
 import os
 import urllib.request
 import requests
@@ -10,12 +10,19 @@ from termcolor import colored
 from colorama import init
 import threading
 from random import randint
-
+import json
 
 class Instagram():
     def __init__(self):
         init(convert=True)
+        self.ayarlar=None
+        self.config=None
+        self.ayarlarYukle()
+        self.dilYukle()
+        self.ayarlarYazdir()
+        self.dil = None
         self.script()
+
         self.tarayiciThreadOlustur()
         self.girisYapildimi = False
         self.tarayiciAcildimi = False
@@ -23,6 +30,25 @@ class Instagram():
         self.index = 1
         self.BASE_URL = "https://www.instagram.com/"
         self.girisYap()
+
+
+    def ayarlarYukle(self):
+        with open('config.json', 'r+', encoding="utf-8") as dosya:
+            self.config = json.load(dosya)
+
+
+    def ayarlarIcerikGetir(self,anahtar):
+        deger=self.config
+        for key in anahtar.split('.'):
+            deger = deger[key]
+        return deger
+
+    def dilYukle(self):
+        self.dil=self.ayarlarIcerikGetir("language")
+        print(self.dil)
+
+    def ayarlarYazdir(self):
+        print(self.ayarlarIcerikGetir("languages.{dil}.warnings.takipEdilenleriGetir.warnings.warning1".format(dil=self.dil)))
 
     def script(self):
         print("")
@@ -197,11 +223,31 @@ class Instagram():
 
     def kullaniciProfilineYonlendir(self,kullanici):
         self.driver.get(self.BASE_URL + kullanici)
-        time.sleep(5)
+        sleep(5)
 
     def urlYonlendir(self,url):
         self.driver.get(url)
-        time.sleep(5)
+        sleep(5)
+
+    def urlKontrol(self, url):
+        try:
+            response = requests.get(url)
+            if response.status_code == 404:
+                return False
+            else:
+                return True
+        except:
+            return False
+
+    def urlGirildiMi(self,url,metod):
+        if not url or len(url)<12:
+            print(self.uyariOlustur("[-] Bir url girişi yapmasınız!", 2))
+            metod
+
+    def urlGecerliMi(self,url,metod):
+        if not self.urlKontrol(url):
+            print(self.uyariOlustur("[-] Geçerli bir url girişi yapmadınız!", 2))
+            metod
 
     def tarayiciThreadOlustur(self):
         t1 = threading.Thread(target=self.tarayiciBaslat)
@@ -216,13 +262,13 @@ class Instagram():
 
     def mesajSil(self,mesaj):
         mesaj.click()
-        time.sleep(self.beklemeSuresiBelirle(1, 2))
+        sleep(self.beklemeSuresiBelirle(1, 2))
         self.driver.find_element_by_xpath(
             "/html/body/div[1]/section/div/div[2]/div/div/div[2]/div[1]/div/div/div[3]/button").click()
-        time.sleep(1)
+        sleep(1)
         self.driver.find_element_by_xpath(
             "/html/body/div[1]/section/div/div[2]/div/div/div[2]/div/div[2]/div[3]/div[1]/button").click()
-        time.sleep(2)
+        sleep(2)
         self.driver.find_element_by_xpath("/html/body/div[4]/div/div/div/div[2]/button[1]").click()
 
     def topluMesajSilme(self):
@@ -245,14 +291,14 @@ class Instagram():
                         self.mesajSil(mesaj)
                         print(self.uyariOlustur("[*] {index} -) {kullaniciAdi} ile yapılan mesajlaşma başarıyla silindi.".format(index=self.index, kullaniciAdi=kullaniciAdi), 1))
                         self.indexArtir()
-                        time.sleep(self.beklemeSuresiBelirle(5,15))
+                        sleep(self.beklemeSuresiBelirle(5,15))
                     break
 
             print("[*] Toplu mesaj silme işlemi tamamlandı.")
             self.menu()
         except Exception as error:
             print(self.uyariOlustur(
-                '[-] Toplu mesaj  aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}'.format(hata=str(error)),
+                "[-] Toplu mesaj  aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)),
                 2))
             self.menu()
 
@@ -316,25 +362,24 @@ class Instagram():
     def topluYorumYapma(self, url=None, yorumSayisi=None, secilenIslem=None):
         try:
             if not url:
-                url = input("Yorum yapmak istediğiniz gönderi url'isini giriniz >> ").strip()
-
+                url = input("Yorum yapmak istediğiniz gönderi url'sini giriniz >> ").strip()
                 self.anaMenuyeDonsunMu(url)
 
-                if self.urlKontrol(url):
-                    print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
-                    self.urlYonlendir(url)
 
-                    if not self.sayfaMevcutMu():
-                        print(self.uyariOlustur("[-] {url} url'sine ulaşılamadı!".format(url=url), 2))
-                        self.topluYorumYapma()
+                self.urlGecerliMi(url,self.topluYorumYapma())
 
-                    if self.hesapGizliMi():
-                        print(self.uyariOlustur(
-                            "[-] {url} gönderisinin sahibinin hesabı gizli hesap olduğundan dolayı toplu yorum yapma işlemi gerçekleştirilemiyor".format(
-                                url=url), 2))
-                        self.topluYorumYapma()
-                else:
-                    print(self.uyariOlustur("[-] Gönderi url'si girmediniz!!", 2))
+
+                print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
+                self.urlYonlendir(url)
+
+                if not self.sayfaMevcutMu():
+                    print(self.uyariOlustur("[-] {url} url'sine ulaşılamadı!".format(url=url), 2))
+                    self.topluYorumYapma()
+
+                if self.hesapGizliMi():
+                    print(self.uyariOlustur(
+                        "[-] {url} gönderisinin sahibinin hesabı gizli hesap olduğundan dolayı toplu yorum yapma işlemi gerçekleştirilemiyor".format(
+                            url=url), 2))
                     self.topluYorumYapma()
 
             if not yorumSayisi:
@@ -364,20 +409,12 @@ class Instagram():
                 print(
                     self.uyariOlustur("Seçilen İşlem >>> Uygulama ile oluşturan rastgele yorumlar ile işlem yapma", 1))
                 print("[*] {url}  gönderisine toplu yorum yapma işlemi başladı.".format(url=url))
-                try:
-                    for i in range(yorumSayisi):
-                        yorum = self.rastgeleYorumGetir()
-                        yorum = self.yorumUzunlukBelirle(yorum)
-                        self.yorumYap(yorum)
-                        print("[*] {index}.yorum yapıldı.".format(index=i + 1))
-                        time.sleep(self.beklemeSuresiBelirle(5,20))
-                except Exception as error:
-                    print(self.uyariOlustur(
-                        "[-] {url} gönderisine toplu yorum yapma işlemi sırasında bir hata oluştu: {hata}".format(
-                            url=url,
-                            hata=str(
-                                error)),
-                        2))
+                for i in range(yorumSayisi):
+                    yorum = self.rastgeleYorumGetir()
+                    yorum = self.yorumUzunlukBelirle(yorum)
+                    self.yorumYap(yorum)
+                    print("[*] {index}.yorum yapıldı.".format(index=i + 1))
+                    sleep(self.beklemeSuresiBelirle(5, 20))
             elif secilenIslem == "2":
                 print(self.uyariOlustur(
                     "Seçilen İşlem >>> Txt dosyasından olarak oluşturduğunuz yorumlar ile işlem yapma", 1))
@@ -391,7 +428,7 @@ class Instagram():
                         print("[*] {index}.yorum yapıldı.".format(index=index + 1))
                         if (index + 1) == yorumSayisi:
                             break
-                        time.sleep(self.beklemeSuresiBelirle(5,20))
+                        sleep(self.beklemeSuresiBelirle(5,20))
                 else:
                     self.topluYorumYapma(url=url, yorumSayisi=yorumSayisi, secilenIslem=secilenIslem)
             else:
@@ -421,36 +458,34 @@ class Instagram():
                 yorum = input("Yorumunuzu giriniz >> ").strip()
                 self.anaMenuyeDonsunMu(yorum)
 
-            if self.urlKontrol(url):
-                self.urlYonlendir(url)
 
-                if not self.sayfaMevcutMu():
-                    print(
-                        self.uyariOlustur("[-] Yorum yapmak istediğiniz öne çıkan hikayenin url'sine ulaşılamadı!", 2))
-                    self.gonderiYorumYapma()
+            self.urlGecerliMi(url,self.gonderiYorumYapma(url=None,yorum=yorum))
 
-                if not self.hesapGizliMi():
-                    if self.degerVarMi(yorum):
-                        yorum = self.yorumUzunlukBelirle(yorum)
-                        print("[*] {url}  gönderisine yorum yapma işlemi başladı.".format(url=url))
-                        self.yorumYap(yorum)
-                        print("[*] {url}  gönderisine yorum yapma işlemi tamamlandı.".format(url=url))
-                    else:
-                        print(
-                            self.uyariOlustur("[-] Yorum girişi yapmadınız!", 2))
-                        self.gonderiYorumYapma(url=url, yorum=None)
-                else:
-                    print(self.uyariOlustur(
-                        "[-] {url} gönderisinin sahibinin hesabı gizli hesap olduğundan dolayı yorum yapma işlemi gerçekleştirilemiyor".format(
-                            url=url), 2))
+
+            if not self.degerVarMi(yorum):
+                print(self.uyariOlustur("[-] Yorum girişi yapmadınız!", 2))
+                self.gonderiYorumYapma(url=url, yorum=None)
+
+            print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
+            self.urlYonlendir(url)
+
+            if not self.sayfaMevcutMu():
+                print(
+                    self.uyariOlustur("[-] Yorum yapmak istediğiniz gönderi url'sine ulaşılamadı!", 2))
+                self.gonderiYorumYapma()
+
+            if not self.hesapGizliMi():
+                yorum = self.yorumUzunlukBelirle(yorum)
+                print("[*] {url}  gönderisine yorum yapma işlemi başladı.".format(url=url))
+                self.yorumYap(yorum)
+                print("[*] {url}  gönderisine yorum yapma işlemi tamamlandı.".format(url=url))
             else:
-                print(self.uyariOlustur("[-] {url} url'sine ulaşılamadı!".format(url=url), 2))
-                self.gonderiYorumYapma(url=None, yorum=yorum)
+                print(self.uyariOlustur(
+                    "[-] {url} gönderisinin sahibinin hesabı gizli hesap olduğundan dolayı yorum yapma işlemi gerçekleştirilemiyor".format(
+                        url=url), 2))
             self.gonderiYorumYapma()
         except Exception as error:
-            print(self.uyariOlustur(
-                "[-] {url} gönderisine yorum yapma işlemi sırasında bir hata oluştu: {hata}".format(url=url,
-                                                                                                    hata=str(error)),
+            print(self.uyariOlustur("[-] {url} gönderisine yorum yapma işlemi sırasında bir hata oluştu: {hata}".format(url=url,hata=str(error)),
                 2))
             self.gonderiYorumYapma()
 
@@ -516,7 +551,7 @@ class Instagram():
             ilkGonderi = self.driver.find_element_by_xpath(
                 "/html/body/div[1]/section/main/article/div[1]/div/div/div[1]/div[1]")
             ilkGonderi.click()
-            time.sleep(1)
+            sleep(1)
             self.indexSifirla()
 
             print("[*] {etiket}  etiketine göre kullanıcı takip etme işlemi başladı.".format(etiket=etiket))
@@ -533,13 +568,13 @@ class Instagram():
                     self.indexArtir()
                     if self.index-1 >= limit:
                         break
-                    time.sleep(0.50)
+                    sleep(0.50)
                     self.gonderiIlerlet()
-                    time.sleep(self.beklemeSuresiBelirle(5,20))
+                    sleep(self.beklemeSuresiBelirle(5,20))
                 else:
                     print(self.uyariOlustur("[*] {kullanici} zaten takip ediliyor.".format(kullanici=kullaniciAdi), 1))
                     self.gonderiIlerlet()
-                    time.sleep(5)
+                    sleep(5)
             print("[*] {etiket}  etiketine göre kullanıcı takip etme işlemi tamamlandı.".format(etiket=etiket))
             self.etiketeGoreTakipEtme()
         except Exception as error:
@@ -564,7 +599,7 @@ class Instagram():
             ilkGonderi = self.driver.find_element_by_xpath(
                 "/html/body/div[1]/section/main/article/div[1]/div/div/div[1]/div[1]")
             ilkGonderi.click()
-            time.sleep(1)
+            sleep(1)
             self.indexSifirla()
 
             print("[*] {etiket}  etiketine göre beğeni yapma işlemi başladı.".format(etiket=etiket))
@@ -579,14 +614,14 @@ class Instagram():
                     self.indexArtir()
                     if self.index-1 >= limit:
                         break
-                    time.sleep(0.50)
+                    sleep(0.50)
                     self.gonderiIlerlet()
-                    time.sleep(self.beklemeSuresiBelirle(5,15))
+                    sleep(self.beklemeSuresiBelirle(5,15))
                 else:
                     print(self.uyariOlustur(
                         "[*] {url} gönderisi daha önce beğenildi.".format(url=self.driver.current_url), 1))
                     self.gonderiIlerlet()
-                    time.sleep(5)
+                    sleep(5)
             print("[*] {etiket}  etiketine göre beğeni yapma işlemi tamamlandı.".format(etiket=etiket))
             self.etiketeGoreBegenme()
         except Exception as error:
@@ -635,7 +670,7 @@ class Instagram():
                     self.dosyaIndir(url, 1)
                 btn_ileri = self.driver.find_element_by_css_selector("button.ow3u_")
                 btn_ileri.click()
-                time.sleep(1)
+                sleep(1)
         except Exception as error:
             print(self.uyariOlustur(
                 "[-] Hikayeleri getirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
@@ -658,7 +693,7 @@ class Instagram():
             if not self.hesapGizliMi():
                 if self.hikayeVarMi():
                     self.driver.find_element_by_css_selector("div.RR-M-").click()
-                    time.sleep(3)
+                    sleep(3)
                     print("[*] {kullanici} kullanıcısının hikayelerini indirme işlemi başladı.".format(
                         kullanici=kullanici))
                     self.klasorOlustur(kullanici)
@@ -691,26 +726,27 @@ class Instagram():
         try:
             url = input("Öne çıkan hikaye url giriniz >> ").strip()
             self.anaMenuyeDonsunMu(url)
-            if self.urlKontrol(url):
-                self.urlYonlendir(url)
+            self.urlGirildiMi(url,self.oneCikanHikayeIndir())
+            self.urlGecerliMi(url,self.oneCikanHikayeIndir())
 
-                if not self.sayfaMevcutMu():
-                    print(self.uyariOlustur("[-] İndirmek istediğiniz öne çıkan hikayenin url'sine ulaşılamadı!", 2))
-                    self.oneCikanHikayeIndir()
+            print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
+            self.urlYonlendir(url)
 
-                print("[*] {url}  öne çıkan hikayesini indirme işlemi başladı".format(url=url))
-                btn_oynat = self.driver.find_element_by_css_selector("button._42FBe")
-                btn_oynat.click()
-                time.sleep(1)
-                kullanici = self.driver.find_element_by_xpath(
-                    "/html/body/div[1]/section/div/div/section/header/div/div[1]/div/div/div/a").get_attribute("title")
-                self.klasorOlustur(kullanici)
-                self.indexSifirla()
-                self.hikayeleriGetir()
-                self.klasorDegistir("../")
-                print("[*] {url}  öne çıkan hikayesini indirme işlemi tamamlandı.".format(url=url))
-            else:
+            if not self.sayfaMevcutMu():
                 print(self.uyariOlustur("[-] İndirmek istediğiniz öne çıkan hikayenin url'sine ulaşılamadı!", 2))
+                self.oneCikanHikayeIndir()
+
+            print("[*] {url}  öne çıkan hikayesini indirme işlemi başladı".format(url=url))
+            btn_oynat = self.driver.find_element_by_css_selector("button._42FBe")
+            btn_oynat.click()
+            sleep(1)
+            kullanici = self.driver.find_element_by_xpath(
+                "/html/body/div[1]/section/div/div/section/header/div/div[1]/div/div/div/a").get_attribute("title")
+            self.klasorOlustur(kullanici)
+            self.indexSifirla()
+            self.hikayeleriGetir()
+            self.klasorDegistir("../")
+            print("[*] {url}  öne çıkan hikayesini indirme işlemi tamamlandı.".format(url=url))
             self.oneCikanHikayeIndir()
         except Exception as error:
             print(self.uyariOlustur(
@@ -718,7 +754,7 @@ class Instagram():
             self.oneCikanHikayeIndir()
 
     def dosyaAdiOlustur(self,veriTuru):
-        dt=str(datetime.datetime.now()).replace(":", "_").replace(" ", "")
+        dt=str(datetime.now()).replace(":", "_").replace(" ", "")
         if veriTuru == 1:
             isim="{index}_{tarih}.jpg".format(index=str(self.index),tarih=dt)
         elif veriTuru == 2:
@@ -733,7 +769,7 @@ class Instagram():
             self.indexArtir()
         except Exception as error:
             print(self.uyariOlustur(
-                '[-] dosya indirme işlemi sırasında bir hata oluştu: {hata}'.format(hata=str(error)), 2))
+                "[-] dosya indirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
 
     def topluTakiptenCik(self):
         try:
@@ -746,7 +782,7 @@ class Instagram():
             btn_takipEdilenler = self.driver.find_element_by_xpath(
                 "/html/body/div[1]/section/main/div/header/section/ul/li[3]/a")
             btn_takipEdilenler.click()
-            time.sleep(3)
+            sleep(3)
             self.indexSifirla()
             devamEtsinMi = True
             while devamEtsinMi:
@@ -757,13 +793,13 @@ class Instagram():
                     btn_takip = takip.find_element_by_css_selector('button.sqdOP')
                     if btn_takip.text == "Following":
                         btn_takip.click()
-                        time.sleep(2)
+                        sleep(2)
                         try:
                             btn_onay = self.driver.find_element_by_css_selector("div.mt3GC > button.aOOlW")
                             btn_onay.click()
                         except Exception as error:
                             print(self.uyariOlustur(
-                                '[-] {kullaniciAdi} kullanıcısını takipten çıkma işlemi sırasında bir hata oluştu: {hata}'.format(
+                                "[-] {kullaniciAdi} kullanıcısını takipten çıkma işlemi sırasında bir hata oluştu: {hata}".format(
                                     kullaniciAdi=takipEdilenKullanıcıAdi, hata=str(error)), 2))
                             continue
                         print(self.uyariOlustur(
@@ -773,16 +809,16 @@ class Instagram():
                         if (self.index - 1) >= takipEdilenSayisi:
                             devamEtsinMi = False
                             break
-                        time.sleep(self.beklemeSuresiGetir(5, 15))
+                        sleep(self.beklemeSuresiGetir(5, 15))
                 if devamEtsinMi:
                     try:
                         self.popupAsagiKaydir(secici='div[role="dialog"] .isgrP')
                     except Exception as error:
                         print(self.uyariOlustur(
-                            '[-] Popup aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}'.format(
+                            "[-] Popup aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}".format(
                                 hata=str(error)), 2))
                         pass
-                    time.sleep(3)
+                    sleep(3)
             self.menu()
         except Exception as error:
             print(self.uyariOlustur(
@@ -809,7 +845,7 @@ class Instagram():
             btn_takipEdilenler = self.driver.find_element_by_xpath(
                 "/html/body/div[1]/section/main/div/header/section/ul/li[3]/a")
             btn_takipEdilenler.click()
-            time.sleep(5)
+            sleep(5)
             self.indexSifirla()
             islemIndex = 0
             devamEtsinMi = True
@@ -823,13 +859,13 @@ class Instagram():
                         btn_takip = takip.find_element_by_css_selector('button.sqdOP')
                         if btn_takip.text == "Following":
                             btn_takip.click()
-                            time.sleep(2)
+                            sleep(2)
                             try:
                                 btn_onay = self.driver.find_element_by_css_selector("div.mt3GC > button.aOOlW")
                                 btn_onay.click()
                             except Exception as error:
                                 print(self.uyariOlustur(
-                                    '[-] {kullaniciAdi} kullanıcısını takipten çıkma işlemi sırasında bir hata oluştu: {hata}'.format(
+                                    "[-] {kullaniciAdi} kullanıcısını takipten çıkma işlemi sırasında bir hata oluştu: {hata}".format(
                                         kullaniciAdi=takipEdilenKullanıcıAdi, hata=str(error)), 2))
                                 continue
                             print(self.uyariOlustur(
@@ -839,7 +875,7 @@ class Instagram():
                             if self.index - 1 >= takipEdilenSayisi:
                                 devamEtsinMi = False
                                 break
-                            time.sleep(self.beklemeSuresiBelirle(5, 15))
+                            sleep(self.beklemeSuresiBelirle(5, 15))
                     islemIndex = islemIndex + 1
                     if islemIndex >= takipEdilenSayisi:
                         devamEtsinMi = False
@@ -849,14 +885,14 @@ class Instagram():
                         self.popupAsagiKaydir(secici='div[role="dialog"] .isgrP')
                     except Exception as error:
                         print(self.uyariOlustur(
-                            '[-] Popup aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}'.format(
+                            "[-] Popup aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}".format(
                                 hata=str(error)), 2))
                         pass
-                    time.sleep(3)
+                    sleep(3)
 
         except Exception as error:
             print(self.uyariOlustur(
-                '[-] Takip etmeyen kullanıcıları takipten çıkma işlemi sırasında bir hata oluştu: {hata}'.format(
+                "[-] Takip etmeyen kullanıcıları takipten çıkma işlemi sırasında bir hata oluştu: {hata}".format(
                     hata=str(error)), 2))
             self.menu()
 
@@ -881,7 +917,7 @@ class Instagram():
             btn_takipciler = self.driver.find_element_by_xpath(
                 "/html/body/div[1]/section/main/div/header/section/ul/li[2]/a")
             btn_takipciler.click()
-            time.sleep(3)
+            sleep(3)
             takipciler = set()
             self.indexSifirla()
             devamEtsinMi = True
@@ -907,10 +943,10 @@ class Instagram():
                         self.popupAsagiKaydir(secici='div[role="dialog"] .isgrP')
                     except Exception as error:
                         print(self.uyariOlustur(
-                            '[-] Popup aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}'.format(
+                            "[-] Popup aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}".format(
                                 hata=str(error)), 2))
                         pass
-                    time.sleep(3)
+                    sleep(3)
             btn_close_dialog = self.driver.find_element_by_xpath("/html/body/div[4]/div/div/div[1]/div/div[2]/button")
             btn_close_dialog.click()
             return takipciler
@@ -925,7 +961,7 @@ class Instagram():
             takipciler = self.takipcileriGetir()
             print("[*] Takipçileri listeye ekleme işlemi başladı.")
             self.takipEdilenleriGetir(takipciler=takipciler)
-            print("[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.")
+            print("[*] Takipçileri listeye ekleme işlemi başladı.")
             self.menu()
         except Exception as error:
             print(self.uyariOlustur(
@@ -942,102 +978,101 @@ class Instagram():
             url = input("İşlem yapmak istediğiniz gönderi url >> ").strip()
             self.anaMenuyeDonsunMu(url)
 
-            if not url:
-                self.gonderiBegenenleriTakipEt()
+            self.urlGirildiMi(url,self.gonderiBegenenleriTakipEt())
+            self.urlGecerliMi(url,self.gonderiBegenenleriTakipEt())
 
-            if self.urlKontrol(url):
-                print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
-                self.urlYonlendir(url)
-                hedefBegenenSayisi = None
+            print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
+            self.urlYonlendir(url)
+            hedefBegenenSayisi = None
 
-                if secilenIslem is None:
-                    print(self.uyariOlustur("       <<< SEÇENEKLER >>>      ", 1))
-                    print(self.uyariOlustur("Tüm takipçiler listesi içerisinden işlem yapmak için 1,", 3))
-                    print(self.uyariOlustur(
-                        "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz,", 3))
-                    print("")
-                    secilenIslem = str(input("Tüm takipçiler listesi içerisinde mi işlem yapılsın ? >> ").strip())
-                    self.anaMenuyeDonsunMu(secilenIslem)
+            if secilenIslem is None:
+                print(self.uyariOlustur("       <<< SEÇENEKLER >>>      ", 1))
+                print(self.uyariOlustur("Tüm takipçiler listesi içerisinden işlem yapmak için 1,", 3))
+                print(self.uyariOlustur(
+                    "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz", 3))
+                print("")
+                secilenIslem = str(input("Tüm takipçiler listesi içerisinde mi işlem yapılsın ? >> ").strip())
+                self.anaMenuyeDonsunMu(secilenIslem)
 
-                if secilenIslem == "1":
-                    print(
-                        self.uyariOlustur("Seçilen İşlem >>> Gönderiyi beğenen tüm kullanıcıları takip etme", 1))
-                elif secilenIslem == "2":
-                    print(self.uyariOlustur(
-                        "Seçilen İşlem >>> Belirtilen sayı kadar gönderiyi beğenen tüm kullanıcıları takip etme", 1))
-                    hedefBegenenSayisi = input("İşlem yapmak için bir sayı giriniz >>> ").strip()
-                    self.anaMenuyeDonsunMu(hedefBegenenSayisi)
-                    if hedefBegenenSayisi.isnumeric():
-                        hedefBegenenSayisi = int(hedefBegenenSayisi)
-                    else:
-                        print(self.uyariOlustur("[-] Bir sayı girişi yapmadınız.Lütfen bir sayı giriniz!", 2))
-                        print("")
-                        self.gonderiBegenenleriTakipEt( secilenIslem=secilenIslem)
+            if secilenIslem == "1":
+                print(
+                    self.uyariOlustur("Seçilen İşlem >>> Gönderiyi beğenen tüm kullanıcıları takip etme", 1))
+            elif secilenIslem == "2":
+                print(self.uyariOlustur(
+                    "Seçilen İşlem >>> Belirtilen sayı kadar gönderiyi beğenen tüm kullanıcıları takip etme", 1))
+                hedefBegenenSayisi = input("İşlem yapmak için bir sayı giriniz >>> ").strip()
+                self.anaMenuyeDonsunMu(hedefBegenenSayisi)
+                if hedefBegenenSayisi.isnumeric():
+                    hedefBegenenSayisi = int(hedefBegenenSayisi)
                 else:
-                    print(self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!", 2))
+                    print(self.uyariOlustur("[-] Bir sayı girişi yapmadınız.Lütfen bir sayı giriniz!", 2))
                     print("")
-                    self.gonderiBegenenleriTakipEt(secilenIslem=None)
+                    self.gonderiBegenenleriTakipEt( secilenIslem=secilenIslem)
+            else:
+                print(self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!", 2))
+                print("")
+                self.gonderiBegenenleriTakipEt(secilenIslem=None)
 
-                if not self.hesapGizliMi():
-                    if not self.gonderiTipiVideoMu():
-                        print("[*] {url}  gönderisini beğenen kullanıcıları takip etme işlemi başladı...".format(url=url))
-                        takipIstekSayisi = 0
-                        devamEtsinMi = True
-                        if hedefBegenenSayisi is None:
-                            begenenSayisi = self.driver.find_element_by_css_selector(
-                                "div.Nm9Fw > button.sqdOP > span").text
-                            begenenSayisi = int(self.metindenKarakterSil(begenenSayisi, ','))
-                        else:
-                            kaynakBegenenSayisi = self.driver.find_element_by_css_selector(
-                                "div.Nm9Fw > button.sqdOP > span").text
-                            kaynakBegenenSayisi = int(self.metindenKarakterSil(kaynakBegenenSayisi, ','))
-                            begenenSayisi = int(self.hedefKaynaktanBuyukMu(hedefBegenenSayisi, kaynakBegenenSayisi))
+            if not self.hesapGizliMi():
+                if not self.gonderiTipiVideoMu():
+                    print("[*] {url}  gönderisini beğenen kullanıcıları takip etme işlemi başladı...".format(url=url))
+                    takipIstekSayisi = 0
+                    devamEtsinMi = True
+                    if hedefBegenenSayisi is None:
+                        begenenSayisi = self.driver.find_element_by_css_selector(
+                            "div.Nm9Fw > button.sqdOP > span").text
+                        begenenSayisi = int(self.metindenKarakterSil(begenenSayisi, ','))
+                    else:
+                        kaynakBegenenSayisi = self.driver.find_element_by_css_selector(
+                            "div.Nm9Fw > button.sqdOP > span").text
+                        kaynakBegenenSayisi = int(self.metindenKarakterSil(kaynakBegenenSayisi, ','))
+                        begenenSayisi = int(self.hedefKaynaktanBuyukMu(hedefBegenenSayisi, kaynakBegenenSayisi))
 
-                        btn_begenenler = self.driver.find_element_by_css_selector("div.Nm9Fw > button.sqdOP")
-                        btn_begenenler.click()
-                        time.sleep(5)
+                    btn_begenenler = self.driver.find_element_by_css_selector("div.Nm9Fw > button.sqdOP")
+                    btn_begenenler.click()
+                    sleep(5)
 
-                        while devamEtsinMi:
-                            dialog_popup = self.driver.find_element_by_css_selector("div.pbNvD")
-                            begenenlerKullanicilar = dialog_popup.find_elements_by_css_selector('div.HVWg4')
-                            for begenenKullanici in begenenlerKullanicilar:
-                                begenenKullaniciAdi = begenenKullanici.find_element_by_css_selector(
-                                    "div.Igw0E > div.Igw0E > div._7UhW9  a").get_attribute('href')
-                                begenenKullaniciAdi = begenenKullaniciAdi.replace(self.BASE_URL, '').replace('/', '')
-                                btn_takip = begenenKullanici.find_element_by_css_selector("div.Igw0E > button.sqdOP")
-                                if btn_takip.text == "Follow":
-                                    print(self.uyariOlustur(
-                                        "[*] {index} -) {kullaniciAdi} kullanıcısı takip edilme işlemi başladı.".format(
-                                            index=takipIstekSayisi + 1, kullaniciAdi=begenenKullaniciAdi), 1))
-                                    btn_takip.click()
-                                    takipIstekSayisi = takipIstekSayisi + 1
-                                    if takipIstekSayisi == begenenSayisi:
-                                        devamEtsinMi = False
-                                        break
-                                    time.sleep(self.beklemeSuresiGetir(5, 15))
+                    while devamEtsinMi:
+                        dialog_popup = self.driver.find_element_by_css_selector("div.pbNvD")
+                        begenenlerKullanicilar = dialog_popup.find_elements_by_css_selector('div.HVWg4')
+                        for begenenKullanici in begenenlerKullanicilar:
+                            begenenKullaniciAdi = begenenKullanici.find_element_by_css_selector(
+                                "div.Igw0E > div.Igw0E > div._7UhW9  a").get_attribute('href')
+                            begenenKullaniciAdi = begenenKullaniciAdi.replace(self.BASE_URL, '').replace('/', '')
+                            btn_takip = begenenKullanici.find_element_by_css_selector("div.Igw0E > button.sqdOP")
+                            if btn_takip.text == "Follow":
+                                print(self.uyariOlustur(
+                                    "[*] {index} -) {kullaniciAdi} kullanıcısı takip edilme işlemi başladı.".format(
+                                        index=takipIstekSayisi + 1, kullaniciAdi=begenenKullaniciAdi), 1))
+                                btn_takip.click()
+                                takipIstekSayisi = takipIstekSayisi + 1
+                                if takipIstekSayisi == begenenSayisi:
+                                    devamEtsinMi = False
+                                    break
+                                sleep(self.beklemeSuresiGetir(5, 15))
 
-                                self.indexArtir()
-                                if hedefBegenenSayisi:
-                                    if self.index-1 >= kaynakBegenenSayisi:
-                                        devamEtsinMi = False
-                                        break
-                                else:
-                                    if self.index-1 >= begenenSayisi:
-                                        devamEtsinMi = False
-                                        break
-                            if devamEtsinMi:
-                                self.popupAsagiKaydir(secici='div[role="dialog"]  .i0EQd > div:nth-child(1)')
-                                time.sleep(3)
+                            self.indexArtir()
+                            if hedefBegenenSayisi:
+                                if self.index-1 >= kaynakBegenenSayisi:
+                                    devamEtsinMi = False
+                                    break
                             else:
-                                print("[*] Takipçi seçme işlemi tamamlandı.")
-                    else:
-                        print(
-                            '[*] {url} gönderisini  beğenen kullanıcıların listesi görüntülenemediğinden dolayı takip etme işlemi yapılamıyor'.format(
-                                url=url))
+                                if self.index-1 >= begenenSayisi:
+                                    devamEtsinMi = False
+                                    break
+                        if devamEtsinMi:
+                            self.popupAsagiKaydir(secici='div[role="dialog"]  .i0EQd > div:nth-child(1)')
+                            sleep(3)
+                        else:
+                            print("[*] Takipçi seçme işlemi tamamlandı.")
                 else:
-                    print(self.uyariOlustur(
-                        "[-] " + url + " gönderisinin sahibinin profili gizli hesap olduğundan dolayı, bu gönderiyi beğenen kullanıcıların listesi alınamıyor!",
-                        2))
+                    print(
+                        "[*] {url} gönderisini  beğenen kullanıcıların listesi görüntülenemediğinden dolayı takip etme işlemi yapılamıyor".format(
+                            url=url))
+            else:
+                print(self.uyariOlustur(
+                    "[-] {url} gönderisinin sahibinin profili gizli hesap olduğundan dolayı, bu gönderiyi beğenen kullanıcıların listesi alınamıyor!".format(url=url),
+                    2))
             self.gonderiBegenenleriTakipEt()
         except Exception as error:
             print(self.uyariOlustur(
@@ -1054,8 +1089,9 @@ class Instagram():
 
     def kullanicilariTakipEt(self, kullaniciListesi, secim):
         for kullanici in kullaniciListesi:
-            self.kullaniciTakipEt(kullanici.strip(), secim)
-            time.sleep(self.beklemeSuresiGetir(10,45))
+            if self.kullaniciKontrol(kullanici):
+                self.kullaniciTakipEt(kullanici.strip(), secim)
+                sleep(self.beklemeSuresiGetir(10,45))
 
     def dosyaSec(self):
         try:
@@ -1092,7 +1128,7 @@ class Instagram():
     def bildirimPopupKapat(self):
         try:
             for i in range(2):
-                time.sleep(5)
+                sleep(5)
                 btn = self.driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]")
                 self.driver.execute_script("arguments[0].click();", btn)
         except:
@@ -1113,6 +1149,7 @@ class Instagram():
         except Exception as error:
             print(self.uyariOlustur(
                 "[-] Aktif kullanıcı adı getirme işlemi sırasında bir hata oluştu: {hata}".format(hata=str(error)), 2))
+            self.aktifKullaniciGetir()
 
     def girisYap(self, username=False, password=False):
         try:
@@ -1120,12 +1157,12 @@ class Instagram():
                 print(" ")
                 print(" ")
                 print(self.uyariOlustur("<<< Instagram Giriş Yap >>>>", 1))
-                username = input('Kullanıcı adınız >> ')
-                password = getpass.getpass(prompt='Parolanız >> ')
+                username = input("Kullanıcı adınız >> ")
+                password = getpass.getpass(prompt="Parolanız >> ")
             elif not username:
-                username = input('Kullanıcı adınız >> ')
+                username = input("Kullanıcı adınız >> ")
             elif not password:
-                password = getpass.getpass(prompt='Parolanız >> ')
+                password = getpass.getpass(prompt="Parolanız >> ")
 
             if not username and not password:
                 print(self.uyariOlustur("[-] Lütfen kullanıcı adınızı ve parolanızı giriniz!", 2))
@@ -1138,13 +1175,13 @@ class Instagram():
                 self.girisYap(username, False)
 
             print(self.uyariOlustur("[*] Kullanıcı girişi yapılıyor...", 1))
-            time.sleep(15)
+            sleep(15)
             usernameInput = self.driver.find_elements_by_css_selector('form input')[0]
             passwordInput = self.driver.find_elements_by_css_selector('form input')[1]
             usernameInput.send_keys(username.strip())
             passwordInput.send_keys(password.strip())
             passwordInput.send_keys(Keys.ENTER)
-            time.sleep(5)
+            sleep(5)
             print(self.girisKontrol())
             if self.girisYapildimi:
                 self.aktifKullaniciGetir()
@@ -1179,11 +1216,11 @@ class Instagram():
             self.girisYap(durum)
 
         if durum:
-            time.sleep(5)
+            sleep(5)
         kodInput = self.driver.find_elements_by_css_selector('form input')[0]
         kodInput.send_keys(kod)
         kodInput.send_keys(Keys.ENTER)
-        time.sleep(5)
+        sleep(5)
         if "A security code is required." in self.driver.page_source:
             print(self.uyariOlustur("[-] Lütfen güvenlik kodunu giriniz!", 2))
             self.inputTemizle(kodInput)
@@ -1217,7 +1254,7 @@ class Instagram():
                 print(self.uyariOlustur("       <<< SEÇENEKLER >>>      ", 1))
                 print(self.uyariOlustur("Tüm takipçiler listesi içerisinden işlem yapmak için 1,", 3))
                 print(self.uyariOlustur(
-                    "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz,", 3))
+                    "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz.", 3))
                 print("")
                 secilenIslem = str(input("Tüm takipçiler listesi içerisinde mi işlem yapılsın ? >> ").strip())
                 self.anaMenuyeDonsunMu(secilenIslem)
@@ -1263,7 +1300,7 @@ class Instagram():
                 btn_takipciler = self.driver.find_element_by_xpath(
                     '//*[@id="react-root"]/section/main/div/header/section/ul/li[2]/a')
                 btn_takipciler.click()
-                time.sleep(5)
+                sleep(5)
 
                 while devamEtsinMi:
                     dialog_popup = self.driver.find_element_by_css_selector('div._1XyCr')
@@ -1281,7 +1318,7 @@ class Instagram():
                                 if takipIstekSayisi == takipciSayisi:
                                     devamEtsinMi = False
                                     break
-                                time.sleep(self.beklemeSuresiGetir(5, 15))
+                                sleep(self.beklemeSuresiGetir(5, 15))
                         except:
                             pass
 
@@ -1295,7 +1332,7 @@ class Instagram():
 
                     if devamEtsinMi:
                         self.popupAsagiKaydir(secici='div[role="dialog"] .isgrP')
-                        time.sleep(3)
+                        sleep(3)
                 print("[*] {kullanici} kullanıcısının takipçilerini takip etme işlemi tamamlandı.".format(kullanici=kullanici))
             else:
                 print(self.uyariOlustur(
@@ -1307,12 +1344,8 @@ class Instagram():
                 "[-] {kullanici} kullanıcısının takipçilerini takip etme işlemi sırasında hata:{hata}".format(kullanici=kullanici,hata=str(error)), 2))
             self.profilSec(secim)
 
-    def kullaniciKontrol(self, kullaniciadi):
-        response = requests.get(self.BASE_URL + kullaniciadi)
-        if response.status_code == 404:
-            return False
-        else:
-            return True
+    def kullaniciKontrol(self, kullanici):
+        return self.urlKontrol(self.BASE_URL + kullanici)
 
     def kullaniciTakipDurumDegistir(self,kullanici,durum):
         if self.hesapGizliMi():
@@ -1357,7 +1390,7 @@ class Instagram():
                 ariaLabel = btn_takip.find_element_by_tag_name("span").get_attribute("aria-label")
                 if ariaLabel == "Following":
                     btn_takip.click()
-                    time.sleep(0.50)
+                    sleep(0.50)
                     self.driver.find_elements_by_css_selector("div.mt3GC >button.aOOlW")[0].click()
                     print(self.uyariOlustur(
                         "[+] {kullanici} kullanıcısı takip edilmekten vazgeçildi.".format(kullanici=kullanici), 1))
@@ -1391,9 +1424,9 @@ class Instagram():
 
     def kullaniciEngelDurumDegistir(self):
         self.driver.find_element_by_css_selector("button.wpO6b").click()
-        time.sleep(0.50)
+        sleep(0.50)
         self.driver.find_elements_by_css_selector("div.mt3GC > button.aOOlW")[0].click()
-        time.sleep(0.50)
+        sleep(0.50)
         self.driver.find_elements_by_css_selector("div.mt3GC > button.aOOlW")[0].click()
 
     def kullaniciEngelle(self, kullanici, secim,durum=True):
@@ -1482,7 +1515,7 @@ class Instagram():
                         self.dosyaIndir(url, veriTuru)
                 btn_ileri = self.driver.find_element_by_css_selector("button._6CZji div.coreSpriteRightChevron")
                 btn_ileri.click()
-                time.sleep(1)
+                sleep(1)
         except:
             pass
 
@@ -1541,7 +1574,7 @@ class Instagram():
                 ilkGonderi = self.driver.find_element_by_xpath(
                     "/html/body/div[1]/section/main/div/div[3]/article/div[1]/div/div[1]/div[1]")
                 ilkGonderi.click()
-                time.sleep(1)
+                sleep(1)
                 self.klasorOlustur(kullanici)
                 self.indexSifirla()
                 for index in range(gonderiSayisi):
@@ -1559,7 +1592,7 @@ class Instagram():
                         else:
                             continue
                     self.gonderiIlerlet()
-                    time.sleep(3)
+                    sleep(3)
                 self.klasorDegistir("../")
                 print("[*] {kullanici}  adlı kullanıcının gönderilerini indirme işlemi tamamlandı.".format(
                     kullanici=kullanici))
@@ -1579,33 +1612,31 @@ class Instagram():
         try:
             url = input("İndirmek istediğiniz gönderi url >> ").strip()
             self.anaMenuyeDonsunMu(url)
-            if not url:
-                print(self.uyariOlustur("[-] Gönderi url'si girmediniz!!", 2))
-                self.gonderiIndir()
+            self.urlGirildiMi(url,self.gonderiIndir())
+            self.urlGecerliMi(url,self.gonderiIndir())
 
-            if self.urlKontrol(url):
-                print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
-                self.urlYonlendir(url)
-                if not self.hesapGizliMi():
-                    print("[*] {url} adresindeki gönderinin indirme işlemi başladı.".format(url=url))
-                    kullanici = self.driver.find_element_by_xpath(
-                        "/html/body/div[1]/section/main/div/div[1]/article/header/div[2]/div[1]/div/span/a").text
-                    self.klasorOlustur(kullanici)
-                    if self.gonderiAlbumMu():
-                        self.indexSifirla()
-                        self.klasorOlustur(str(self.index) + "_album")
-                        self.albumUrlGetir()
-                        self.klasorDegistir("../")
-                    else:
-                        [url, veriTuru] = self.gonderiUrlGetir(durum=False)
-                        if url is not None:
-                            self.dosyaIndir(url, veriTuru)
-                    print("[*] {url} adresindeki gönderinin indirme işlemi tamamlandı.".format(url=url))
+            print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
+            self.urlYonlendir(url)
+            if not self.hesapGizliMi():
+                print("[*] {url} adresindeki gönderinin indirme işlemi başladı.".format(url=url))
+                kullanici = self.driver.find_element_by_xpath(
+                    "/html/body/div[1]/section/main/div/div[1]/article/header/div[2]/div[1]/div/span/a").text
+                self.klasorOlustur(kullanici)
+                if self.gonderiAlbumMu():
+                    self.indexSifirla()
+                    self.klasorOlustur(str(self.index) + "_album")
+                    self.albumUrlGetir()
                     self.klasorDegistir("../")
                 else:
-                    print(self.uyariOlustur(
-                        "[-] {url} gönderisinin sahibinin profili gizli hesap olduğundan indirme işlemi yapılamıyor!".format(
-                            url=url), 2))
+                    [url, veriTuru] = self.gonderiUrlGetir(durum=False)
+                    if url is not None:
+                        self.dosyaIndir(url, veriTuru)
+                print("[*] {url} adresindeki gönderinin indirme işlemi tamamlandı.".format(url=url))
+                self.klasorDegistir("../")
+            else:
+                print(self.uyariOlustur(
+                    "[-] {url} gönderisinin sahibinin profili gizli hesap olduğundan indirme işlemi yapılamıyor!".format(
+                        url=url), 2))
             self.gonderiIndir()
         except Exception as error:
             print(
@@ -1615,9 +1646,9 @@ class Instagram():
     def gonderiBegenDurumDegistir(self, btn):
         btn.click()
         self.indexArtir()
-        time.sleep(0.50)
+        sleep(0.50)
         self.gonderiIlerlet()
-        time.sleep(self.beklemeSuresiGetir(5, 15))
+        sleep(self.beklemeSuresiGetir(5, 15))
 
     def gonderileriBegen(self, kullanici, secim, durum=True):
         try:
@@ -1631,7 +1662,7 @@ class Instagram():
                 ilkGonderi = self.driver.find_element_by_xpath(
                     "/html/body/div[1]/section/main/div/div[3]/article/div[1]/div/div[1]/div[1]")
                 ilkGonderi.click()
-                time.sleep(1)
+                sleep(1)
                 self.klasorOlustur(kullanici)
                 self.indexSifirla()
                 for index in range(gonderiSayisi):
@@ -1647,7 +1678,7 @@ class Instagram():
                             print(self.uyariOlustur(
                                 "[*] {url} gönderisi daha önce beğenildi.".format(url=self.driver.current_url), 1))
                             self.gonderiIlerlet()
-                            time.sleep(5)
+                            sleep(5)
                     else:
                         if begeniDurum == "unlike":
                             print(self.uyariOlustur(
@@ -1659,7 +1690,7 @@ class Instagram():
                             print(self.uyariOlustur(
                                 "[*] {url} gönderisi zaten beğenilmedi.".format(url=self.driver.current_url), 1))
                             self.gonderiIlerlet()
-                            time.sleep(5)
+                            sleep(5)
                 print("[*] {kullanici}  adlı kullanıcının gönderilerini beğenme işlemi tamamlandı.".format(
                     kullanici=kullanici))
                 self.profilSec(secim)
@@ -1692,52 +1723,50 @@ class Instagram():
                 url = input("Beğenmekten vazgeçmek istediğiniz gönderi url >> ").strip()
 
             self.anaMenuyeDonsunMu(url)
-            if not url:
-                print(self.uyariOlustur("[-] Gönderi url'si girmediniz!!", 2))
-                self.gonderiBegen(durum)
+            self.urlGirildiMi(url, self.gonderiBegen(durum))
+            self.urlGecerliMi(url,self.gonderiBegen(durum))
 
-            if self.urlKontrol(url):
-                print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
-                self.urlYonlendir(url)
-                if not self.hesapGizliMi():
-                    if durum:
-                        print("[*] {url} adresindeki gönderinin beğenme işlemi başladı...".format(url=url))
-                    else:
-                        print("[*] {url} adresindeki gönderinin beğenmekten vazgeçme işlemi başladı...".format(url=url))
-                    btn_begen = self.driver.find_element_by_xpath(
-                        "/html/body/div[1]/section/main/div/div[1]/article/div[3]/section[1]/span[1]/button")
-                    begeniDurum = self.begenButonuDurumGetir(btn_begen)
-                    if durum:
-                        if begeniDurum == "like":
-                            btn_begen.click()
-                            print(
-                                self.uyariOlustur("[+] {url} gönderisi beğenildi.".format(url=self.driver.current_url),
-                                                  1))
-                        else:
-                            print(self.uyariOlustur(
-                                "[*] {url} gönderisi daha önce beğenildi.".format(url=self.driver.current_url), 1))
-                    else:
-                        if begeniDurum == "unlike":
-                            btn_begen.click()
-                            print(self.uyariOlustur(
-                                "[+] {url} gönderisi beğenilmekten vazgeçildi.".format(url=self.driver.current_url), 1))
-                        else:
-                            print(self.uyariOlustur(
-                                "[*] {url} gönderisi zaten beğenilmedi.".format(url=self.driver.current_url), 1))
-                    if durum:
-                        print("[*] {url} adresindeki gönderinin beğenme işlemi tamamlandı.".format(url=url))
-                    else:
-                        print(
-                            "[*] {url} adresindeki gönderinin beğenmekten vazgeçme işlemi tamamlandı.".format(url=url))
+            print("[*] {url}  gönderisine yönlendiriliyor...".format(url=url))
+            self.urlYonlendir(url)
+            if not self.hesapGizliMi():
+                if durum:
+                    print("[*] {url} adresindeki gönderinin beğenme işlemi başladı...".format(url=url))
                 else:
-                    if durum:
-                        print(self.uyariOlustur(
-                            "[-] {url} gönderisinin sahibinin profili gizli hesap olduğundan beğeni işlemi yapılamıyor!".format(
-                                url=url), 2))
+                    print("[*] {url} adresindeki gönderinin beğenmekten vazgeçme işlemi başladı...".format(url=url))
+                btn_begen = self.driver.find_element_by_xpath(
+                    "/html/body/div[1]/section/main/div/div[1]/article/div[3]/section[1]/span[1]/button")
+                begeniDurum = self.begenButonuDurumGetir(btn_begen)
+                if durum:
+                    if begeniDurum == "like":
+                        btn_begen.click()
+                        print(
+                            self.uyariOlustur("[+] {url} gönderisi beğenildi.".format(url=self.driver.current_url),
+                                              1))
                     else:
                         print(self.uyariOlustur(
-                            "[-] {url} gönderisinin sahibinin profili gizli hesap olduğundan beğenmektez vazgeçme işlemi yapılamıyor!".format(
-                                url=url), 2))
+                            "[*] {url} gönderisi daha önce beğenildi.".format(url=self.driver.current_url), 1))
+                else:
+                    if begeniDurum == "unlike":
+                        btn_begen.click()
+                        print(self.uyariOlustur(
+                            "[+] {url} gönderisi beğenilmekten vazgeçildi.".format(url=self.driver.current_url), 1))
+                    else:
+                        print(self.uyariOlustur(
+                            "[*] {url} gönderisi zaten beğenilmedi.".format(url=self.driver.current_url), 1))
+                if durum:
+                    print("[*] {url} adresindeki gönderinin beğenme işlemi tamamlandı.".format(url=url))
+                else:
+                    print(
+                        "[*] {url} adresindeki gönderinin beğenmekten vazgeçme işlemi tamamlandı.".format(url=url))
+            else:
+                if durum:
+                    print(self.uyariOlustur(
+                        "[-] {url} gönderisinin sahibinin profili gizli hesap olduğundan beğeni işlemi yapılamıyor!".format(
+                            url=url), 2))
+                else:
+                    print(self.uyariOlustur(
+                        "[-] {url} gönderisinin sahibinin profili gizli hesap olduğundan beğenmektez vazgeçme işlemi yapılamıyor!".format(
+                            url=url), 2))
             self.gonderiBegen(durum)
         except Exception as error:
             if durum:
@@ -1749,15 +1778,7 @@ class Instagram():
                     "[-] Gönderi beğenmekten vazgeçme işlemi sırasında bir hata oluştu:{hata}".format(hata=error), 2))
             self.gonderiBegen(durum)
 
-    def urlKontrol(self, url):
-        try:
-            response = requests.get(url)
-            if response.status_code == 404:
-                return False
-            else:
-                return True
-        except:
-            return False
+
 
     def uyariOlustur(self, mesaj, durum):
         if durum == 1:
@@ -1770,7 +1791,7 @@ class Instagram():
     def klasorOlustur(self, klasor):
         if not os.path.exists(klasor):
             os.mkdir(klasor)
-            print(self.uyariOlustur("[+] '" + klasor + "' adında klasör oluşturuldu", 1))
+            print(self.uyariOlustur("[+] {klasor} adında klasör oluşturuldu".format(klasor=klasor), 1))
             self.klasorDegistir(klasor)
             print("[*] {klasor} klasörüne geçiş yapıldı".format(klasor=klasor))
         else:
