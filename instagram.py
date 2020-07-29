@@ -29,10 +29,19 @@ class Instagram():
         self.BASE_URL = "https://www.instagram.com/"
         self.girisYap()
 
+    def configdosyasiVarMi(self):
+        if os.path.isfile("config.json"):
+            return True
+        else:
+            return False
 
     def ayarlarYukle(self):
-        with open('config.json', 'r+', encoding="utf-8") as dosya:
-            self.config = json.load(dosya)
+        if self.configdosyasiVarMi():
+            with open('config.json', 'r+', encoding="utf-8") as dosya:
+                self.config = json.load(dosya)
+        else:
+            self.uyariOlustur("Config file is missing - Config dosyası eksik !",2)
+            exit()
 
     def configGetir(self,anahtar):
         deger=self.config
@@ -204,12 +213,16 @@ class Instagram():
         t1.start()
 
     def BASE_UYARI(self,metod,warnings=None,inputs=None):
-        if warnings:
-            return "languages.{dil}.warnings.{metod}.warnings.".format(dil=self.dil,metod=metod.__name__)
-        elif inputs:
-            return "languages.{dil}.warnings.{metod}.inputs.".format(dil=self.dil, metod=metod.__name__)
-        else:
-            return "languages.{dil}.warnings.{metod}.".format(dil=self.dil, metod=metod.__name__)
+        try:
+            if warnings:
+                return "languages.{dil}.warnings.{metod}.warnings.".format(dil=self.dil,metod=metod.__name__)
+            elif inputs:
+                return "languages.{dil}.warnings.{metod}.inputs.".format(dil=self.dil, metod=metod.__name__)
+            else:
+                return "languages.{dil}.warnings.{metod}.".format(dil=self.dil, metod=metod.__name__)
+        except Exception as error:
+            base_warnings = self.BASE_UYARI(metod=self.BASE_UYARI, warnings=True)
+            self.uyariOlustur(str(self.configGetir(base_warnings+"warning1")).format(hata=str(error)))
 
 
     def tarayiciBaslat(self):
