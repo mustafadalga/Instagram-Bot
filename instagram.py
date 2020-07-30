@@ -15,11 +15,11 @@ import json
 class Instagram():
     def __init__(self):
         init(convert=True)
-        self.ayarlar=None
         self.config=None
         self.dil = None
         self.ayarlarYukle()
         self.dilYukle()
+        self.ayarlar()
         self.script()
         self.tarayiciThreadOlustur()
         self.girisYapildimi = False
@@ -29,14 +29,179 @@ class Instagram():
         self.BASE_URL = "https://www.instagram.com/"
         self.girisYap()
 
-    def configdosyasiVarMi(self):
-        if os.path.isfile("config.json"):
-            return True
+    def BASE_AYARLAR(self):
+        try:
+            return "languages.{dil}.ayarlar.".format(dil=self.dil)
+        except Exception as error:
+            self.uyariOlustur(error,2)
+
+    def ayarlar(self,durum=True):
+        if durum:
+            ayarlar=self.configGetir(self.BASE_AYARLAR()+"ana_ekran.secenekler")
+            for secenek in ayarlar:
+                self.uyariOlustur(secenek,3)
+        secilenIslem=input("Yapmak istediğiniz işlemin başındaki sayısı giriniz >> ")
+
+        if secilenIslem=="1":
+            self.dilAyarlari()
+        elif secilenIslem=="2":
+            self.tarayiciAyarlari()
+        elif secilenIslem=="3":
+            self.menu()
         else:
-            return False
+            self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!", 2)
+            self.ayarlar(durum=False)
+
+
+    def dilAyarlari(self,durum=True):
+        if durum:
+            ayarlar=self.configGetir(self.BASE_AYARLAR()+"dil_ayarlari.secenekler")
+            for secenek in ayarlar:
+                self.uyariOlustur(secenek,3)
+        secilenIslem=input("Yapmak istediğiniz işlemin başındaki sayısı giriniz >>")
+
+        if secilenIslem=="1":
+            self.dilSec()
+        elif secilenIslem=="2":
+            self.ayarlar()
+        elif secilenIslem=="3":
+            self.menu()
+        else:
+            self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",2)
+            self.dilAyarlari(durum=False)
+
+    def dilSec(self,durum=True):
+        if durum:
+            ayarlar=self.configGetir(self.BASE_AYARLAR()+"dil_ayarlari.dil_degistir.secenekler")
+            for secenek in ayarlar:
+                self.uyariOlustur(secenek,3)
+        secilenIslem=input("Yapmak istediğiniz işlemin başındaki sayısı giriniz >>")
+
+        if secilenIslem in ["1","2"]:
+            self.uygulamaDilDegistir(dilNo=secilenIslem)
+            self.ayarlar()
+        elif secilenIslem=="3":
+            self.dilAyarlari()
+        elif secilenIslem=="4":
+            self.ayarlar()
+        elif secilenIslem=="5":
+            self.menu()
+        else:
+            self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",2)
+            self.dilSec(durum=False)
+
+    def uygulamaDilDegistir(self,dilNo):
+        try:
+            if dilNo=="1":
+                dil="tr"
+            elif dilNo=="2":
+                dil="en"
+            with open('config.json', 'r+', encoding="utf-8") as dosya:
+                veri = json.load(dosya)
+                veri["language"]=dil
+                dosya.seek(0)
+                json.dump(veri, dosya, indent=4,ensure_ascii=False)
+                dosya.truncate()
+            self.uyariOlustur("[*] Uygulama dili başarıyla değiştirildi.Değişikliği görmek için uygulamayı yeniden başlatın",1)
+        except Exception as error:
+            self.uyariOlustur("[-] Uygulama dili değiştirme işlemi sırasında bir hata oluştu:{hata}".format(hata=str(error)), 2)
+
+    def tarayiciAyarlari(self,durum=True):
+        if durum:
+            ayarlar=self.configGetir(self.BASE_AYARLAR()+"tarayici_ayarlari.secenekler")
+            for secenek in ayarlar:
+                self.uyariOlustur(secenek,3)
+        secilenIslem=input("Yapmak istediğiniz işlemin başındaki sayısı giriniz >>")
+
+        if secilenIslem=="1":
+            self.tarayiciGorunmeDurumuAyarlari()
+        elif secilenIslem=="2":
+            self.tarayiciPathAyarlari()
+        elif secilenIslem=="3":
+            self.ayarlar()
+        elif secilenIslem=="4":
+            self.menu()
+        else:
+            self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",2)
+            self.tarayiciAyarlari(durum=False)
+
+    def tarayiciPathAyarlari(self,durum=True):
+        if durum:
+            ayarlar=self.configGetir(self.BASE_AYARLAR()+"tarayici_ayarlari.path_degistir.secenekler")
+            for secenek in ayarlar:
+                self.uyariOlustur(secenek,3)
+
+        secilenIslem = input("Yapmak istediğiniz işlemin başındaki sayısı giriniz >>")
+        if secilenIslem=="1":
+            self.tarayiciPathDegistir()
+            self.ayarlar()
+        elif secilenIslem=="2":
+            self.tarayiciAyarlari()
+        elif secilenIslem=="3":
+            self.ayarlar()
+        elif secilenIslem=="4":
+            self.menu()
+        else:
+            self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",2)
+            self.tarayiciPathAyarlari(durum=False)
+
+
+    def tarayiciPathDegistir(self):
+        try:
+            path = input("Tarayıcı sürü yolunu giriniz >>")
+            if self.dosyaMevcutMu(path):
+                with open('config.json', 'r+', encoding="utf-8") as dosya:
+                    veri = json.load(dosya)
+                    veri["driver_path"]=path
+                    dosya.seek(0)
+                    json.dump(veri, dosya, indent=4,ensure_ascii=False)
+                    dosya.truncate()
+                self.uyariOlustur("[*] Tarayıcı sürücü yolu başarıyla değiştirildi.Değişikliği görmek için uygulamayı yeniden başlatın.",1)
+            else:
+                self.uyariOlustur("[-] Belirttiğiniz dosya mevcut değil!", 2)
+                self.tarayiciPathAyarlari()
+        except Exception as error:
+            self.uyariOlustur("[-] Tarayıcı sürücü yolu  değiştirme işlemi sırasında bir hata oluştu:{hata}".format(hata=str(error)), 2)
+
+
+    def tarayiciGorunmeDurumuAyarlari(self,durum=True):
+        if durum:
+            ayarlar=self.configGetir(self.BASE_AYARLAR()+"tarayici_ayarlari.gorunme_durumu_degistir.secenekler")
+            for secenek in ayarlar:
+                self.uyariOlustur(secenek,3)
+        secilenIslem=input("Yapmak istediğiniz işlemin başındaki sayısı giriniz >>")
+        if secilenIslem in ["1","2"]:
+            self.tarayiciGorunmeDurumDegistir(durum=secilenIslem)
+            self.ayarlar()
+        elif secilenIslem=="3":
+            self.tarayiciAyarlari()
+        elif secilenIslem=="4":
+            self.ayarlar()
+        elif secilenIslem=="5":
+            self.menu()
+        else:
+            self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",2)
+            self.tarayiciGorunmeDurumuAyarlari(durum=False)
+
+    def tarayiciGorunmeDurumDegistir(self,durum):
+        try:
+            if durum=="1":
+                headless="true"
+            elif durum=="2":
+                headless="false"
+            with open('config.json', 'r+', encoding="utf-8") as dosya:
+                veri = json.load(dosya)
+                veri["headless"]=headless
+                dosya.seek(0)
+                json.dump(veri, dosya, indent=4,ensure_ascii=False)
+                dosya.truncate()
+            self.uyariOlustur("[*] Tarayıcı görünme durumu başarıyla değiştirildi.Değişikliği görmek için uygulamayı yeniden başlatın.",1)
+        except Exception as error:
+            self.uyariOlustur("[-] Tarayıcı görünme durumu değiştirme işlemi sırasında bir hata oluştu:{hata}".format(hata=str(error)), 2)
+
 
     def ayarlarYukle(self):
-        if self.configdosyasiVarMi():
+        if self.dosyaMevcutMu("config.json"):
             with open('config.json', 'r+', encoding="utf-8") as dosya:
                 self.config = json.load(dosya)
         else:
@@ -86,7 +251,7 @@ class Instagram():
         if secim:
             try:
                 secim = int(secim)
-                if 0 < secim < 26:
+                if 0 < secim < 27:
                     self.secilenIslemiGoster(secim)
                     if secim in [1,2,3,9,12,20,21,22,23]:
                         self.profilSec(secim)
@@ -117,8 +282,10 @@ class Instagram():
                     elif secim==19:
                         self.gonderiYorumYapma()
                     elif secim==24:
-                        self.cikisYap()
+                        self.ayarlar()
                     elif secim==25:
+                        self.oturumKapat()
+                    elif secim==26:
                         self.quit()
                 else:
                     self.uyariOlustur(self.configGetir(base_warnings+"warning1"), 2)
@@ -229,7 +396,7 @@ class Instagram():
         base_warnings=self.BASE_UYARI(metod=self.tarayiciBaslat,warnings=True)
 
         self.uyariOlustur(self.configGetir(base_warnings+"warning1"), 1)
-        self.driver = webdriver.Firefox(firefox_profile=self.dilDegistir(),
+        self.driver = webdriver.Firefox(firefox_profile=self.tarayiciDilDegistir(),
                                         executable_path="E:\\Python\\Uygulamalar\\Intagram-Bot\\Instagram-Bot\\geckodriver.exe")
         self.driver.get(self.BASE_URL + 'accounts/login/')
 
@@ -354,7 +521,7 @@ class Instagram():
 
                 if self.hesapGizliMi():
                     self.uyariOlustur(
-                       str(self.configGetir(base_warnings+"warning3")).format(
+                        str(self.configGetir(base_warnings+"warning3")).format(
                             url=url), 2)
                     self.topluYorumYapma()
 
@@ -452,7 +619,7 @@ class Instagram():
             self.gonderiYorumYapma()
         except Exception as error:
             self.uyariOlustur(str(self.configGetir(base_warnings+"warning7")).format(url=url,hata=str(error)),
-                2)
+                              2)
             self.gonderiYorumYapma()
 
     def gonderiIlerlet(self):
@@ -474,7 +641,7 @@ class Instagram():
                 self.urlYonlendir(url)
                 if not self.sayfaMevcutMu():
                     self.uyariOlustur(str(self.configGetir(base_warnings+"warning2")).format(etiket=etiket),
-                                            2)
+                                      2)
                     return self.etiketGetir()
                 return etiket
             else:
@@ -535,7 +702,7 @@ class Instagram():
                     btn_takip.click()
                     self.uyariOlustur(
                         str(self.configGetir(base_warnings+"warning2")).format(index=self.index,
-                                                                                    kullanici=kullaniciAdi), 1)
+                                                                               kullanici=kullaniciAdi), 1)
                     self.indexArtir()
                     if self.index-1 >= limit:
                         break
@@ -676,7 +843,7 @@ class Instagram():
                     self.uyariOlustur(self.configGetir(base_warnings+"warning3"), 2)
             else:
                 self.uyariOlustur(str(self.configGetir(base_warnings+"warning4")).format(
-                        kullanici=kullanici), 2)
+                    kullanici=kullanici), 2)
             self.profilSec(secim)
         except Exception as error:
             self.uyariOlustur(str(self.configGetir(base_warnings+"warning5")).format(hata=str(error)), 2)
@@ -769,10 +936,10 @@ class Instagram():
                             btn_onay.click()
                         except Exception as error:
                             self.uyariOlustur(str(self.configGetir(base_warnings+"warning2")).format(
-                                    kullaniciAdi=takipEdilenKullanıcıAdi, hata=str(error)), 2)
+                                kullaniciAdi=takipEdilenKullanıcıAdi, hata=str(error)), 2)
                             continue
                         self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(
-                                index=self.index, kullaniciAdi=takipEdilenKullanıcıAdi), 1)
+                            index=self.index, kullaniciAdi=takipEdilenKullanıcıAdi), 1)
                         self.indexArtir()
                         if (self.index - 1) >= takipEdilenSayisi:
                             devamEtsinMi = False
@@ -783,7 +950,7 @@ class Instagram():
                         self.popupAsagiKaydir(secici='div[role="dialog"] .isgrP')
                     except Exception as error:
                         self.uyariOlustur(str(self.configGetir(base_warnings+"warning4")).format(
-                                hata=str(error)), 2)
+                            hata=str(error)), 2)
                         pass
                     sleep(3)
             self.menu()
@@ -832,10 +999,10 @@ class Instagram():
                                 btn_onay.click()
                             except Exception as error:
                                 self.uyariOlustur(str(self.configGetir(base_warnings+"warning2")).format(
-                                        kullaniciAdi=takipEdilenKullanıcıAdi, hata=str(error)), 2)
+                                    kullaniciAdi=takipEdilenKullanıcıAdi, hata=str(error)), 2)
                                 continue
                             self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(
-                                    index=self.index, kullaniciAdi=takipEdilenKullanıcıAdi), 1)
+                                index=self.index, kullaniciAdi=takipEdilenKullanıcıAdi), 1)
                             self.indexArtir()
                             if self.index - 1 >= takipEdilenSayisi:
                                 devamEtsinMi = False
@@ -850,13 +1017,13 @@ class Instagram():
                         self.popupAsagiKaydir(secici='div[role="dialog"] .isgrP')
                     except Exception as error:
                         self.uyariOlustur(str(self.configGetir(base_warnings+"warning4")).format(
-                                hata=str(error)), 2)
+                            hata=str(error)), 2)
                         pass
                     sleep(3)
 
         except Exception as error:
             self.uyariOlustur(str(self.configGetir(base_warnings+"warning5")).format(
-                    hata=str(error)), 2)
+                hata=str(error)), 2)
             self.menu()
 
     def popupAsagiKaydir(self, secici):
@@ -894,8 +1061,8 @@ class Instagram():
                         self.metindenKarakterSil(takipciKullaniciAdi, self.BASE_URL), '/')
                     if takipciKullaniciAdi not in takipciler:
                         self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(index=self.index,
-                                                                                         takipci=takipciKullaniciAdi),
-                            1)
+                                                                                                 takipci=takipciKullaniciAdi),
+                                          1)
                         takipciler.add(takipciKullaniciAdi)
                         self.indexArtir()
                         if (self.index - 1) >= takipciSayisi:
@@ -906,7 +1073,7 @@ class Instagram():
                         self.popupAsagiKaydir(secici='div[role="dialog"] .isgrP')
                     except Exception as error:
                         self.uyariOlustur(str(self.configGetir(base_warnings+"warning4")).format(
-                                hata=str(error)), 2)
+                            hata=str(error)), 2)
                         pass
                     sleep(3)
             btn_close_dialog = self.driver.find_element_by_xpath("/html/body/div[4]/div/div/div[1]/div/div[2]/button")
@@ -926,7 +1093,7 @@ class Instagram():
             self.menu()
         except Exception as error:
             self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(
-                    hata=str(error)), 2)
+                hata=str(error)), 2)
             self.menu()
 
     def metindenKarakterSil(self, metin, silinecekKarakterler):
@@ -998,7 +1165,7 @@ class Instagram():
                             btn_takip = begenenKullanici.find_element_by_css_selector("div.Igw0E > button.sqdOP")
                             if btn_takip.text == "Follow":
                                 self.uyariOlustur(str(self.configGetir(base_warnings+"warning8")).format(
-                                        index=takipIstekSayisi + 1, kullaniciAdi=begenenKullaniciAdi), 1)
+                                    index=takipIstekSayisi + 1, kullaniciAdi=begenenKullaniciAdi), 1)
                                 btn_takip.click()
                                 takipIstekSayisi = takipIstekSayisi + 1
                                 if takipIstekSayisi == begenenSayisi:
@@ -1022,10 +1189,10 @@ class Instagram():
                             print(self.configGetir(base_warnings+"warning9"))
                 else:
                     print(str(self.configGetir(base_warnings+"warning10")).format(
-                            url=url))
+                        url=url))
             else:
                 self.uyariOlustur(str(self.configGetir(base_warnings+"warning11")).format(url=url),
-                    2)
+                                  2)
             self.gonderiBegenenleriTakipEt()
         except Exception as error:
             self.uyariOlustur(str(self.configGetir(base_warnings+"warning12")).format(hata=str(error)), 2)
@@ -1051,7 +1218,7 @@ class Instagram():
         try:
             dosyaAdi = input(self.configGetir(base_inputs+"input1")).strip()
             self.anaMenuyeDonsunMu(dosyaAdi)
-            if self.dosyaMi(dosyaAdi) and self.txtDosyasiMi(dosyaAdi):
+            if self.dosyaMevcutMu(dosyaAdi) and self.txtDosyasiMi(dosyaAdi):
                 return str(dosyaAdi)
             else:
                 self.uyariOlustur(self.configGetir(base_warnings+"warning1"), 2)
@@ -1060,7 +1227,7 @@ class Instagram():
             self.uyariOlustur(str(self.configGetir(base_warnings+"warning2")).format(hata=str(error)), 2)
             return self.dosyaSec()
 
-    def dosyaMi(self, path):
+    def dosyaMevcutMu(self, path):
         if os.path.isfile(path):
             return True
         else:
@@ -1088,7 +1255,7 @@ class Instagram():
         except:
             pass
 
-    def dilDegistir(self):
+    def tarayiciDilDegistir(self):
         profile = webdriver.FirefoxProfile()
         profile.set_preference('intl.accept_languages', 'en-US, en')
         return profile
@@ -1285,7 +1452,7 @@ class Instagram():
                 print(str(self.configGetir(base_warnings+"warning8")).format(kullanici=kullanici))
             else:
                 self.uyariOlustur(str(self.configGetir(base_warnings+"warning9")).format(kullanici=kullanici),
-                    2)
+                                  2)
             self.profilSec(secim)
         except Exception as error:
             self.uyariOlustur(str(self.configGetir(base_warnings+"warning10")).format(kullanici=kullanici,hata=str(error)), 2)
@@ -1305,13 +1472,13 @@ class Instagram():
                     self.uyariOlustur(str(self.configGetir(base_warnings+"warning1")).format(kullanici=kullanici), 1)
                 elif btn_text == "requested":
                     self.uyariOlustur(str(self.configGetir(base_warnings+"warning2")).format(kullanici=kullanici),
-                        1)
+                                      1)
                 elif btn_text == "unblock":
                     self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(
-                            kullanici=kullanici), 1)
+                        kullanici=kullanici), 1)
             else:
                 self.uyariOlustur(str(self.configGetir(base_warnings+"warning4")).format(
-                        kullanici=kullanici), 1)
+                    kullanici=kullanici), 1)
         else:
             btn_takip = self.driver.find_element_by_css_selector('span.vBF20 > button._5f5mN')
             btn_text = str(btn_takip.text).lower()
@@ -1325,7 +1492,7 @@ class Instagram():
                     ariaLabel = btn_takip.find_element_by_tag_name("span").get_attribute("aria-label")
                     if ariaLabel == "Following":
                         self.uyariOlustur(str(self.configGetir(base_warnings+"warning7")).format(
-                                kullanici=kullanici), 1)
+                            kullanici=kullanici), 1)
             else:
                 ariaLabel = btn_takip.find_element_by_tag_name("span").get_attribute("aria-label")
                 if ariaLabel == "Following":
@@ -1356,7 +1523,7 @@ class Instagram():
                 self.uyariOlustur(str(self.configGetir(base_warnings+"warning5")).format(kullanici=kullanici,hata=str(error)),2)
             else:
                 self.uyariOlustur(str(self.configGetir(base_warnings+"warning6")).format(kullanici=kullanici,
-                                                                                                   hata=str(error)), 2)
+                                                                                         hata=str(error)), 2)
             if secim != 14:
                 self.profilSec(secim)
 
@@ -1537,7 +1704,7 @@ class Instagram():
                     kullanici=kullanici))
             else:
                 self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(
-                        kullanici=kullanici), 2)
+                    kullanici=kullanici), 2)
 
             self.profilSec(secim)
         except Exception as error:
@@ -1573,7 +1740,7 @@ class Instagram():
                 self.klasorDegistir("../")
             else:
                 self.uyariOlustur(str(self.configGetir(base_warnings+"warning4")).format(
-                        url=url), 2)
+                    url=url), 2)
             self.gonderiIndir()
         except Exception as error:
             print(
@@ -1609,7 +1776,7 @@ class Instagram():
                     if durum:
                         if begeniDurum == "like":
                             self.uyariOlustur(str(self.configGetir(base_warnings+"warning2")).format(index=str(self.index),
-                                                                                  url=self.driver.current_url), 1)
+                                                                                                     url=self.driver.current_url), 1)
                             self.gonderiBegenDurumDegistir(btn_begen)
                         else:
                             self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(url=self.driver.current_url), 1)
@@ -1618,8 +1785,8 @@ class Instagram():
                     else:
                         if begeniDurum == "unlike":
                             self.uyariOlustur(str(self.configGetir(base_warnings+"warning4")).format(index=str(self.index),
-                                                                                                 url=self.driver.current_url),
-                                1)
+                                                                                                     url=self.driver.current_url),
+                                              1)
                             self.gonderiBegenDurumDegistir(btn_begen)
                         else:
                             self.uyariOlustur(str(self.configGetir(base_warnings+"warning5")).format(url=self.driver.current_url), 1)
@@ -1631,18 +1798,18 @@ class Instagram():
             else:
                 if durum:
                     self.uyariOlustur(str(self.configGetir(base_warnings+"warning7")).format(
-                            kullanici=kullanici), 2)
+                        kullanici=kullanici), 2)
                 else:
                     self.uyariOlustur(str(self.configGetir(base_warnings+"warning8")).format(
-                            kullanici=kullanici), 2)
+                        kullanici=kullanici), 2)
                 self.profilSec(secim)
         except Exception as error:
             if durum:
                 self.uyariOlustur(str(self.configGetir(base_warnings+"warning9")).format(
-                        kullanici=kullanici, hata=error), 2)
+                    kullanici=kullanici, hata=error), 2)
             else:
                 self.uyariOlustur(str(self.configGetir(base_warnings+"warning10")).format(
-                        kullanici=kullanici, hata=error), 2)
+                    kullanici=kullanici, hata=error), 2)
             self.profilSec(secim)
 
     def gonderiBegen(self, durum=True):
@@ -1690,10 +1857,10 @@ class Instagram():
             else:
                 if durum:
                     self.uyariOlustur(str(self.configGetir(base_warnings+"warning10")).format(
-                            url=url), 2)
+                        url=url), 2)
                 else:
                     self.uyariOlustur(str(self.configGetir(base_warnings+"warning11")).format(
-                            url=url), 2)
+                        url=url), 2)
             self.gonderiBegen(durum)
         except Exception as error:
             if durum:
@@ -1728,8 +1895,8 @@ class Instagram():
     def klasorDegistir(self, klasor):
         os.chdir(klasor)
 
-    def cikisYap(self):
-        base_warnings = self.BASE_UYARI(metod=self.cikisYap, warnings=True)
+    def oturumKapat(self):
+        base_warnings = self.BASE_UYARI(metod=self.oturumKapat, warnings=True)
         print(self.configGetir(base_warnings+"warning1"))
         try:
             self.driver.find_element_by_xpath("/html/body/div[1]/section/nav/div[2]/div/div/div[3]/div/div[5]").click()
