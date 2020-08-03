@@ -137,9 +137,33 @@
                         "warning1": "[-] Gönderi url'si getirme işlemi sırasında bir hata oluştu: {hata}"
                     }
                 },
+                "ayarlar": {
+                    "inputs": {
+                        "input1": "Yapmak istediğiniz işlemin başındaki sayısı giriniz >> "
+                    },
+                    "warnings": {
+                        "warning1": "[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
+                        "warning2": "[-] Ayarlar menüsünde bir hata oluştu:{hata}"
+                    }
+                },
+                "ayarlarYukle": {
+                    "warnings": {
+                        "warning1": "[-] Gönderi url'si getirme işlemi sırasında bir hata oluştu: {hata}"
+                    }
+                },
+                "BASE_AYARLAR": {
+                    "warnings": {
+                        "warning1":"[-] Ayarlar menüsünün içeriğini yazdırmak için format oluşturma işlemi sırasında bir hata oluştu:{hata}"
+                    }
+                },
+                "BASE_SLEEP": {
+                    "warnings": {
+                        "warning1": "[-] Bekleme sürelerini yazdırmak için oluşturulan formatlama işlemi sırasında bir hata oluştu:{hata}"
+                    }
+                },
                 "BASE_UYARI": {
                     "warnings": {
-                        "warning1": "uyarı mesajlarını yazdırma işlemi sırasında bir hata oluştu:{hata}"
+                        "warning1": "[-] Uyarı mesajlarını yazdırmak için  format oluşturma işlemi sırasında bir hata oluştu:{hata}"
                     }
                 },
                 "dosyaIndir": {
@@ -160,6 +184,24 @@
                     "warnings": {
                         "warning1": "[-] Geçerli bir dosya yolu belirtmediniz.Sadece txt uzantılı dosyaları seçebilirsiniz!",
                         "warning2": "[-] Dosya seçme işlemi sırasında bir hata oluştu:{hata}"
+                    }
+                },
+                "dilAyarlari": {
+                    "inputs": {
+                        "input1": "Yapmak istediğiniz işlemin başındaki sayısı giriniz >>"
+                    },
+                    "warnings": {
+                        "warning1": "[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
+                        "warning2": "[-] Dil ayarları menüsünde bir hata oluştu:{hata}"
+                    }
+                },
+                "dilSec": {
+                    "inputs": {
+                        "input1": "Yapmak istediğiniz işlemin başındaki sayısı giriniz >>"
+                    },
+                    "warnings": {
+                        "warning1": "[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
+                        "warning2": "[-] Uygulama dili değiştirme işlemi sırasında bir hata oluştu:{hata}"
                     }
                 },
                 "etiketeGoreBegenme": {
@@ -510,6 +552,7 @@
                         "21": "Seçilen İşlem >>> Kullanıcı Takip Etmekten Vazgeçme",
                         "22": "Seçilen İşlem >>> Kullanıcı Engelleme",
                         "23": "Seçilen İşlem >>> Kullanıcı Engeli Kaldırma",
+                        "24": "",
                         "25": "Seçilen İşlem >>> İnstagram Çıkış Yapma",
                         "26": "Seçilen İşlem >>> Uygulama'dan Çıkış Yapma"
                     },
@@ -548,6 +591,52 @@
                         "warning1": "[*] Tarayıcı Başlatılıyor..."
                     }
                 },
+                "tarayiciAyarlari": {
+                    "inputs": {
+                        "input1": "Yapmak istediğiniz işlemin başındaki sayısı giriniz >>"
+                    },
+                    "warnings": {
+                        "warning1":"[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
+                        "warning2": "[-] Tarayıcı ayarları menüsünde bir hata oluştu:{hata}"
+                    }
+                },
+                "tarayiciPathAyarlari": {
+                    "inputs": {
+                        "input1": "Yapmak istediğiniz işlemin başındaki sayısı giriniz >>"
+                    },
+                    "warnings": {
+                        "warning1":"[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
+                        "warning2": "[-] Tarayıcı sürücü yolu değiştirme menüsünde bir hata oluştu:{hata}"
+                    }
+                },
+                "tarayiciPathDegistir": {
+                    "inputs": {
+                        "input1":"Tarayıcı sürücü yolunu giriniz >>"
+                    },
+                    "warnings": {
+                        "warning1":"[*] Tarayıcı sürücü yolu başarıyla değiştirildi.Değişikliği görmek için uygulamayı yeniden başlatın.",
+                        "warning2": "[-] Belirttiğiniz dosya mevcut değil!",
+                        "warning3": "[-] Tarayıcı sürücü yolu  değiştirme işlemi sırasında bir hata oluştu:{hata}"
+                    }
+                },
+                "tarayiciGorunmeDurumuAyarlari": {
+                    "inputs": {
+                        "input1":"Yapmak istediğiniz işlemin başındaki sayısı giriniz >>"
+                    },
+                    "warnings": {
+                        "warning1":"[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
+                        "warning2":"[-] Tarayıcı görünme durumu ayarları menüsünde bir hata oluştu:{hata}"
+                    }
+                },
+                "tarayiciGorunmeDurumDegistir": {
+                    "inputs": {
+                        "input1":"Yapmak istediğiniz işlemin başındaki sayısı giriniz >>"
+                    },
+                    "warnings": {
+                        "warning1":"[*] Tarayıcı görünme durumu başarıyla değiştirildi.Değişikliği görmek için uygulamayı yeniden başlatın.",
+                        "warning2":"[-] Tarayıcı görünme durumu değiştirme işlemi sırasında bir hata oluştu:{hata}"
+                    }
+                },
                 "topluMesajSilme": {
                     "warnings": {
                         "warning1": "[*] Toplu mesaj silme işlemi başladı.",
@@ -555,7 +644,7 @@
                         "warning3": "[*] {index} -) {kullaniciAdi} ile yapılan mesajlaşma silinecek.",
                         "warning4": "[*] {index} -) {kullaniciAdi} ile yapılan mesajlaşma başarıyla silindi.",
                         "warning5": "[*] Toplu mesaj silme işlemi tamamlandı.",
-                        "warning6": "[-] Toplu mesaj  aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}"
+                        "warning6": "[-] Toplu mesaj silme işlemi sırasında bir hata oluştu: {hata}"
                     }
                 },
                 "topluTakiptenCik": {
@@ -606,6 +695,12 @@
                         "warning1": "[-] Bir url girişi yapmasınız!"
                     }
                 },
+                "uygulamaDilDegistir": {
+                    "warnings": {
+                        "warning1": "[*] Uygulama dili başarıyla değiştirildi.Değişikliği görmek için uygulamayı yeniden başlatın",
+                        "warning2": "[-] Uygulama dili değiştirme işlemi sırasında bir hata oluştu:{hata}"
+                    }
+                },
                 "yorumYap": {
                     "warnings": {
                         "warning1": "[-] {url} gönderisine yorum yapma işlemi sırasında bir hata oluştu: {hata}"
@@ -625,8 +720,7 @@
             "sleep1": 1,
             "sleep2": 0.5,
             "sleep3": [
-                15,
-                5
+                5,15
             ],
             "sleep4": 5
         },
@@ -634,8 +728,7 @@
             "sleep1": 1,
             "sleep2": 0.5,
             "sleep3": [
-                20,
-                5
+                5,15
             ],
             "sleep4": 5
         },
@@ -650,15 +743,13 @@
         "gonderiBegenDurumDegistir": {
             "sleep1": 0.5,
             "sleep2": [
-                15,
-                5
+                5,15
             ]
         },
         "gonderiBegenenleriTakipEt": {
             "sleep1": 5,
             "sleep2": [
-                15,
-                5
+                5,15
             ],
             "sleep3": 3
         },
@@ -693,8 +784,7 @@
         "kullaniciTakipcileriniTakipEt": {
             "sleep1": 5,
             "sleep2": [
-                15,
-                5
+                5,15
             ],
             "sleep3": 3
         },
@@ -720,15 +810,14 @@
             "sleep1": 5,
             "sleep2": 2,
             "sleep3": [
-                15,
-                5
+                5,15
             ],
             "sleep4": 3
         },
         "topluMesajSilme": {
             "sleep1": [
-                15,
-                5
+                5,
+                15
             ]
         },
         "topluTakiptenCik": {
@@ -742,8 +831,7 @@
         },
         "topluYorumYapma": {
             "sleep1": [
-                20,
-                5
+                5,20
             ]
         },
         "urlYonlendir": {
