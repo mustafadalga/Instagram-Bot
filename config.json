@@ -14,7 +14,7 @@
                         "       <<< OPTIONS >>>      ",
                         "      ",
                         "1 -)  Language Settings",
-                        "2 -)  Driver Settings",
+                        "2 -)  Browser Settings",
                         "3 -)  Exit Settings"
                     ]
                 },
@@ -48,26 +48,26 @@
                 "tarayici_ayarlari": {
                     "secenekler": [
                         "      ",
-                        "         DRIVER SETTINGS",
-                        "Driver Path:C:\\geckodriver.exe",
-                        "Driver Visibility Status:Open",
+                        "         BROWSER SETTINGS",
+                        "Browser Path:C:\\geckodriver.exe",
+                        "Browser Visibility Status:Open",
                         "      ",
                         "       <<< OPTIONS >>>      ",
                         "      ",
-                        "1-)Change Driver Visibility Status",
-                        "2-)Change Driver Path",
+                        "1-)Change Browser Visibility Status",
+                        "2-)Change Browser Path",
                         "3-)Return to Previous Menu",
                         "4-)Exit Settings"
                     ],
                     "gorunme_durumu_degistir": {
                         "secenekler": [
                             "      ",
-                            "Selected Option >>>  Change Driver Visibility Status",
+                            "Selected Option >>>  Change Browser Visibility Status",
                             "      ",
                             "       <<< OPTIONS >>>      ",
                             "      ",
-                            "1-) Enter 1 to change driver visibility status to open",
-                            "2-) Enter 2 to change driver visibility status to close",
+                            "1-) Enter 1 to change browser visibility status to open",
+                            "2-) Enter 2 to change browser visibility status to close",
                             "3-)Return to Previous Menu",
                             "4-)Return to Main Menu",
                             "5-)Exit Settings"
@@ -76,11 +76,11 @@
                     "path_degistir": {
                         "secenekler": [
                             "      ",
-                            "Selected Option >>>  Change Driver Path",
+                            "Selected Option >>>  Change Browser Path",
                             "      ",
                             "       <<< OPTIONS >>>      ",
                             "      ",
-                            "1-)Enter 1 to enter a new driver path",
+                            "1-)Enter 1 to enter a new browser path",
                             "2-)Return to Previous Menu",
                             "3-)Return to Main Menu",
                             "4-)Exit Settings"
@@ -123,7 +123,7 @@
             "warnings": {
                 "aktifKullaniciGetir": {
                     "warnings": {
-                        "warning1": "[-] Aktif kullanıcı adı getirme işlemi sırasında bir hata oluştu: {hata}"
+                        "warning1": "[-] An error occurred while fetching active username:{hata}"
                     }
                 },
                 "AlbumIcerikSayisiGetir": {
@@ -133,74 +133,69 @@
                 },
                 "albumIcerikUrlGetir": {
                     "warnings": {
-                        "warning1": "[-] Gönderi url'si getirme işlemi sırasında bir hata oluştu: {hata}"
+                        "warning1": "[-] An error occurred while fetching post url:{hata}"
                     }
                 },
                 "ayarlar": {
                     "inputs": {
-                        "input1": "Yapmak istediğiniz işlemin başındaki sayısı giriniz >> "
+                        "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >> "
                     },
                     "warnings": {
-                        "warning1": "[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
-                        "warning2": "[-] Ayarlar menüsünde bir hata oluştu:{hata}"
-                    }
-                },
-                "ayarlarYukle": {
-                    "warnings": {
-                        "warning1": "[-] Gönderi url'si getirme işlemi sırasında bir hata oluştu: {hata}"
+                        "warning1": "[-] You have not made a valid choice.Please make a valid choice!",
+                        "warning2": "[-] An error occurred in the settings menu:{hata}"
                     }
                 },
                 "BASE_AYARLAR": {
                     "warnings": {
-                        "warning1": "[-] Ayarlar menüsünün içeriğini yazdırmak için format oluşturma işlemi sırasında bir hata oluştu:{hata}"
+                            "warning1": "[-] An error occurred during the formatting process created to print settings menu:{hata}"
                     }
                 },
                 "BASE_SLEEP": {
                     "warnings": {
-                        "warning1": "[-] Bekleme sürelerini yazdırmak için oluşturulan formatlama işlemi sırasında bir hata oluştu:{hata}"
+                        "warning1": "[-] An error occurred during the formatting process created to print waiting times: {hata}"
                     }
                 },
                 "BASE_UYARI": {
                     "warnings": {
-                        "warning1": "[-] Uyarı mesajlarını yazdırmak için  format oluşturma işlemi sırasında bir hata oluştu:{hata}"
+                        "warning1": "[-] An error occurred during the formatting process created to print warning messages:{hata}"
                     }
                 },
                 "dosyaIndir": {
                     "warnings": {
-                        "warning1": "[+] {url} indirildi",
-                        "warning2": "[-] dosya indirme işlemi sırasında bir hata oluştu: {hata}"
+                        "warning1": "[+] {url} downloaded",
+                        "warning2": "[-] An error occurred during the file download process: {hata}"
                     }
                 },
                 "dosyaİceriginiAl": {
                     "warnings": {
-                        "warning1": "[-] Seçilen dosyanın yüklenme işlemi sırasında bir hata oluştu:{hata}"
+                        "warning1": "[-] An error occurred while loading the selected file:{hata}"
                     }
                 },
                 "dosyaSec": {
                     "inputs": {
-                        "input1": "Dosya yolunu giriniz >> "
+                        "input1": "Enter file path >>"
                     },
                     "warnings": {
-                        "warning1": "[-] Geçerli bir dosya yolu belirtmediniz.Sadece txt uzantılı dosyaları seçebilirsiniz!",
-                        "warning2": "[-] Dosya seçme işlemi sırasında bir hata oluştu:{hata}"
+                        "warning1": "[-] You did not specify a valid file path.You can only select files with the txt extension!",
+                        "warning2": "[-] An error occurred during the file selection process:{hata}"
                     }
                 },
                 "dilAyarlari": {
                     "inputs": {
-                        "input1": "Yapmak istediğiniz işlemin başındaki sayısı giriniz >>"
+                        "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >>"
                     },
                     "warnings": {
-                        "warning1": "[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
-                        "warning2": "[-] Dil ayarları menüsünde bir hata oluştu:{hata}"
+                        "warning1": "[-] You have not made a valid choice.Please make a valid choice!",
+                        "warning2": "[-] An error occurred in the language settings menu:{hata}"
                     }
                 },
                 "dilSec": {
                     "inputs": {
-                        "input1": "Yapmak istediğiniz işlemin başındaki sayısı giriniz >>"
+                        "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >> "
                     },
                     "warnings": {
-                        "warning1": "[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
-                        "warning2": "[-] Uygulama dili değiştirme işlemi sırasında bir hata oluştu:{hata}"
+                        "warning1": "[-] You have not made a valid choice.Please make a valid choice!",
+                        "warning2": "[-] An error occurred during the application language change process:{hata}"
                     }
                 },
                 "etiketeGoreBegenme": {
@@ -214,12 +209,12 @@
                 },
                 "etiketeGoreIslemLimitiGetir": {
                     "inputs": {
-                        "input1": "Beğenmek istediğiniz gönderi sayısını giriniz >> ",
-                        "input2": "Takip etmek istediğiniz kullanıcı sayısını giriniz >> "
+                        "input1": "Enter the number of posts you want to like >> ",
+                        "input2": "Enter the number of users you want to follow >> "
                     },
                     "warnings": {
-                        "warning1": "[-] Bir sayı girişi yapmadınız!",
-                        "warning2": "[-] Belirleyen etikete göre işlem yapma limiti belirleme işlemi yapma sırasında bir hata oluştu: {hata}"
+                        "warning1": "[-] You did not enter a number!",
+                        "warning2": "[-] Belirlenen etikete göre işlem yapma limiti belirleme işlemi yapma sırasında bir hata oluştu: {hata}"
                     }
                 },
                 "etiketeGoreTakipEtme": {
@@ -233,92 +228,92 @@
                 },
                 "etiketGetir": {
                     "inputs": {
-                        "input1": "Bir etiket adı giriniz >> "
+                        "input1": "Enter a tag name >> "
                     },
                     "warnings": {
-                        "warning1": "[*] {url}  sayfasına yönlendiriliyor...",
-                        "warning2": "[-] {etiket} etiketine ait bir gönderi bulunamadı!",
-                        "warning3": "[-] Bir etiket girişi yapmadınız!",
+                        "warning1": "[*] Redirecting to {url} page ...",
+                        "warning2": "[-] A post belonging to tag {etiket} could not be found!",
+                        "warning3": "[-] You have not entered a tag!",
                         "warning4": "[-] Etiket belirleme işlemi yapma sırasında bir hata oluştu: {hata}"
                     }
                 },
                 "exit": {
                     "warnings": {
-                        "warning1": "\n [*] Python uygulamasından çıkış yapılıyor..."
+                        "warning1": "\n [*] Signing out from the application..."
                     }
                 },
                 "girisDogrulama": {
                     "inputs": {
-                        "input1": "Telefonunuza gönderilen kodu giriniz >> "
+                        "input1": "Enter the code sent to your phone >> "
                     },
                     "warnings": {
-                        "warning1": "[-] Lütfen güvenlik kodunu giriniz!",
-                        "warning2": "[-] Lütfen güvenlik kodunu kontrol edin ve tekrar deneyin.",
-                        "warning3": "[+] Giriş işlemi başarılı",
-                        "warning4": "[-] Giriş Yapılamıyor..."
+                        "warning1": "[-] Please enter the security code!",
+                        "warning2": "[-] Please check the security code and try again.",
+                        "warning3": "[+] Login is successful",
+                        "warning4": "[-] Unable to Login ..."
                     }
                 },
                 "girisKontrol": {
                     "warnings": {
-                        "warning1": "[-] Girdiğiniz kullanıcı adı bir hesaba ait değil. Lütfen kullanıcı adınızı kontrol edin ve tekrar deneyin.",
-                        "warning2": "[-] Üzgünüz, parolanız hatalıydı. Lütfen parolanızı tekrar kontrol edin.",
-                        "warning3": "[+] Giriş işlemi başarılı",
-                        "warning4": "[-] Giriş işlemi başarısız"
+                        "warning1": "[-] The username you entered doesn't belong to an account. Please check your username and try again.",
+                        "warning2": "[-] Sorry, your password was incorrect. Please double-check your password.",
+                        "warning3": "[+] Login is successful",
+                        "warning4": "[-] Login failed"
                     }
                 },
                 "girisYap": {
                     "inputs": {
-                        "input1": "Kullanıcı adınız >> ",
-                        "input2": "Parolanız >> "
+                        "input1": "Your username >> ",
+                        "input2": "Your password >> "
                     },
                     "warnings": {
-                        "warning1": "<<< Instagram Giriş Yap >>>>",
-                        "warning2": "[-] Lütfen kullanıcı adınızı ve parolanızı giriniz!",
-                        "warning3": "[-] Lütfen kullanıcı adınızı giriniz!",
-                        "warning4": "[-] Lütfen parolanızı giriniz!",
-                        "warning5": "[*] Kullanıcı girişi yapılıyor...",
-                        "warning6": "[-] Kullanıcı girişi sırasında hata:{hata}"
+                        "warning1": "<<< Login to Instagram >>>>",
+                        "warning2": "[-] Please enter your username and password!",
+                        "warning3": "[-] Please enter your username!",
+                        "warning4": "[-] Please enter your password!",
+                        "warning5": "[*] Logging in user ...",
+                        "warning6": "[-] Error during user login:{hata}"
                     }
                 },
                 "gonderiBegen": {
                     "inputs": {
-                        "input1": "Beğenmek istediğiniz gönderi url >> ",
-                        "input2": "Beğenmekten vazgeçmek istediğiniz gönderi url >> "
+                        "input1": "Enter the post url you want to like >> ",
+                        "input2": "Enter the post url you want to unlike >> "
                     },
                     "warnings": {
-                        "warning1": "[*] {url}  gönderisine yönlendiriliyor...",
+                        "warning1": "[*] Redirecting to {url} post ...",
                         "warning2": "[*] {url} adresindeki gönderinin beğenme işlemi başladı...",
                         "warning3": "[*] {url} adresindeki gönderinin beğenmekten vazgeçme işlemi başladı...",
-                        "warning4": "[+] {url} gönderisi beğenildi.",
-                        "warning5": "[*] {url} gönderisi daha önce beğenildi.",
+                        "warning4": "[+] {url} post liked.",
+                        "warning5": "[*] {url} post was liked before.",
                         "warning6": "[+] {url} gönderisi beğenilmekten vazgeçildi.",
                         "warning7": "[*] {url} gönderisi zaten beğenilmedi.",
                         "warning8": "[*] {url} adresindeki gönderinin beğenme işlemi tamamlandı.",
                         "warning9": "[*] {url} adresindeki gönderinin beğenmekten vazgeçme işlemi tamamlandı.",
-                        "warning10": "[-] {url} gönderisinin sahibinin profili gizli hesap olduğundan beğeni işlemi yapılamıyor!",
-                        "warning11": "[-] {url} gönderisinin sahibinin profili gizli hesap olduğundan beğenmektez vazgeçme işlemi yapılamıyor!",
-                        "warning12": "[-] Gönderi beğenme işlemi sırasında bir hata oluştu:{hata}",
-                        "warning13": "[-] Gönderi beğenmekten vazgeçme işlemi sırasında bir hata oluştu:{hata}"
+                        "warning10": "[-] Likes cannot be applied because the profile of the owner of the {url} post is a private account!",
+                        "warning11": "[-] Unlikes cannot be applied because the profile of the owner of the {url} post is a private account!",
+                        "warning12": "[-] An error occurred during the post like process:{hata}",
+                        "warning13": "[-] An error occurred during the post unlike process:{hata}"
                     }
                 },
                 "gonderiBegenenleriTakipEt": {
                     "inputs": {
-                        "input1": "İşlem yapmak istediğiniz gönderi url >> ",
+                        "input1": "Enter the post url you want to process >> >> ",
                         "input2": "Tüm takipçiler listesi içerisinde mi işlem yapılsın ? >> ",
-                        "input3": "İşlem yapmak için bir sayı giriniz >>> "
+                        "input3": "Enter a number to process >>>"
                     },
                     "warnings": {
-                        "warning1": "[*] {url}  gönderisine yönlendiriliyor...",
+                        "warning1": "[*] Redirecting to {url} page ...",
                         "warning2": [
-                            "       <<< SEÇENEKLER >>>      ",
-                            "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz",
+                            "       <<< OPTIONS >>>      ",
                             "Tüm takipçiler listesi içerisinden işlem yapmak için 1,",
+                            "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz",
                             ""
                         ],
                         "warning3": "Seçilen İşlem >>> Gönderiyi beğenen tüm kullanıcıları takip etme",
                         "warning4": "Seçilen İşlem >>> Belirtilen sayı kadar gönderiyi beğenen tüm kullanıcıları takip etme",
-                        "warning5": "[-] Bir sayı girişi yapmadınız.Lütfen bir sayı giriniz!",
-                        "warning6": "[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
+                        "warning5": "[-] You did not enter a number. Please enter a number!...",
+                        "warning6": "[-] You have not made a valid choice.Please make a valid choice!",
                         "warning7": "[*] {url}  gönderisini beğenen kullanıcıları takip etme işlemi başladı...",
                         "warning8": "[*] {index} -) {kullaniciAdi} kullanıcısı takip edilme işlemi başladı.",
                         "warning9": "[*] Takipçi seçme işlemi tamamlandı.",
@@ -329,14 +324,14 @@
                 },
                 "gonderiIndir": {
                     "inputs": {
-                        "input1": "İndirmek istediğiniz gönderi url >> "
+                        "input1": "Enter the post url you want to download >> "
                     },
                     "warnings": {
-                        "warning1": "[*] {url}  gönderisine yönlendiriliyor...",
-                        "warning2": "[*] {url} adresindeki gönderinin indirme işlemi başladı.",
-                        "warning3": "[*] {url} adresindeki gönderinin indirme işlemi tamamlandı.",
-                        "warning4": "[-] {url} gönderisinin sahibinin profili gizli hesap olduğundan indirme işlemi yapılamıyor!",
-                        "warning5": "[-] gönderi indirme işlemi sırasında bir hata oluştu:{hata}"
+                        "warning1": "[*] Redirecting to {url} page ...",
+                        "warning2": "[*] Download of {url} post started.",
+                        "warning3": "[*] Download of {url} post completed.",
+                        "warning4": "[-] Unable to download post because the owner of post {url} is a private account!",
+                        "warning5": "[-] An error occurred during the post download:{hata}"
                     }
                 },
                 "gonderileriBegen": {
@@ -363,23 +358,23 @@
                 },
                 "gonderiUrlGetir": {
                     "warnings": {
-                        "warning1": "[-] Gönderi url'si getirme işlemi sırasında bir hata oluştu: {hata}"
+                        "warning1": "[-] An error occurred while fetching  post url: {hata}"
                     }
                 },
                 "gonderiVarMi": {
                     "warnings": {
-                        "warning1": "[-] {kullanici} adlı kullanıcının gönderileri bulunmamaktadır."
+                        "warning1": "[-] {user} has no posts."
                     }
                 },
                 "gonderiYorumYapma": {
                     "inputs": {
-                        "input1": "Yorum yapmak istediğiniz gönderi url'isini giriniz >> ",
-                        "input2": "Yorumunuzu giriniz >> "
+                        "input1": "Enter the post url you want to comment >>  ",
+                        "input2": "Enter your comment >> "
                     },
                     "warnings": {
-                        "warning1": "[-] Yorum girişi yapmadınız!",
-                        "warning2": "[*] {url}  gönderisine yönlendiriliyor...",
-                        "warning3": "[-] Yorum yapmak istediğiniz öne çıkan hikayenin url'sine ulaşılamadı!",
+                        "warning1": "[-] You have not entered a comment!",
+                        "warning2": "[*] Redirecting to {url} page ...",
+                        "warning3": "[-]The url of the post you want to comment could not be reached!",
                         "warning4": "[*] {url}  gönderisine yorum yapma işlemi başladı.",
                         "warning5": "[*] {url}  gönderisine yorum yapma işlemi tamamlandı.",
                         "warning6": "[-] {url} gönderisinin sahibinin hesabı gizli hesap olduğundan dolayı yorum yapma işlemi gerçekleştirilemiyor",
@@ -390,19 +385,19 @@
                     "warnings": {
                         "warning1": "[*] {kullanici} kullanıcısının hikayelerini indirme işlemi başladı.",
                         "warning2": "[*] {kullanici} kullanıcısının hikayelerini indirme işlemi tamamlandı.",
-                        "warning3": "[-] Hikaye bulunamadı!",
-                        "warning4": "[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan takipçileri takip edilemiyor!",
-                        "warning5": "[-] Hikayeleri indirme işlemi sırasında bir hata oluştu: {hata}"
+                        "warning3": "[-] No stories found!",
+                        "warning4": "[-] {user} 's account is a hidden account, so its followers cannot be followed!",
+                        "warning5": "[-] An error occurred while downloading the story:{hata}"
                     }
                 },
                 "hikayeleriGetir": {
                     "warnings": {
-                        "warning1": "[-] Hikayeleri getirme işlemi sırasında bir hata oluştu: {hata}"
+                        "warning1": "[-] An error occurred while fetching stories: {hata}"
                     }
                 },
                 "hikayeSayisiGetir": {
                     "warnings": {
-                        "warning1": "[-] Hikaye sayısı getirme işlemi sırasında bir hata oluştu: {hata}"
+                        "warning1": "[-] An error occurred while fetching story count: {hata}"
                     }
                 },
                 "hikayeVarMi": {
@@ -415,16 +410,15 @@
                         "input1": " İşlem yapmak için bir seçim yapınız >> "
                     },
                     "warnings": {
-                        "warning1": "[-] Lütfen geçerli bir seçim yapınız!",
+                        "warning1": "[-] Please make a valid choice!",
                         "warning2": "[-] Yapılacak işlem , başındaki sayıya göre seçilmeli."
                     }
                 },
                 "klasorOlustur": {
                     "warnings": {
-                        "warning1": "[+] {klasor} adında klasör oluşturuldu",
-                        "warning2": "[*] {klasor} klasörüne geçiş yapıldı",
-                        "warning3": "[*] {klasor} adında klasör zaten mevcut",
-                        "warning4": "[*] {klasor} klasörüne geçiş yapıldı"
+                        "warning1": "[+] Folder named {folder} created",
+                        "warning2": "[*] Folder named {folder} already exists",
+                        "warning3": "[*] Switched to the {folder} folder"
                     }
                 },
                 "kullaniciEngelle": {
@@ -448,20 +442,20 @@
                     },
                     "warnings": {
                         "warning1": [
-                            "       <<< SEÇENEKLER >>>      ",
-                            "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz.",
+                            "       <<< OPTIONS >>>      ",
                             "Tüm takipçiler listesi içerisinden işlem yapmak için 1,",
+                            "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz.",
                             ""
                         ],
                         "warning2": "Seçilen İşlem >>> Tüm takipçiler listesi içerisindeki kullanıcıları takip etme",
                         "warning3": "Seçilen İşlem >>> Belirtilen sayı kadar takipçiler listesi içerisindeki kullanıcıları takip etme",
-                        "warning4": "[-] Bir sayı girişi yapmadınız.Lütfen bir sayı giriniz!",
-                        "warning5": "[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
+                        "warning4": "[-] You did not enter a number. Please enter a number!...",
+                        "warning5": "[-] You have not made a valid choice.Please make a valid choice!",
                         "warning6": "[*] {kullanici} kullanıcısının takipçilerini takip etme işlemi başladı...",
                         "warning7": "[*] {index} -) {takipci} takip edilme işlemi başladı.",
                         "warning8": "[*] {kullanici} kullanıcısının takipçilerini takip etme işlemi tamamlandı.",
                         "warning9": "[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan takipçileri takip edilemiyor!",
-                        "warning10": "[-] {kullanici} kullanıcısının takipçilerini takip etme işlemi sırasında hata:{hata}"
+                        "warning10":"[-] {kullanici} kullanıcısının takipçilerini takip etme işlemi sırasında hata:{hata}"
                     }
                 },
                 "kullaniciTakipDurumDegistir": {
@@ -488,10 +482,10 @@
                 },
                 "oneCikanHikayeIndir": {
                     "inputs": {
-                        "input1": "Öne çıkan hikaye url giriniz >> "
+                        "input1": "Enter highlight story url >> "
                     },
                     "warnings": {
-                        "warning1": "[*] {url}  gönderisine yönlendiriliyor...",
+                        "warning1": "[*] Redirecting to {url} page ...",
                         "warning2": "[-] İndirmek istediğiniz öne çıkan hikayenin url'sine ulaşılamadı!",
                         "warning3": "[*] {url}  öne çıkan hikayesini indirme işlemi başladı",
                         "warning4": "[*] {url}  öne çıkan hikayesini indirme işlemi tamamlandı.",
@@ -510,14 +504,14 @@
                 "quit": {
                     "warnings": {
                         "warning1": "[*] Uygulamadan çıkış yapılıyor...",
-                        "warning2": "[*] Uygulamadan çıkış yapıldı...",
-                        "warning3": "[-] Uygulamadan çıkış sırasında hata oluştu:{hata}"
+                        "warning2": "[*] Signed out from the application... ",
+                        "warning3": "[-] Uygulamadan çıkış işlemi sırasında hata:{hata}"
                     }
                 },
                 "oturumKapat": {
                     "warnings": {
                         "warning1": "[*] İnstagramdan çıkış yapılıyor...",
-                        "warning2": "[*] İnstagramdan çıkış yapıldı...",
+                        "warning2": "[*] Signed out of Instagram ...",
                         "warning3": "[-] İnstagramdan çıkış işlemi sırasında hata:{hata}"
                     }
                 },
@@ -562,7 +556,7 @@
                 },
                 "takipcileriGetir": {
                     "warnings": {
-                        "warning1": "[*] Tarayıcı profilinize yönlendiriliyor.",
+                        "warning1": "[*] Browser is redirected to your profile...",
                         "warning2": "[*] Takipçileri listeye ekleme işlemi başladı.",
                         "warning3": "[*] {index} -) {takipci} takipcisi listeye eklendi.",
                         "warning4": "[-] Popup aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}",
@@ -587,53 +581,53 @@
                 },
                 "tarayiciBaslat": {
                     "warnings": {
-                        "warning1": "[*] Tarayıcı Başlatılıyor..."
+                        "warning1": "[*] Browser starting ......"
                     }
                 },
                 "tarayiciAyarlari": {
                     "inputs": {
-                        "input1": "Yapmak istediğiniz işlemin başındaki sayısı giriniz >>"
+                        "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >>"
                     },
                     "warnings": {
-                        "warning1": "[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
-                        "warning2": "[-] Tarayıcı ayarları menüsünde bir hata oluştu:{hata}"
+                        "warning1": "[-] You have not made a valid choice.Please make a valid choice!",
+                        "warning2": "[-] An error occurred in the browser settings menu:{hata}"
                     }
                 },
                 "tarayiciPathAyarlari": {
                     "inputs": {
-                        "input1": "Yapmak istediğiniz işlemin başındaki sayısı giriniz >>"
+                        "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >>"
                     },
                     "warnings": {
-                        "warning1": "[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
-                        "warning2": "[-] Tarayıcı sürücü yolu değiştirme menüsünde bir hata oluştu:{hata}"
+                        "warning1": "[-] You have not made a valid choice.Please make a valid choice!",
+                        "warning2": "[-] An error occurred during the browser path changed:{hata}"
                     }
                 },
                 "tarayiciPathDegistir": {
                     "inputs": {
-                        "input1": "Tarayıcı sürücü yolunu giriniz >>"
+                        "input1": "Enter browser path >>"
                     },
                     "warnings": {
-                        "warning1": "[*] Tarayıcı sürücü yolu başarıyla değiştirildi.Değişikliği görmek için uygulamayı yeniden başlatın.",
-                        "warning2": "[-] Belirttiğiniz dosya mevcut değil!",
-                        "warning3": "[-] Tarayıcı sürücü yolu  değiştirme işlemi sırasında bir hata oluştu:{hata}"
+                        "warning1": "[*] Browser path successfully changed.Restart the application to see the change.",
+                        "warning2": "[-] The file you specified does not exist!",
+                        "warning3": "[-] An error occurred during the browser path changed:{hata}"
                     }
                 },
                 "tarayiciGorunmeDurumuAyarlari": {
                     "inputs": {
-                        "input1": "Yapmak istediğiniz işlemin başındaki sayısı giriniz >>"
+                        "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >>"
                     },
                     "warnings": {
-                        "warning1": "[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
-                        "warning2": "[-] Tarayıcı görünme durumu ayarları menüsünde bir hata oluştu:{hata}"
+                        "warning1": "[-] You have not made a valid choice.Please make a valid choice!",
+                        "warning2": "[-] An error occurred in the browser visibility settings menu:{hata}"
                     }
                 },
                 "tarayiciGorunmeDurumDegistir": {
                     "inputs": {
-                        "input1": "Yapmak istediğiniz işlemin başındaki sayısı giriniz >>"
+                        "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >>"
                     },
                     "warnings": {
-                        "warning1": "[*] Tarayıcı görünme durumu başarıyla değiştirildi.Değişikliği görmek için uygulamayı yeniden başlatın.",
-                        "warning2": "[-] Tarayıcı görünme durumu değiştirme işlemi sırasında bir hata oluştu:{hata}"
+                        "warning1": "[*] Browser visibility status changed successfully.Restart the application to see the change.",
+                        "warning2": "[-] An error occurred while changing the browser visibility status:{hata}"
                     }
                 },
                 "topluMesajSilme": {
@@ -662,20 +656,20 @@
                         "input3": "Uygulama ile oluşturan rastgele yorumlar seçilsin mi? >> "
                     },
                     "warnings": {
-                        "warning1": "[*] {url}  gönderisine yönlendiriliyor...",
-                        "warning2": "[-] {url} url'sine ulaşılamadı!",
+                        "warning1": "[*] Redirecting to {url} page ...",
+                        "warning2": "[-] Unable to reach url {url}!",
                         "warning3": "[-] {url} gönderisinin sahibinin hesabı gizli hesap olduğundan dolayı toplu yorum yapma işlemi gerçekleştirilemiyor",
                         "warning4": "[*] En fazla 50 yorum yapabilirsiniz.Yorum sayısı 50 olarak belirlenmiştir!",
-                        "warning5": "[-] Yapmak istediğiniz yorum sayısını girmediniz!",
+                        "warning5": "[-] You did not enter the number of comments you want to make!",
                         "warning6": [
-                            "       <<< SEÇENEKLER >>>      ",
-                            "Txt dosyasından olarak oluşturduğunuz yorumlar ile işlem yapmak için 2 giriniz.",
+                            "       <<< OPTIONS >>>      ",
                             "Uygulama ile oluşturan rastgele yorumlar ile işlem yapmak için 1,",
+                            "Txt dosyasından olarak oluşturduğunuz yorumlar ile işlem yapmak için 2 giriniz.",
                             " "
                         ],
                         "warning7": "Seçilen İşlem >>> Uygulama ile oluşturan rastgele yorumlar ile işlem yapma",
                         "warning8": "[*] {url}  gönderisine toplu yorum yapma işlemi başladı.",
-                        "warning9": "[*] {index}.yorum yapıldı.",
+                        "warning9": "[*] {index}. yorum yapıldı.",
                         "warning10": "Seçilen İşlem >>> Txt dosyasından olarak oluşturduğunuz yorumlar ile işlem yapma",
                         "warning11": "[*] {url}  gönderisine toplu yorum yapma işlemi başladı.",
                         "warning12": "[*] {index}.yorum yapıldı.",
@@ -686,7 +680,7 @@
                 },
                 "urlGecerliMi": {
                     "warnings": {
-                        "warning1": "[-] Geçerli bir url girişi yapmadınız!"
+                        "warning1": "[-] You have not entered a valid url!"
                     }
                 },
                 "urlGirildiMi": {
@@ -696,13 +690,13 @@
                 },
                 "uygulamaDilDegistir": {
                     "warnings": {
-                        "warning1": "[*] Uygulama dili başarıyla değiştirildi.Değişikliği görmek için uygulamayı yeniden başlatın",
-                        "warning2": "[-] Uygulama dili değiştirme işlemi sırasında bir hata oluştu:{hata}"
+                        "warning1": "[*] Application language changed successfully.Restart the application to see the change.",
+                        "warning2": "[-] An error occurred during the application language change process:{hata}"
                     }
                 },
                 "yorumYap": {
                     "warnings": {
-                        "warning1": "[-] {url} gönderisine yorum yapma işlemi sırasında bir hata oluştu: {hata}"
+                        "warning1": "[-] An error occurred while commenting on the {url} post: {hata}"
                     }
                 }
             }
@@ -841,7 +835,7 @@
                 },
                 "ayarlar": {
                     "inputs": {
-                        "input1": "Yapmak istediğiniz işlemin başındaki sayısı giriniz >> "
+                        "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >> "
                     },
                     "warnings": {
                         "warning1": "[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
@@ -890,7 +884,7 @@
                 },
                 "dilAyarlari": {
                     "inputs": {
-                        "input1": "Yapmak istediğiniz işlemin başındaki sayısı giriniz >>"
+                        "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >>"
                     },
                     "warnings": {
                         "warning1": "[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
@@ -899,7 +893,7 @@
                 },
                 "dilSec": {
                     "inputs": {
-                        "input1": "Yapmak istediğiniz işlemin başındaki sayısı giriniz >>"
+                        "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >>"
                     },
                     "warnings": {
                         "warning1": "[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
@@ -1014,8 +1008,8 @@
                         "warning1": "[*] {url}  gönderisine yönlendiriliyor...",
                         "warning2": [
                             "       <<< SEÇENEKLER >>>      ",
-                            "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz",
                             "Tüm takipçiler listesi içerisinden işlem yapmak için 1,",
+                            "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz",
                             ""
                         ],
                         "warning3": "Seçilen İşlem >>> Gönderiyi beğenen tüm kullanıcıları takip etme",
@@ -1082,7 +1076,7 @@
                     "warnings": {
                         "warning1": "[-] Yorum girişi yapmadınız!",
                         "warning2": "[*] {url}  gönderisine yönlendiriliyor...",
-                        "warning3": "[-] Yorum yapmak istediğiniz öne çıkan hikayenin url'sine ulaşılamadı!",
+                        "warning3": "[-] Yorum yapmak istediğiniz gönderinin url'sine ulaşılamadı!",
                         "warning4": "[*] {url}  gönderisine yorum yapma işlemi başladı.",
                         "warning5": "[*] {url}  gönderisine yorum yapma işlemi tamamlandı.",
                         "warning6": "[-] {url} gönderisinin sahibinin hesabı gizli hesap olduğundan dolayı yorum yapma işlemi gerçekleştirilemiyor",
@@ -1152,8 +1146,8 @@
                     "warnings": {
                         "warning1": [
                             "       <<< SEÇENEKLER >>>      ",
-                            "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz.",
                             "Tüm takipçiler listesi içerisinden işlem yapmak için 1,",
+                            "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz.",
                             ""
                         ],
                         "warning2": "Seçilen İşlem >>> Tüm takipçiler listesi içerisindeki kullanıcıları takip etme",
@@ -1295,7 +1289,7 @@
                 },
                 "tarayiciAyarlari": {
                     "inputs": {
-                        "input1": "Yapmak istediğiniz işlemin başındaki sayısı giriniz >>"
+                        "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >>"
                     },
                     "warnings": {
                         "warning1": "[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
@@ -1304,7 +1298,7 @@
                 },
                 "tarayiciPathAyarlari": {
                     "inputs": {
-                        "input1": "Yapmak istediğiniz işlemin başındaki sayısı giriniz >>"
+                        "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >>"
                     },
                     "warnings": {
                         "warning1": "[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
@@ -1323,7 +1317,7 @@
                 },
                 "tarayiciGorunmeDurumuAyarlari": {
                     "inputs": {
-                        "input1": "Yapmak istediğiniz işlemin başındaki sayısı giriniz >>"
+                        "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >>"
                     },
                     "warnings": {
                         "warning1": "[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
@@ -1332,7 +1326,7 @@
                 },
                 "tarayiciGorunmeDurumDegistir": {
                     "inputs": {
-                        "input1": "Yapmak istediğiniz işlemin başındaki sayısı giriniz >>"
+                        "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >>"
                     },
                     "warnings": {
                         "warning1": "[*] Tarayıcı görünme durumu başarıyla değiştirildi.Değişikliği görmek için uygulamayı yeniden başlatın.",
@@ -1372,8 +1366,8 @@
                         "warning5": "[-] Yapmak istediğiniz yorum sayısını girmediniz!",
                         "warning6": [
                             "       <<< SEÇENEKLER >>>      ",
-                            "Txt dosyasından olarak oluşturduğunuz yorumlar ile işlem yapmak için 2 giriniz.",
                             "Uygulama ile oluşturan rastgele yorumlar ile işlem yapmak için 1,",
+                            "Txt dosyasından olarak oluşturduğunuz yorumlar ile işlem yapmak için 2 giriniz.",
                             " "
                         ],
                         "warning7": "Seçilen İşlem >>> Uygulama ile oluşturan rastgele yorumlar ile işlem yapma",
