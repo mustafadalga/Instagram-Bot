@@ -19,7 +19,6 @@ class Instagram():
         self.dil = None
         self.ayarlarYukle()
         self.dilYukle()
-        self.ayarlar()
         self.script()
         self.tarayiciThreadOlustur()
         self.girisYapildimi = False
@@ -33,71 +32,91 @@ class Instagram():
         try:
             return "languages.{dil}.ayarlar.".format(dil=self.dil)
         except Exception as error:
-            self.uyariOlustur("[-] Ayarlar menüsünün içeriğini yazdırmak için format oluşturma işlemi sırasında bir hata oluştu:{hata}".format(hata=str(error)),2)
+            base_warnings = self.BASE_UYARI(metod=self.BASE_AYARLAR, warnings=True)
+            self.uyariOlustur(str(self.configGetir(base_warnings+"warning1")).format(hata=str(error)),2)
 
     def BASE_SLEEP(self,metod):
         try:
             return "time.{metod}.".format(metod=metod.__name__)
         except Exception as error:
-            self.uyariOlustur("[-] Bekleme sürelerini yazdırmak için oluşturulan formatlama işlemi sırasında bir hata oluştu:{hata}".format(hata=str(error)),2)
+            base_warnings = self.BASE_UYARI(metod=self.BASE_SLEEP, warnings=True)
+            self.uyariOlustur(str(self.configGetir(base_warnings+"warning1")).format(hata=str(error)),2)
 
 
     def ayarlar(self,durum=True):
-        if durum:
-            ayarlar=self.configGetir(self.BASE_AYARLAR()+"ana_ekran.secenekler")
-            for secenek in ayarlar:
-                self.uyariOlustur(secenek,3)
-        secilenIslem=input("Yapmak istediğiniz işlemin başındaki sayısı giriniz >> ")
+        base_warnings = self.BASE_UYARI(metod=self.ayarlar, warnings=True)
+        base_inputs = self.BASE_UYARI(metod=self.ayarlar,inputs=True)
+        try:
+            if durum:
+                ayarlar=self.configGetir("{base}ana_ekran.secenekler".format(base=self.BASE_AYARLAR()))
+                for secenek in ayarlar:
+                    self.uyariOlustur(secenek,3)
+            secilenIslem=input(self.configGetir(base_inputs+"input1"))
 
-        if secilenIslem=="1":
-            self.dilAyarlari()
-        elif secilenIslem=="2":
-            self.tarayiciAyarlari()
-        elif secilenIslem=="3":
-            self.menu()
-        else:
-            self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!", 2)
-            self.ayarlar(durum=False)
+            if secilenIslem=="1":
+                self.dilAyarlari()
+            elif secilenIslem=="2":
+                self.tarayiciAyarlari()
+            elif secilenIslem=="3":
+                self.menu()
+            else:
+                self.uyariOlustur(self.configGetir(base_warnings+"warning1"), 2)
+                self.ayarlar(durum=False)
+        except Exception as error:
+            self.uyariOlustur(str(self.configGetir(base_warnings+"warning2")).format(hata=str(error)),2)
+
 
 
     def dilAyarlari(self,durum=True):
-        if durum:
-            ayarlar=self.configGetir(self.BASE_AYARLAR()+"dil_ayarlari.secenekler")
-            for secenek in ayarlar:
-                self.uyariOlustur(secenek,3)
-        secilenIslem=input("Yapmak istediğiniz işlemin başındaki sayısı giriniz >>")
+        base_warnings = self.BASE_UYARI(metod=self.dilAyarlari, warnings=True)
+        base_inputs = self.BASE_UYARI(metod=self.dilAyarlari,inputs=True)
+        try:
+            if durum:
+                ayarlar=self.configGetir("{base}dil_ayarlari.secenekler".format(base=self.BASE_AYARLAR()))
+                for secenek in ayarlar:
+                    self.uyariOlustur(secenek,3)
+            secilenIslem=input(self.configGetir(base_inputs+"input1"))
 
-        if secilenIslem=="1":
-            self.dilSec()
-        elif secilenIslem=="2":
-            self.ayarlar()
-        elif secilenIslem=="3":
-            self.menu()
-        else:
-            self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",2)
-            self.dilAyarlari(durum=False)
+            if secilenIslem=="1":
+                self.dilSec()
+            elif secilenIslem=="2":
+                self.ayarlar()
+            elif secilenIslem=="3":
+                self.menu()
+            else:
+                self.uyariOlustur(self.configGetir(base_warnings+"warning1"),2)
+                self.dilAyarlari(durum=False)
+        except Exception as error:
+            self.uyariOlustur(str(self.configGetir(base_warnings+"warning2")).format(hata=str(error)),2)
+
 
     def dilSec(self,durum=True):
-        if durum:
-            ayarlar=self.configGetir(self.BASE_AYARLAR()+"dil_ayarlari.dil_degistir.secenekler")
-            for secenek in ayarlar:
-                self.uyariOlustur(secenek,3)
-        secilenIslem=input("Yapmak istediğiniz işlemin başındaki sayısı giriniz >>")
+        base_warnings = self.BASE_UYARI(metod=self.dilSec, warnings=True)
+        base_inputs = self.BASE_UYARI(metod=self.dilSec,inputs=True)
+        try:
+            if durum:
+                ayarlar=self.configGetir("{base}dil_ayarlari.dil_degistir.secenekler".format(base=self.BASE_AYARLAR()))
+                for secenek in ayarlar:
+                    self.uyariOlustur(secenek,3)
+            secilenIslem=input(self.configGetir(base_inputs+"input1"))
 
-        if secilenIslem in ["1","2"]:
-            self.uygulamaDilDegistir(dilNo=secilenIslem)
-            self.ayarlar()
-        elif secilenIslem=="3":
-            self.dilAyarlari()
-        elif secilenIslem=="4":
-            self.ayarlar()
-        elif secilenIslem=="5":
-            self.menu()
-        else:
-            self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",2)
-            self.dilSec(durum=False)
+            if secilenIslem in ["1","2"]:
+                self.uygulamaDilDegistir(dilNo=secilenIslem)
+                self.ayarlar()
+            elif secilenIslem=="3":
+                self.dilAyarlari()
+            elif secilenIslem=="4":
+                self.ayarlar()
+            elif secilenIslem=="5":
+                self.menu()
+            else:
+                self.uyariOlustur(self.configGetir(base_warnings+"warning1"),2)
+                self.dilSec(durum=False)
+        except Exception as error:
+            self.uyariOlustur(str(self.configGetir(base_warnings + "warning2")).format(hata=str(error)), 2)
 
     def uygulamaDilDegistir(self,dilNo):
+        base_warnings = self.BASE_UYARI(metod=self.uygulamaDilDegistir, warnings=True)
         try:
             if dilNo=="1":
                 dil="tr"
@@ -109,53 +128,65 @@ class Instagram():
                 dosya.seek(0)
                 json.dump(veri, dosya, indent=4,ensure_ascii=False)
                 dosya.truncate()
-            self.uyariOlustur("[*] Uygulama dili başarıyla değiştirildi.Değişikliği görmek için uygulamayı yeniden başlatın",1)
+            self.uyariOlustur(self.configGetir(base_warnings+"warning1"),1)
         except Exception as error:
-            self.uyariOlustur("[-] Uygulama dili değiştirme işlemi sırasında bir hata oluştu:{hata}".format(hata=str(error)), 2)
+            self.uyariOlustur(str(self.configGetir(base_warnings+"warning2")).format(hata=str(error)), 2)
 
     def tarayiciAyarlari(self,durum=True):
-        if durum:
-            ayarlar=self.configGetir(self.BASE_AYARLAR()+"tarayici_ayarlari.secenekler")
-            for secenek in ayarlar:
-                self.uyariOlustur(secenek,3)
-        secilenIslem=input("Yapmak istediğiniz işlemin başındaki sayısı giriniz >>")
+        base_warnings = self.BASE_UYARI(metod=self.tarayiciAyarlari, warnings=True)
+        base_inputs = self.BASE_UYARI(metod=self.tarayiciAyarlari,inputs=True)
+        try:
+            if durum:
+                ayarlar=self.configGetir("{base}tarayici_ayarlari.secenekler".format(base=self.BASE_AYARLAR()))
+                for secenek in ayarlar:
+                    self.uyariOlustur(secenek,3)
+            secilenIslem=input(self.configGetir(base_inputs+"input1"))
 
-        if secilenIslem=="1":
-            self.tarayiciGorunmeDurumuAyarlari()
-        elif secilenIslem=="2":
-            self.tarayiciPathAyarlari()
-        elif secilenIslem=="3":
-            self.ayarlar()
-        elif secilenIslem=="4":
-            self.menu()
-        else:
-            self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",2)
-            self.tarayiciAyarlari(durum=False)
+            if secilenIslem=="1":
+                self.tarayiciGorunmeDurumuAyarlari()
+            elif secilenIslem=="2":
+                self.tarayiciPathAyarlari()
+            elif secilenIslem=="3":
+                self.ayarlar()
+            elif secilenIslem=="4":
+                self.menu()
+            else:
+                self.uyariOlustur(self.configGetir(base_warnings+"warning1"),2)
+                self.tarayiciAyarlari(durum=False)
+        except Exception as error:
+            self.uyariOlustur(str(self.configGetir(base_warnings + "warning2")).format(hata=str(error)), 2)
 
     def tarayiciPathAyarlari(self,durum=True):
-        if durum:
-            ayarlar=self.configGetir(self.BASE_AYARLAR()+"tarayici_ayarlari.path_degistir.secenekler")
-            for secenek in ayarlar:
-                self.uyariOlustur(secenek,3)
+        base_warnings = self.BASE_UYARI(metod=self.tarayiciPathAyarlari, warnings=True)
+        base_inputs = self.BASE_UYARI(metod=self.tarayiciPathAyarlari,inputs=True)
+        try:
+            if durum:
+                ayarlar=self.configGetir(self.BASE_AYARLAR()+"tarayici_ayarlari.path_degistir.secenekler")
+                for secenek in ayarlar:
+                    self.uyariOlustur(secenek,3)
+            secilenIslem = input(self.configGetir(base_inputs+"input1"))
+            if secilenIslem=="1":
+                self.tarayiciPathDegistir()
+                self.ayarlar()
+            elif secilenIslem=="2":
+                self.tarayiciAyarlari()
+            elif secilenIslem=="3":
+                self.ayarlar()
+            elif secilenIslem=="4":
+                self.menu()
+            else:
+                self.uyariOlustur(self.configGetir(base_warnings+"warning1"),2)
+                self.tarayiciPathAyarlari(durum=False)
+        except Exception as error:
+            self.uyariOlustur(str(self.configGetir(base_warnings+"warning2")).format(hata=str(error)), 2)
 
-        secilenIslem = input("Yapmak istediğiniz işlemin başındaki sayısı giriniz >>")
-        if secilenIslem=="1":
-            self.tarayiciPathDegistir()
-            self.ayarlar()
-        elif secilenIslem=="2":
-            self.tarayiciAyarlari()
-        elif secilenIslem=="3":
-            self.ayarlar()
-        elif secilenIslem=="4":
-            self.menu()
-        else:
-            self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",2)
-            self.tarayiciPathAyarlari(durum=False)
 
 
     def tarayiciPathDegistir(self):
+        base_warnings = self.BASE_UYARI(metod=self.tarayiciPathDegistir, warnings=True)
+        base_inputs = self.BASE_UYARI(metod=self.tarayiciPathDegistir,inputs=True)
         try:
-            path = input("Tarayıcı sürü yolunu giriniz >>")
+            path = input(self.configGetir(base_inputs+"input1"))
             if self.dosyaMevcutMu(path):
                 with open('config.json', 'r+', encoding="utf-8") as dosya:
                     veri = json.load(dosya)
@@ -163,34 +194,40 @@ class Instagram():
                     dosya.seek(0)
                     json.dump(veri, dosya, indent=4,ensure_ascii=False)
                     dosya.truncate()
-                self.uyariOlustur("[*] Tarayıcı sürücü yolu başarıyla değiştirildi.Değişikliği görmek için uygulamayı yeniden başlatın.",1)
+                self.uyariOlustur(self.configGetir(base_warnings+"warning1"),1)
             else:
-                self.uyariOlustur("[-] Belirttiğiniz dosya mevcut değil!", 2)
+                self.uyariOlustur(self.configGetir(base_warnings+"warning2"), 2)
                 self.tarayiciPathAyarlari()
         except Exception as error:
-            self.uyariOlustur("[-] Tarayıcı sürücü yolu  değiştirme işlemi sırasında bir hata oluştu:{hata}".format(hata=str(error)), 2)
+            self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(hata=str(error)), 2)
 
 
     def tarayiciGorunmeDurumuAyarlari(self,durum=True):
-        if durum:
-            ayarlar=self.configGetir(self.BASE_AYARLAR()+"tarayici_ayarlari.gorunme_durumu_degistir.secenekler")
-            for secenek in ayarlar:
-                self.uyariOlustur(secenek,3)
-        secilenIslem=input("Yapmak istediğiniz işlemin başındaki sayısı giriniz >>")
-        if secilenIslem in ["1","2"]:
-            self.tarayiciGorunmeDurumDegistir(durum=secilenIslem)
-            self.ayarlar()
-        elif secilenIslem=="3":
-            self.tarayiciAyarlari()
-        elif secilenIslem=="4":
-            self.ayarlar()
-        elif secilenIslem=="5":
-            self.menu()
-        else:
-            self.uyariOlustur("[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",2)
-            self.tarayiciGorunmeDurumuAyarlari(durum=False)
+        base_warnings = self.BASE_UYARI(metod=self.tarayiciGorunmeDurumuAyarlari, warnings=True)
+        base_inputs = self.BASE_UYARI(metod=self.tarayiciGorunmeDurumuAyarlari, inputs=True)
+        try:
+            if durum:
+                ayarlar=self.configGetir("{base}tarayici_ayarlari.gorunme_durumu_degistir.secenekler".format(base=self.BASE_AYARLAR()))
+                for secenek in ayarlar:
+                    self.uyariOlustur(secenek,3)
+            secilenIslem=input(self.configGetir(base_inputs+"input1"))
+            if secilenIslem in ["1","2"]:
+                self.tarayiciGorunmeDurumDegistir(durum=secilenIslem)
+                self.ayarlar()
+            elif secilenIslem=="3":
+                self.tarayiciAyarlari()
+            elif secilenIslem=="4":
+                self.ayarlar()
+            elif secilenIslem=="5":
+                self.menu()
+            else:
+                self.uyariOlustur(self.configGetir(base_warnings+"warning1"),2)
+                self.tarayiciGorunmeDurumuAyarlari(durum=False)
+        except Exception as error:
+            self.uyariOlustur(str(self.configGetir(base_warnings + "warning2")).format(hata=str(error)), 2)
 
     def tarayiciGorunmeDurumDegistir(self,durum):
+        base_warnings = self.BASE_UYARI(metod=self.tarayiciGorunmeDurumDegistir, warnings=True)
         try:
             if durum=="1":
                 headless="true"
@@ -202,9 +239,9 @@ class Instagram():
                 dosya.seek(0)
                 json.dump(veri, dosya, indent=4,ensure_ascii=False)
                 dosya.truncate()
-            self.uyariOlustur("[*] Tarayıcı görünme durumu başarıyla değiştirildi.Değişikliği görmek için uygulamayı yeniden başlatın.",1)
+            self.uyariOlustur(self.configGetir(base_warnings+"warning1"),1)
         except Exception as error:
-            self.uyariOlustur("[-] Tarayıcı görünme durumu değiştirme işlemi sırasında bir hata oluştu:{hata}".format(hata=str(error)), 2)
+            self.uyariOlustur(str(self.configGetir(base_warnings+"warning2")).format(hata=str(error)), 2)
 
 
     def ayarlarYukle(self):
@@ -413,7 +450,7 @@ class Instagram():
         mesaj.click()
         base = self.BASE_SLEEP(metod=self.mesajSil)
         sleep1=self.configGetir(base + "sleep1")
-        sleep(self.beklemeSuresiBelirle(sleep1[0],sleep1[1]))
+        sleep(self.beklemeSuresiGetir(sleep1[0],sleep1[1]))
         self.driver.find_element_by_xpath(
             "/html/body/div[1]/section/div/div[2]/div/div/div[2]/div[1]/div/div/div[3]/button").click()
         sleep(self.configGetir(base + "sleep2"))
@@ -446,7 +483,7 @@ class Instagram():
                         self.uyariOlustur(str(self.configGetir(base_warnings+"warning4")).format(index=self.index, kullaniciAdi=kullaniciAdi), 1)
                         self.indexArtir()
                         sleep1 = self.configGetir(base_sleep + "sleep1")
-                        sleep(self.beklemeSuresiBelirle(sleep1[0], sleep1[1]))
+                        sleep(self.beklemeSuresiGetir(sleep1[0], sleep1[1]))
                     break
 
             print(self.configGetir(base_warnings+"warning5"))
@@ -565,7 +602,7 @@ class Instagram():
                     yorum = self.yorumUzunlukBelirle(yorum)
                     self.yorumYap(yorum)
                     print(str(self.configGetir(base_warnings+"warning9")).format(index=i + 1))
-                    sleep(self.beklemeSuresiBelirle(sleep1[0],sleep1[1]))
+                    sleep(self.beklemeSuresiGetir(sleep1[0],sleep1[1]))
             elif secilenIslem == "2":
                 self.uyariOlustur(self.configGetir(base_warnings+"warning10"), 1)
                 dosya = self.dosyaSec(1)
@@ -578,7 +615,7 @@ class Instagram():
                         print(str(self.configGetir(base_warnings+"warning12")).format(index=index + 1))
                         if (index + 1) == yorumSayisi:
                             break
-                        sleep(self.beklemeSuresiBelirle(sleep1[0],sleep1[1]))
+                        sleep(self.beklemeSuresiGetir(sleep1[0],sleep1[1]))
                 else:
                     self.topluYorumYapma(url=url, yorumSayisi=yorumSayisi, secilenIslem=secilenIslem)
             else:
@@ -721,7 +758,7 @@ class Instagram():
                     sleep(self.configGetir("{base}sleep2".format(base=base_sleep)))
                     self.gonderiIlerlet()
                     sleep3=self.configGetir("{base}sleep3".format(base=base_sleep))
-                    sleep(self.beklemeSuresiBelirle(sleep3[0],sleep3[1]))
+                    sleep(self.beklemeSuresiGetir(sleep3[0],sleep3[1]))
                 else:
                     self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(kullanici=kullaniciAdi), 1)
                     self.gonderiIlerlet()
@@ -767,7 +804,7 @@ class Instagram():
                     sleep(self.configGetir("{base}sleep2".format(base=base_sleep)))
                     self.gonderiIlerlet()
                     sleep3=self.configGetir("{base}sleep3".format(base=base_sleep))
-                    sleep(self.beklemeSuresiBelirle(sleep3[0],sleep3[1]))
+                    sleep(self.beklemeSuresiGetir(sleep3[0],sleep3[1]))
                 else:
                     self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(url=self.driver.current_url), 1)
                     self.gonderiIlerlet()
@@ -1032,7 +1069,7 @@ class Instagram():
                                 devamEtsinMi = False
                                 break
                             sleep3=self.configGetir("{base}sleep3".format(base=base_sleep))
-                            sleep(self.beklemeSuresiBelirle(sleep3[0],sleep3[1]))
+                            sleep(self.beklemeSuresiGetir(sleep3[0],sleep3[1]))
                     islemIndex = islemIndex + 1
                     if islemIndex >= takipEdilenSayisi:
                         devamEtsinMi = False
@@ -1803,7 +1840,7 @@ class Instagram():
 
     def gonderileriBegen(self, kullanici, secim, durum=True):
         base_warnings = self.BASE_UYARI(metod=self.gonderileriBegen, warnings=True)
-        base_sleep = self.BASE_SLEEP(metod=self.kullaniciProfilineYonlendir)
+        base_sleep = self.BASE_SLEEP(metod=self.gonderileriBegen)
         try:
             self.kullaniciProfilineYonlendir(kullanici)
             if not self.hesapGizliMi():
@@ -1973,7 +2010,7 @@ class Instagram():
 try:
     instagram = Instagram()
 except KeyboardInterrupt:
-    print("\n [*] Python uygulamasından çıkış yapılıyor...")
+    print("\n [*] Signing out from the application...")
     exit()
 
 
