@@ -1970,12 +1970,10 @@ class Instagram():
         if not os.path.exists(klasor):
             os.mkdir(klasor)
             self.uyariOlustur(str(self.configGetir(base_warnings+"warning1")).format(klasor=klasor), 1)
-            self.klasorDegistir(klasor)
-            print(str(self.configGetir(base_warnings+"warning2")).format(klasor=klasor))
         else:
-            print(str(self.configGetir(base_warnings+"warning3")).format(klasor=klasor))
-            self.klasorDegistir(klasor)
-            print(str(self.configGetir(base_warnings+"warning4")).format(klasor=klasor))
+            print(str(self.configGetir(base_warnings+"warning2")).format(klasor=klasor))
+        self.klasorDegistir(klasor)
+        print(str(self.configGetir(base_warnings+"warning3")).format(klasor=klasor))
 
     def klasorDegistir(self, klasor):
         os.chdir(klasor)
