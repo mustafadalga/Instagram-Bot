@@ -39,9 +39,9 @@
                             "      ",
                             "1-) Enter 1 for the Turkish language",
                             "2-) Enter 2 for the English language.",
-                            "3-)Return to Previous Menu",
-                            "4-)Return to Main Menu",
-                            "5-)Exit Settings"
+                            "3-) Return to Previous Menu",
+                            "4-) Return to Main Menu",
+                            "5-) Exit Settings"
                         ]
                     }
                 },
@@ -128,7 +128,7 @@
                 },
                 "AlbumIcerikSayisiGetir": {
                     "warnings": {
-                        "warning1": "[-] {url} gönderisinin album içerik sayısını getirme işlemi sırasında hata:{hata}"
+                        "warning1": "[-] {url} Error when fetching album content count:{hata}"
                     }
                 },
                 "albumIcerikUrlGetir": {
@@ -138,7 +138,7 @@
                 },
                 "ayarlar": {
                     "inputs": {
-                        "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >> "
+                        "input1": "Enter an option number >> "
                     },
                     "warnings": {
                         "warning1": "[-] You have not made a valid choice.Please make a valid choice!",
@@ -147,7 +147,7 @@
                 },
                 "BASE_AYARLAR": {
                     "warnings": {
-                            "warning1": "[-] An error occurred during the formatting process created to print settings menu:{hata}"
+                        "warning1": "[-] An error occurred during the formatting process created to print settings menu:{hata}"
                     }
                 },
                 "BASE_SLEEP": {
@@ -182,7 +182,7 @@
                 },
                 "dilAyarlari": {
                     "inputs": {
-                        "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >>"
+                        "input1": "Enter an option number >> "
                     },
                     "warnings": {
                         "warning1": "[-] You have not made a valid choice.Please make a valid choice!",
@@ -191,7 +191,7 @@
                 },
                 "dilSec": {
                     "inputs": {
-                        "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >> "
+                        "input1": "Enter an option number >> "
                     },
                     "warnings": {
                         "warning1": "[-] You have not made a valid choice.Please make a valid choice!",
@@ -298,9 +298,9 @@
                 },
                 "gonderiBegenenleriTakipEt": {
                     "inputs": {
-                        "input1": "Enter the post url you want to process >> >> ",
-                        "input2": "Tüm takipçiler listesi içerisinde mi işlem yapılsın ? >> ",
-                        "input3": "Enter a number to process >>>"
+                        "input1": "Enter the post url you want to process >> ",
+                        "input2": "Do you want to process in all followers list ? >> ",
+                        "input3": " Enter an option number >> "
                     },
                     "warnings": {
                         "warning1": "[*] Redirecting to {url} page ...",
@@ -310,15 +310,15 @@
                             "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz",
                             ""
                         ],
-                        "warning3": "Seçilen İşlem >>> Gönderiyi beğenen tüm kullanıcıları takip etme",
-                        "warning4": "Seçilen İşlem >>> Belirtilen sayı kadar gönderiyi beğenen tüm kullanıcıları takip etme",
+                        "warning3": "Selected Option >>> Gönderiyi beğenen tüm kullanıcıları takip etme",
+                        "warning4": "Selected Option >>> Belirtilen sayı kadar gönderiyi beğenen tüm kullanıcıları takip etme",
                         "warning5": "[-] You did not enter a number. Please enter a number!...",
                         "warning6": "[-] You have not made a valid choice.Please make a valid choice!",
                         "warning7": "[*] {url}  gönderisini beğenen kullanıcıları takip etme işlemi başladı...",
                         "warning8": "[*] {index} -) {kullaniciAdi} kullanıcısı takip edilme işlemi başladı.",
-                        "warning9": "[*] Takipçi seçme işlemi tamamlandı.",
+                        "warning9": "[*] Follower selection is completed.",
                         "warning10": "[*] {url} gönderisini  beğenen kullanıcıların listesi görüntülenemediğinden dolayı takip etme işlemi yapılamıyor",
-                        "warning11": "[-] {url} gönderisinin sahibinin profili gizli hesap olduğundan dolayı, bu gönderiyi beğenen kullanıcıların listesi alınamıyor!",
+                        "warning11": "[-]  {url} post is a private post. The list of users who liked the post cannot be followed.",
                         "warning12": "[-] Gönderi beğenenleri takip etme işlemi sırasında bir hata oluştu: {hata}"
                     }
                 },
@@ -330,7 +330,7 @@
                         "warning1": "[*] Redirecting to {url} page ...",
                         "warning2": "[*] Download of {url} post started.",
                         "warning3": "[*] Download of {url} post completed.",
-                        "warning4": "[-] Unable to download post because the owner of post {url} is a private account!",
+                        "warning4": "[-] {url} post is a private post. Post cannot be downloaded.",
                         "warning5": "[-] An error occurred during the post download:{hata}"
                     }
                 },
@@ -363,7 +363,7 @@
                 },
                 "gonderiVarMi": {
                     "warnings": {
-                        "warning1": "[-] {user} has no posts."
+                        "warning1": "[-] {kullanici} has no posts."
                     }
                 },
                 "gonderiYorumYapma": {
@@ -375,9 +375,9 @@
                         "warning1": "[-] You have not entered a comment!",
                         "warning2": "[*] Redirecting to {url} page ...",
                         "warning3": "[-]The url of the post you want to comment could not be reached!",
-                        "warning4": "[*] {url}  gönderisine yorum yapma işlemi başladı.",
-                        "warning5": "[*] {url}  gönderisine yorum yapma işlemi tamamlandı.",
-                        "warning6": "[-] {url} gönderisinin sahibinin hesabı gizli hesap olduğundan dolayı yorum yapma işlemi gerçekleştirilemiyor",
+                        "warning4": "[*] Commenting on {url} post started.",
+                        "warning5": "[*] Commenting on post to {url} is complete.",
+                        "warning6": "[-] {url} post is a private post. You cannot comment on post",
                         "warning7": "[-] {url} gönderisine yorum yapma işlemi sırasında bir hata oluştu: {hata}"
                     }
                 },
@@ -386,7 +386,7 @@
                         "warning1": "[*] {kullanici} kullanıcısının hikayelerini indirme işlemi başladı.",
                         "warning2": "[*] {kullanici} kullanıcısının hikayelerini indirme işlemi tamamlandı.",
                         "warning3": "[-] No stories found!",
-                        "warning4": "[-] {user} 's account is a hidden account, so its followers cannot be followed!",
+                        "warning4": "[-] {kullanici} 's account is a hidden account, so its followers cannot be followed!",
                         "warning5": "[-] An error occurred while downloading the story:{hata}"
                     }
                 },
@@ -407,11 +407,11 @@
                 },
                 "islemSec": {
                     "inputs": {
-                        "input1": " İşlem yapmak için bir seçim yapınız >> "
+                        "input1": " Enter an option number >> "
                     },
                     "warnings": {
                         "warning1": "[-] Please make a valid choice!",
-                        "warning2": "[-] Yapılacak işlem , başındaki sayıya göre seçilmeli."
+                        "warning2": "[-] You did not enter a valid option number!"
                     }
                 },
                 "klasorOlustur": {
@@ -423,22 +423,22 @@
                 },
                 "kullaniciEngelle": {
                     "warnings": {
-                        "warning1": "[*]  {kullanici} kullanıcısını engelleme işlemi başladı.",
-                        "warning2": "[*]  {kullanici} kullanıcısının engelini kaldırma işlemi başladı.",
-                        "warning3": "[-] {kullanici} kullanıcısı zaten engellenmiş durumda",
-                        "warning4": "[-] {kullanici} kullanıcısı zaten engellenmemiş durumda.",
-                        "warning5": "[-] {kullanici} kullanıcısı zaten engellenmiş durumda.",
-                        "warning6": "[-] {kullanici} kullanıcısı zaten engellenmemiş durumda.",
-                        "warning7": "[*]  {kullanici} kullanıcısını engelleme işlemi tamamlandı.",
-                        "warning8": "[*]  {kullanici} kullanıcısının engelini kaldırma işlemi tamamlandı.",
-                        "warning9": "[-] {kullanici} kullanıcısını engelleme işlemi sırasında hata:{hata}",
-                        "warning10": "[-] {kullanici} kullanıcısının engelini kaldırma işlemi sırasında hata:{hata}"
+                        "warning1": "[*]  Blocking process for {kullanici} has started.",
+                        "warning2": "[*]  Unblocking process for {kullanici} has started.",
+                        "warning3": "[-] {kullanici} is already blocked",
+                        "warning4": "[-] {kullanici} is already unblocked",
+                        "warning5": "[-] {kullanici} is already blocked",
+                        "warning6": "[-] {kullanici} is already unblocked",
+                        "warning7": "[*]  Blocking process for {kullanici} has completed.",
+                        "warning8": "[*]  Unblocking process for {kullanici} has completed.",
+                        "warning9": "[-] Error while blocking user {kullanici}:{hata}",
+                        "warning10": "[-] Error while unblocking user {kullanici}:{hata}"
                     }
                 },
                 "kullaniciTakipcileriniTakipEt": {
                     "inputs": {
-                        "input1": "Tüm takipçiler listesi içerisinde mi işlem yapılsın ? >> ",
-                        "input2": "İşlem yapmak için bir sayı giriniz >>> "
+                        "input1": "Do you want to process in all followers list ? >> ",
+                        "input2": "Enter an option number >> "
                     },
                     "warnings": {
                         "warning1": [
@@ -447,8 +447,8 @@
                             "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz.",
                             ""
                         ],
-                        "warning2": "Seçilen İşlem >>> Tüm takipçiler listesi içerisindeki kullanıcıları takip etme",
-                        "warning3": "Seçilen İşlem >>> Belirtilen sayı kadar takipçiler listesi içerisindeki kullanıcıları takip etme",
+                        "warning2": "Selected Option >>> Tüm takipçiler listesi içerisindeki kullanıcıları takip etme",
+                        "warning3": "Selected Option >>> Belirtilen sayı kadar takipçiler listesi içerisindeki kullanıcıları takip etme",
                         "warning4": "[-] You did not enter a number. Please enter a number!...",
                         "warning5": "[-] You have not made a valid choice.Please make a valid choice!",
                         "warning6": "[*] {kullanici} kullanıcısının takipçilerini takip etme işlemi başladı...",
@@ -522,32 +522,32 @@
                 },
                 "secilenIslemiGoster": {
                     "secimler": {
-                        "1": "Seçilen İşlem >>> All Posts Download",
-                        "2": "Seçilen İşlem >>> Like All Posts",
-                        "3": "Seçilen İşlem >>> Unlike All Posts",
-                        "4": "Seçilen İşlem >>> All UnFollow",
-                        "5": "Seçilen İşlem >>> Bulk Commenting To A Post",
-                        "6": "Seçilen İşlem >>> Unfollow Users Who Don't Follow",
-                        "7": "Seçilen İşlem >>> Bulk Message Deletion",
-                        "8": "Seçilen İşlem >>> Highlight Download",
-                        "9": "Seçilen İşlem >>> Story Download",
-                        "10": "Seçilen İşlem >>> A Post Download",
-                        "11": "Seçilen İşlem >>> IG TV Video Download",
-                        "12": "Seçilen İşlem >>> Following A User's Followers",
-                        "13": "Seçilen İşlem >>> Following All Users In A File",
-                        "14": "Seçilen İşlem >>> Follow Users Who Like A Post",
-                        "15": "Seçilen İşlem >>> Follow Users by Tag",
-                        "16": "Seçilen İşlem >>> Liking Posts by Tag",
-                        "17": "Seçilen İşlem >>> Like A Post",
-                        "18": "Seçilen İşlem >>> Unlike A Post",
-                        "19": "Seçilen İşlem >>> Commenting A Post",
-                        "20": "Seçilen İşlem >>> User Follow",
-                        "21": "Seçilen İşlem >>> User Unfollow",
-                        "22": "Seçilen İşlem >>> User Blocking",
-                        "23": "Seçilen İşlem >>> User Unblocking",
+                        "1": "Selected Option >>> All Posts Download",
+                        "2": "Selected Option >>> Like All Posts",
+                        "3": "Selected Option >>> Unlike All Posts",
+                        "4": "Selected Option >>> All UnFollow",
+                        "5": "Selected Option >>> Bulk Commenting To A Post",
+                        "6": "Selected Option >>> Unfollow Users Who Don't Follow",
+                        "7": "Selected Option >>> Bulk Message Deletion",
+                        "8": "Selected Option >>> Highlight Download",
+                        "9": "Selected Option >>> Story Download",
+                        "10": "Selected Option >>> A Post Download",
+                        "11": "Selected Option >>> IG TV Video Download",
+                        "12": "Selected Option >>> Following A User's Followers",
+                        "13": "Selected Option >>> Following All Users In A File",
+                        "14": "Selected Option >>> Follow Users Who Like A Post",
+                        "15": "Selected Option >>> Follow Users by Tag",
+                        "16": "Selected Option >>> Liking Posts by Tag",
+                        "17": "Selected Option >>> Like A Post",
+                        "18": "Selected Option >>> Unlike A Post",
+                        "19": "Selected Option >>> Commenting A Post",
+                        "20": "Selected Option >>> User Follow",
+                        "21": "Selected Option >>> User Unfollow",
+                        "22": "Selected Option >>> User Blocking",
+                        "23": "Selected Option >>> User Unblocking",
                         "24": "",
-                        "25": "Seçilen İşlem >>> Instagram Sign Out",
-                        "26": "Seçilen İşlem >>> Application Signing Out"
+                        "25": "Selected Option >>> Instagram Sign Out",
+                        "26": "Selected Option >>> Application Signing Out"
                     },
                     "warnings": {
                         "warning1": "Invalid choice!",
@@ -586,7 +586,7 @@
                 },
                 "tarayiciAyarlari": {
                     "inputs": {
-                        "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >>"
+                        "input1": "Enter an option number >> "
                     },
                     "warnings": {
                         "warning1": "[-] You have not made a valid choice.Please make a valid choice!",
@@ -595,7 +595,7 @@
                 },
                 "tarayiciPathAyarlari": {
                     "inputs": {
-                        "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >>"
+                        "input1": "Enter an option number >> "
                     },
                     "warnings": {
                         "warning1": "[-] You have not made a valid choice.Please make a valid choice!",
@@ -614,7 +614,7 @@
                 },
                 "tarayiciGorunmeDurumuAyarlari": {
                     "inputs": {
-                        "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >>"
+                        "input1": "Enter an option number >> "
                     },
                     "warnings": {
                         "warning1": "[-] You have not made a valid choice.Please make a valid choice!",
@@ -623,7 +623,7 @@
                 },
                 "tarayiciGorunmeDurumDegistir": {
                     "inputs": {
-                        "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >>"
+                        "input1": "Enter an option number >> "
                     },
                     "warnings": {
                         "warning1": "[*] Browser visibility status changed successfully.Restart the application to see the change.",
@@ -651,15 +651,15 @@
                 },
                 "topluYorumYapma": {
                     "inputs": {
-                        "input1": "Yorum yapmak istediğiniz gönderi url'sini giriniz >> ",
-                        "input2": "Yapmak istediğiniz yorum sayısını giriniz >> ",
+                        "input1": "Enter the post url you want to comment >>",
+                        "input2": "Enter the number of comments you want to make >> ",
                         "input3": "Uygulama ile oluşturan rastgele yorumlar seçilsin mi? >> "
                     },
                     "warnings": {
                         "warning1": "[*] Redirecting to {url} page ...",
                         "warning2": "[-] Unable to reach url {url}!",
-                        "warning3": "[-] {url} gönderisinin sahibinin hesabı gizli hesap olduğundan dolayı toplu yorum yapma işlemi gerçekleştirilemiyor",
-                        "warning4": "[*] En fazla 50 yorum yapabilirsiniz.Yorum sayısı 50 olarak belirlenmiştir!",
+                        "warning3": "[-] {url} post is a private post. Cannot bulk comment",
+                        "warning4": "[*] You can make a maximum of 50 comments! .Number of comments  changed to 50.!",
                         "warning5": "[-] You did not enter the number of comments you want to make!",
                         "warning6": [
                             "       <<< OPTIONS >>>      ",
@@ -667,13 +667,13 @@
                             "Txt dosyasından olarak oluşturduğunuz yorumlar ile işlem yapmak için 2 giriniz.",
                             " "
                         ],
-                        "warning7": "Seçilen İşlem >>> Uygulama ile oluşturan rastgele yorumlar ile işlem yapma",
+                        "warning7": "Selected Option >>> Uygulama ile oluşturan rastgele yorumlar ile işlem yapma",
                         "warning8": "[*] {url}  gönderisine toplu yorum yapma işlemi başladı.",
                         "warning9": "[*] {index}. yorum yapıldı.",
-                        "warning10": "Seçilen İşlem >>> Txt dosyasından olarak oluşturduğunuz yorumlar ile işlem yapma",
+                        "warning10": "Selected Option >>> Txt dosyasından olarak oluşturduğunuz yorumlar ile işlem yapma",
                         "warning11": "[*] {url}  gönderisine toplu yorum yapma işlemi başladı.",
                         "warning12": "[*] {index}.yorum yapıldı.",
-                        "warning13": "[-] Bir seçim yapmadınız!.Lütfen yapmak istediğiniz işlemin numarasını giriniz!",
+                        "warning13": "[-] You didn't make a choice!.Please make a choice!",
                         "warning14": "[*] {url}  gönderisine toplu yorum yapma işlemi tamamlandı.",
                         "warning15": "[-] {url} gönderisine toplu yorum yapma işlemi sırasında bir hata oluştu: {hata}"
                     }
