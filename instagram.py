@@ -499,9 +499,9 @@ class Instagram():
                     if mesaj not in silinenMesajlar:
                         silinenMesajlar.add(mesaj)
                         kullaniciAdi = mesaj.find_element_by_css_selector("._7UhW9.xLCgt.MMzan.KV-D4.fDxYl").text
-                        self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(index=self.index,kullaniciAdi=kullaniciAdi),1)
+                        self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(index=self.index,kullanici=kullaniciAdi),1)
                         self.mesajSil(mesaj)
-                        self.uyariOlustur(str(self.configGetir(base_warnings+"warning4")).format(index=self.index, kullaniciAdi=kullaniciAdi), 1)
+                        self.uyariOlustur(str(self.configGetir(base_warnings+"warning4")).format(index=self.index, kullanici=kullaniciAdi), 1)
                         self.indexArtir()
                         sleep1 = self.configGetir(base_sleep + "sleep1")
                         sleep(self.beklemeSuresiGetir(sleep1[0], sleep1[1]))
@@ -1018,10 +1018,10 @@ class Instagram():
                             btn_onay.click()
                         except Exception as error:
                             self.uyariOlustur(str(self.configGetir(base_warnings+"warning2")).format(
-                                kullaniciAdi=takipEdilenKullanıcıAdi, hata=str(error)), 2)
+                                kullanici=takipEdilenKullanıcıAdi, hata=str(error)), 2)
                             continue
                         self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(
-                            index=self.index, kullaniciAdi=takipEdilenKullanıcıAdi), 1)
+                            index=self.index, kullanici=takipEdilenKullanıcıAdi), 1)
                         self.indexArtir()
                         if (self.index - 1) >= takipEdilenSayisi:
                             devamEtsinMi = False
@@ -1057,9 +1057,7 @@ class Instagram():
         base_warnings = self.BASE_UYARI(metod=self.takipEdilenleriGetir, warnings=True)
         base_sleep = self.BASE_SLEEP(metod=self.takipEdilenleriGetir)
         try:
-            print(self.configGetir(base_warnings+"warning1"))
             takipEdilenSayisi = self.takipEdilenSayisiGetir()
-
             btn_takipEdilenler = self.driver.find_element_by_xpath(
                 "/html/body/div[1]/section/main/div/header/section/ul/li[3]/a")
             btn_takipEdilenler.click()
@@ -1082,11 +1080,11 @@ class Instagram():
                                 btn_onay = self.driver.find_element_by_css_selector("div.mt3GC > button.aOOlW")
                                 btn_onay.click()
                             except Exception as error:
-                                self.uyariOlustur(str(self.configGetir(base_warnings+"warning2")).format(
-                                    kullaniciAdi=takipEdilenKullanıcıAdi, hata=str(error)), 2)
+                                self.uyariOlustur(str(self.configGetir(base_warnings+"warning1")).format(
+                                    kullanici=takipEdilenKullanıcıAdi, hata=str(error)), 2)
                                 continue
-                            self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(
-                                index=self.index, kullaniciAdi=takipEdilenKullanıcıAdi), 1)
+                            self.uyariOlustur(str(self.configGetir(base_warnings+"warning2")).format(
+                                index=self.index, kullanici=takipEdilenKullanıcıAdi), 1)
                             self.indexArtir()
                             if self.index - 1 >= takipEdilenSayisi:
                                 devamEtsinMi = False
@@ -1101,13 +1099,13 @@ class Instagram():
                     try:
                         self.popupAsagiKaydir(secici='div[role="dialog"] .isgrP')
                     except Exception as error:
-                        self.uyariOlustur(str(self.configGetir(base_warnings+"warning4")).format(
+                        self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(
                             hata=str(error)), 2)
                         pass
                     sleep(self.configGetir("{base}sleep4".format(base=base_sleep)))
 
         except Exception as error:
-            self.uyariOlustur(str(self.configGetir(base_warnings+"warning5")).format(
+            self.uyariOlustur(str(self.configGetir(base_warnings+"warning4")).format(
                 hata=str(error)), 2)
             self.menu()
 
@@ -1128,7 +1126,6 @@ class Instagram():
         try:
             print(self.configGetir(base_warnings+"warning1"))
             self.kullaniciProfilineYonlendir(self.aktifKullanici)
-            print(self.configGetir(base_warnings+"warning2"))
             takipciSayisi = self.takipciSayisiGetir()
 
             btn_takipciler = self.driver.find_element_by_xpath(
@@ -1146,7 +1143,7 @@ class Instagram():
                     takipciKullaniciAdi = self.metindenKarakterSil(
                         self.metindenKarakterSil(takipciKullaniciAdi, self.BASE_URL), '/')
                     if takipciKullaniciAdi not in takipciler:
-                        self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(index=self.index,
+                        self.uyariOlustur(str(self.configGetir(base_warnings+"warning2")).format(index=self.index,
                                                                                                  takipci=takipciKullaniciAdi),
                                           1)
                         takipciler.add(takipciKullaniciAdi)
@@ -1158,7 +1155,7 @@ class Instagram():
                     try:
                         self.popupAsagiKaydir(secici='div[role="dialog"] .isgrP')
                     except Exception as error:
-                        self.uyariOlustur(str(self.configGetir(base_warnings+"warning4")).format(
+                        self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(
                             hata=str(error)), 2)
                         pass
                     sleep(self.configGetir("{base}sleep2".format(base=base_sleep)))
@@ -1166,19 +1163,21 @@ class Instagram():
             btn_close_dialog.click()
             return takipciler
         except Exception as error:
-            self.uyariOlustur(str(self.configGetir(base_warnings+"warning5")).format(hata=str(error)), 2)
+            self.uyariOlustur(str(self.configGetir(base_warnings+"warning4")).format(hata=str(error)), 2)
             self.menu()
 
     def takipEtmeyenleriTakiptenCik(self):
         base_warnings = self.BASE_UYARI(metod=self.takipEtmeyenleriTakiptenCik, warnings=True)
         try:
+            print(self.configGetir(base_warnings + "warning1"))
             takipciler = self.takipcileriGetir()
-            print(self.configGetir(base_warnings+"warning1"))
+            print(self.configGetir(base_warnings + "warning2"))
+            print(self.configGetir(base_warnings + "warning3"))
             self.takipEdilenleriGetir(takipciler=takipciler)
-            print(self.configGetir(base_warnings+"warning2"))
+            print(self.configGetir(base_warnings+"warning4"))
             self.menu()
         except Exception as error:
-            self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(
+            self.uyariOlustur(str(self.configGetir(base_warnings+"warning5")).format(
                 hata=str(error)), 2)
             self.menu()
 
