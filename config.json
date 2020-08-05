@@ -204,7 +204,7 @@
                         "warning2": "[+] {index}-) {url} post liked.",
                         "warning3": "[*] {url} post was liked before.",
                         "warning4": "[*] {etiket}  etiketine göre beğeni yapma işlemi tamamlandı.",
-                        "warning5": "[-] Etikete göre beğeni işlemi yapma sırasında bir hata oluştu: {hata}"
+                        "warning5": "[-] An error occurred during liking the post by tag: {hata}"
                     }
                 },
                 "etiketeGoreIslemLimitiGetir": {
@@ -214,7 +214,7 @@
                     },
                     "warnings": {
                         "warning1": "[-] You did not enter a number!",
-                        "warning2": "[-] Belirlenen etikete göre işlem yapma limiti belirleme işlemi yapma sırasında bir hata oluştu: {hata}"
+                        "warning2": "[-] An error occurred during the limit setting process: {hata}"
                     }
                 },
                 "etiketeGoreTakipEtme": {
@@ -223,7 +223,7 @@
                         "warning2": "[+] {index}-) {kullanici} takip edilmeye başlandı.",
                         "warning3": "[*] {kullanici} is already being followed.",
                         "warning4": "[*] {etiket}  etiketine göre kullanıcı takip etme işlemi tamamlandı.",
-                        "warning5": "[-] Etikete göre beğeni işlemi yapma sırasında bir hata oluştu: {hata}"
+                        "warning5": "[-] An error occurred while following the user by tag: {hata}"
                     }
                 },
                 "etiketGetir": {
@@ -234,7 +234,7 @@
                         "warning1": "[*] Redirecting to {url} page ...",
                         "warning2": "[-] A post belonging to tag {etiket} could not be found!",
                         "warning3": "[-] You have not entered a tag!",
-                        "warning4": "[-] Etiket belirleme işlemi yapma sırasında bir hata oluştu: {hata}"
+                        "warning4": "[-] There was an error selecting the tag: {hata}"
                     }
                 },
                 "exit": {
@@ -926,7 +926,7 @@
                         "warning2": "[+] {index}-) {kullanici} takip edilmeye başlandı.",
                         "warning3": "[*] {kullanici} zaten takip ediliyor.",
                         "warning4": "[*] {etiket}  etiketine göre kullanıcı takip etme işlemi tamamlandı.",
-                        "warning5": "[-] Etikete göre beğeni işlemi yapma sırasında bir hata oluştu: {hata}"
+                        "warning5": "[-] Etikete göre takip işlemi yapma sırasında bir hata oluştu: {hata}"
                     }
                 },
                 "etiketGetir": {
