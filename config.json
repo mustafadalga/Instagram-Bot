@@ -1,8 +1,8 @@
 {
     "driver_language": "'intl.accept_languages', 'en-US, en'",
     "driver_path": "C:\\geckodriver.exe",
-    "headless": "false",
-    "language": "en",
+    "headless": "true",
+    "language": "tr",
     "languages": {
         "en": {
             "ayarlar": {
@@ -26,9 +26,9 @@
                         "      ",
                         "       <<< OPTIONS >>>      ",
                         "      ",
-                        "1-)Change Language",
-                        "2-)Return to Previous Menu",
-                        "3-)Exit Settings"
+                        "1-)  Change Language",
+                        "2-)  Return to Previous Menu",
+                        "3-)  Exit Settings"
                     ],
                     "dil_degistir": {
                         "secenekler": [
@@ -37,11 +37,11 @@
                             "      ",
                             "       <<< OPTIONS >>>      ",
                             "      ",
-                            "1-) Enter 1 for the Turkish language",
-                            "2-) Enter 2 for the English language.",
-                            "3-) Return to Previous Menu",
-                            "4-) Return to Main Menu",
-                            "5-) Exit Settings"
+                            "1-)  Enter 1 for the Turkish language",
+                            "2-)  Enter 2 for the English language.",
+                            "3-)  Return to Previous Menu",
+                            "4-)  Return to Main Menu",
+                            "5-)  Exit Settings"
                         ]
                     }
                 },
@@ -54,10 +54,10 @@
                         "      ",
                         "       <<< OPTIONS >>>      ",
                         "      ",
-                        "1-)Change Browser Visibility Status",
-                        "2-)Change Browser Path",
-                        "3-)Return to Previous Menu",
-                        "4-)Exit Settings"
+                        "1-)  Change Browser Visibility Status",
+                        "2-)  Change Browser Path",
+                        "3-)  Return to Previous Menu",
+                        "4-)  Exit Settings"
                     ],
                     "gorunme_durumu_degistir": {
                         "secenekler": [
@@ -66,11 +66,11 @@
                             "      ",
                             "       <<< OPTIONS >>>      ",
                             "      ",
-                            "1-) Enter 1 to change browser visibility status to open",
-                            "2-) Enter 2 to change browser visibility status to close",
-                            "3-)Return to Previous Menu",
-                            "4-)Return to Main Menu",
-                            "5-)Exit Settings"
+                            "1-)  Enter 1 to change browser visibility status to open",
+                            "2-)  Enter 2 to change browser visibility status to close",
+                            "3-)  Return to Previous Menu",
+                            "4-)  Return to Main Menu",
+                            "5-)  Exit Settings"
                         ]
                     },
                     "path_degistir": {
@@ -80,10 +80,10 @@
                             "      ",
                             "       <<< OPTIONS >>>      ",
                             "      ",
-                            "1-)Enter 1 to enter a new browser path",
-                            "2-)Return to Previous Menu",
-                            "3-)Return to Main Menu",
-                            "4-)Exit Settings"
+                            "1-)  Enter 1 to enter a new browser path",
+                            "2-)  Return to Previous Menu",
+                            "3-)  Return to Main Menu",
+                            "4-)  Exit Settings"
                         ]
                     }
                 }
@@ -201,8 +201,8 @@
                 "etiketeGoreBegenme": {
                     "warnings": {
                         "warning1": "[*] {etiket}  etiketine göre beğeni yapma işlemi başladı.",
-                        "warning2": "[+] {index}-) {url} gönderisi beğenildi.",
-                        "warning3": "[*] {url} gönderisi daha önce beğenildi.",
+                        "warning2": "[+] {index}-) {url} post liked.",
+                        "warning3": "[*] {url} post was liked before.",
                         "warning4": "[*] {etiket}  etiketine göre beğeni yapma işlemi tamamlandı.",
                         "warning5": "[-] Etikete göre beğeni işlemi yapma sırasında bir hata oluştu: {hata}"
                     }
@@ -219,9 +219,9 @@
                 },
                 "etiketeGoreTakipEtme": {
                     "warnings": {
-                        "warning1": "[*] {etiket}  etiketine göre kullanıcı takip etme işlemi başladı.",
+                        "warning1": "[*] The user following process for the {etiket} tag has begun.",
                         "warning2": "[+] {index}-) {kullanici} takip edilmeye başlandı.",
-                        "warning3": "[*] {kullanici} zaten takip ediliyor.",
+                        "warning3": "[*] {kullanici} is already being followed.",
                         "warning4": "[*] {etiket}  etiketine göre kullanıcı takip etme işlemi tamamlandı.",
                         "warning5": "[-] Etikete göre beğeni işlemi yapma sırasında bir hata oluştu: {hata}"
                     }
@@ -277,8 +277,8 @@
                 },
                 "gonderiBegen": {
                     "inputs": {
-                        "input1": "Enter the post url you want to like >> ",
-                        "input2": "Enter the post url you want to unlike >> "
+                        "input1": "Enter a post url >> ",
+                        "input2": "Enter a post url >> "
                     },
                     "warnings": {
                         "warning1": "[*] Redirecting to {url} post ...",
@@ -287,7 +287,7 @@
                         "warning4": "[+] {url} post liked.",
                         "warning5": "[*] {url} post was liked before.",
                         "warning6": "[+] {url} gönderisi beğenilmekten vazgeçildi.",
-                        "warning7": "[*] {url} gönderisi zaten beğenilmedi.",
+                        "warning7": "[*] {url} post was already unliked.",
                         "warning8": "[*] {url} adresindeki gönderinin beğenme işlemi tamamlandı.",
                         "warning9": "[*] {url} adresindeki gönderinin beğenmekten vazgeçme işlemi tamamlandı.",
                         "warning10": "[-] Likes cannot be applied because the profile of the owner of the {url} post is a private account!",
@@ -298,7 +298,7 @@
                 },
                 "gonderiBegenenleriTakipEt": {
                     "inputs": {
-                        "input1": "Enter the post url you want to process >> ",
+                        "input1": "Enter post url >> ",
                         "input2": "Do you want to process in all followers list ? >> ",
                         "input3": " Enter an option number >> "
                     },
@@ -306,19 +306,19 @@
                         "warning1": "[*] Redirecting to {url} page ...",
                         "warning2": [
                             "       <<< OPTIONS >>>      ",
-                            "Tüm takipçiler listesi içerisinden işlem yapmak için 1,",
+                            "Enter 1 to process from all followers list,",
                             "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz",
                             ""
                         ],
-                        "warning3": "Selected Option >>> Gönderiyi beğenen tüm kullanıcıları takip etme",
+                        "warning3": "Selected Option >>> Follow all users who like post",
                         "warning4": "Selected Option >>> Belirtilen sayı kadar gönderiyi beğenen tüm kullanıcıları takip etme",
                         "warning5": "[-] You did not enter a number. Please enter a number!...",
                         "warning6": "[-] You have not made a valid choice.Please make a valid choice!",
                         "warning7": "[*] {url}  gönderisini beğenen kullanıcıları takip etme işlemi başladı...",
-                        "warning8": "[*] {index} -) {kullaniciAdi} kullanıcısı takip edilme işlemi başladı.",
+                        "warning8": "[*] {index} -) {kullanici} kullanıcısı takip edilme işlemi başladı.",
                         "warning9": "[*] Follower selection is completed.",
-                        "warning10": "[*] {url} gönderisini  beğenen kullanıcıların listesi görüntülenemediğinden dolayı takip etme işlemi yapılamıyor",
-                        "warning11": "[-]  {url} post is a private post. The list of users who liked the post cannot be followed.",
+                        "warning10": "[*] Unable to view the list of users who liked the {url} post! Users cannot be followed.",
+                        "warning11": "[-] {url} post is a private post. The list of users who liked the post cannot be followed.",
                         "warning12": "[-] Gönderi beğenenleri takip etme işlemi sırasında bir hata oluştu: {hata}"
                     }
                 },
@@ -336,24 +336,24 @@
                 },
                 "gonderileriBegen": {
                     "warnings": {
-                        "warning1": "[*] {kullanici}  adlı kullanıcının gönderilerini beğenme işlemi başladı.",
-                        "warning2": "[+] {index}-) {url} Post liked.",
-                        "warning3": "[*] {url} Post was liked before.",
-                        "warning4": "[+] {index}-) {url} gönderisi beğenilmekten vazgeçildi.",
-                        "warning5": "[*]  {url} Post is already not liked.",
-                        "warning6": "[*] {kullanici}  adlı kullanıcının gönderilerini beğenme işlemi tamamlandı.",
-                        "warning7": "[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan gönderileri beğenme işlemi yapılamıyor!",
-                        "warning8": "[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan gönderileri beğenmekten vazgeçme işlemi yapılamıyor!",
-                        "warning9": "[-] {kullanici} kullanıcısının gönderilerini beğenme işlemi sırasında bir hata oluştu:{hata}",
-                        "warning10": "[-] {kullanici} kullanıcısının gönderilerini beğenmekten vazgeçme işlemi sırasında bir hata oluştu:{hata}"
+                        "warning1": "[*] The process of liking {kullanici}'s posts is started.",
+                        "warning2": "[+] {index}-) {url} post liked.",
+                        "warning3": "[*] {url} post was liked before.",
+                        "warning4": "[+] {index}-) {url} post unliked.",
+                        "warning5": "[*]  {url} post is already not liked.",
+                        "warning6": "[*] The process of liking {kullanici}'s posts is completed.",
+                        "warning7": "[-] Unable to like posts because {user} 's account is a private account!",
+                        "warning8": "[-] Unable to unlike posts because {user} 's account is a private account!",
+                        "warning9": "[-] An error occurred while liking {kullanici}'s posts:{hata}",
+                        "warning10": "[-] An error occurred while unliking {kullanici}'s posts:{hata}"
                     }
                 },
                 "gonderileriIndir": {
                     "warnings": {
-                        "warning1": "[*] {kullanici}  adlı kullanıcının gönderilerini indirme işlemi başladı",
-                        "warning2": "[*] {kullanici}  adlı kullanıcının gönderilerini indirme işlemi tamamlandı.",
-                        "warning3": "[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan gönderileri indirme işlemi yapılamıyor!",
-                        "warning4": "[-] {kullanici} kullanıcısının gönderilerini indirme işlemi sırasında bir hata oluştu:{hata}"
+                        "warning1": "[*] Download of {kullanici}'s posts has started.",
+                        "warning2": "[*] Download of {kullanici}'s posts has completed.",
+                        "warning3": "[-] Unable to download posts because {kullanici}'s account is a private account!",
+                        "warning4": "[-] An error occurred while downloading the posts of {kullanici}: {hata}"
                     }
                 },
                 "gonderiUrlGetir": {
@@ -374,7 +374,7 @@
                     "warnings": {
                         "warning1": "[-] You have not entered a comment!",
                         "warning2": "[*] Redirecting to {url} page ...",
-                        "warning3": "[-]The url of the post you want to comment could not be reached!",
+                        "warning3": "[-] The url of the post you want to comment could not be reached!",
                         "warning4": "[*] Commenting on {url} post started.",
                         "warning5": "[*] Commenting on post to {url} is complete.",
                         "warning6": "[-] {url} post is a private post. You cannot comment on post",
@@ -423,14 +423,14 @@
                 },
                 "kullaniciEngelle": {
                     "warnings": {
-                        "warning1": "[*]  Blocking process for {kullanici} has started.",
-                        "warning2": "[*]  Unblocking process for {kullanici} has started.",
+                        "warning1": "[*] Blocking process for {kullanici} has started.",
+                        "warning2": "[*] Unblocking process for {kullanici} has started.",
                         "warning3": "[-] {kullanici} is already blocked",
                         "warning4": "[-] {kullanici} is already unblocked",
                         "warning5": "[-] {kullanici} is already blocked",
                         "warning6": "[-] {kullanici} is already unblocked",
-                        "warning7": "[*]  Blocking process for {kullanici} has completed.",
-                        "warning8": "[*]  Unblocking process for {kullanici} has completed.",
+                        "warning7": "[*] Blocking process for {kullanici} has completed.",
+                        "warning8": "[*] Unblocking process for {kullanici} has completed.",
                         "warning9": "[-] Error while blocking user {kullanici}:{hata}",
                         "warning10": "[-] Error while unblocking user {kullanici}:{hata}"
                     }
@@ -443,7 +443,7 @@
                     "warnings": {
                         "warning1": [
                             "       <<< OPTIONS >>>      ",
-                            "Tüm takipçiler listesi içerisinden işlem yapmak için 1,",
+                            "Enter 1 to process from all followers list,",
                             "Belirtilen sayı kadar takipçiler listesi içerisinden işlem yapmak için 2 giriniz.",
                             ""
                         ],
@@ -455,7 +455,7 @@
                         "warning7": "[*] {index} -) {takipci} takip edilme işlemi başladı.",
                         "warning8": "[*] {kullanici} kullanıcısının takipçilerini takip etme işlemi tamamlandı.",
                         "warning9": "[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan takipçileri takip edilemiyor!",
-                        "warning10":"[-] {kullanici} kullanıcısının takipçilerini takip etme işlemi sırasında hata:{hata}"
+                        "warning10": "[-] {kullanici} kullanıcısının takipçilerini takip etme işlemi sırasında hata:{hata}"
                     }
                 },
                 "kullaniciTakipDurumDegistir": {
@@ -494,7 +494,7 @@
                 },
                 "profilSec": {
                     "inputs": {
-                        "input1": " İşlem yapmak istediğiniz profilin kullanıcı adı >> "
+                        "input1": " Enter a username >>"
                     },
                     "warnings": {
                         "warning1": "[*] Browser redirecting to {kullanici} profile ...",
@@ -503,16 +503,16 @@
                 },
                 "quit": {
                     "warnings": {
-                        "warning1": "[*] Uygulamadan çıkış yapılıyor...",
+                        "warning1": "[*] Signing out of application ......",
                         "warning2": "[*] Signed out from the application... ",
-                        "warning3": "[-] Uygulamadan çıkış işlemi sırasında hata:{hata}"
+                        "warning3": "[-] Error during application exit process:{hata}"
                     }
                 },
                 "oturumKapat": {
                     "warnings": {
-                        "warning1": "[*] İnstagramdan çıkış yapılıyor...",
+                        "warning1": "[*] Signing out of Instagram ...",
                         "warning2": "[*] Signed out of Instagram ...",
-                        "warning3": "[-] İnstagramdan çıkış işlemi sırasında hata:{hata}"
+                        "warning3": "[-] There was an error signing out of Instagram:{hata}"
                     }
                 },
                 "rastgeleYorumGetir": {
@@ -559,7 +559,7 @@
                         "warning1": "[*] Browser is redirected to your profile...",
                         "warning2": "[*] Takipçileri listeye ekleme işlemi başladı.",
                         "warning3": "[*] {index} -) {takipci} takipcisi listeye eklendi.",
-                        "warning4": "[-] Popup aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}",
+                        "warning4": "[-] An error occurred while scrolling the popup down: {hata}",
                         "warning5": "[-] Takipçileri seçme işlemi sırasında bir hata oluştu: {hata}"
                     }
                 },
@@ -568,20 +568,21 @@
                         "warning1": "[*] Takip etmeyen kullanıcıları takipten çıkma işlemi başladı.",
                         "warning2": "[-] {kullaniciAdi} kullanıcısını takipten çıkma işlemi sırasında bir hata oluştu: {hata}",
                         "warning3": "[*] {index} -) {kullaniciAdi} adlı kullanıcı takip edilmekten vazgeçildi.",
-                        "warning4": "[-] Popup aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}",
+                        "warning4": "[-] An error occurred while scrolling the popup down: {hata}",
                         "warning5": "[-] Takip etmeyen kullanıcıları takipten çıkma işlemi sırasında bir hata oluştu: {hata}"
                     }
                 },
                 "takipEtmeyenleriTakiptenCik": {
                     "warnings": {
                         "warning1": "[*] Takipçileri listeye ekleme işlemi başladı.",
-                        "warning2": "[*] Takipçileri listeye ekleme işlemi başladı.",
+                        "warning2": "[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.",
                         "warning3": "[-] Takip etmeyen kullanıcıları takipten çıkma işlemi sırasında bir hata oluştu: {hata}"
                     }
                 },
                 "tarayiciBaslat": {
                     "warnings": {
-                        "warning1": "[*] Browser starting ......"
+                        "warning1": "[*] Browser starting ......",
+                        "warning2": "[-] An error occurred during the browser initialization process:{hata}"
                     }
                 },
                 "tarayiciAyarlari": {
@@ -632,12 +633,12 @@
                 },
                 "topluMesajSilme": {
                     "warnings": {
-                        "warning1": "[*] Toplu mesaj silme işlemi başladı.",
-                        "warning2": "[*] Mesaj kutusunda mesaj bulunmamaktadır.",
+                        "warning1": "[*] Bulk message deletion process is started.",
+                        "warning2": "[*] You have no messages.",
                         "warning3": "[*] {index} -) {kullaniciAdi} ile yapılan mesajlaşma silinecek.",
                         "warning4": "[*] {index} -) {kullaniciAdi} ile yapılan mesajlaşma başarıyla silindi.",
-                        "warning5": "[*] Toplu mesaj silme işlemi tamamlandı.",
-                        "warning6": "[-] Toplu mesaj silme işlemi sırasında bir hata oluştu: {hata}"
+                        "warning5": "[*] Bulk message deletion process is completed.",
+                        "warning6": "[-] An error occurred during bulk message deletion: {hata}"
                     }
                 },
                 "topluTakiptenCik": {
@@ -645,7 +646,7 @@
                         "warning1": "[*] Toplu takipten çıkma işlemi başladı.",
                         "warning2": "[-] {kullaniciAdi} kullanıcısını takipten çıkma işlemi sırasında bir hata oluştu: {hata}",
                         "warning3": "[*] {index} -) {kullaniciAdi} adlı kullanıcı takip edilmekten vazgeçildi.",
-                        "warning4": "[-] Popup aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}",
+                        "warning4": "[-] An error occurred while scrolling the popup down: {hata}",
                         "warning5": "[-] Toplu takipten çıkma işlemi sırasında bir hata oluştu: {hata}"
                     }
                 },
@@ -664,18 +665,18 @@
                         "warning6": [
                             "       <<< OPTIONS >>>      ",
                             "Uygulama ile oluşturan rastgele yorumlar ile işlem yapmak için 1,",
-                            "Txt dosyasından olarak oluşturduğunuz yorumlar ile işlem yapmak için 2 giriniz.",
+                            "Txt dosyası olarak oluşturduğunuz yorumlar ile işlem yapmak için 2 giriniz.",
                             " "
                         ],
                         "warning7": "Selected Option >>> Uygulama ile oluşturan rastgele yorumlar ile işlem yapma",
-                        "warning8": "[*] {url}  gönderisine toplu yorum yapma işlemi başladı.",
-                        "warning9": "[*] {index}. yorum yapıldı.",
-                        "warning10": "Selected Option >>> Txt dosyasından olarak oluşturduğunuz yorumlar ile işlem yapma",
-                        "warning11": "[*] {url}  gönderisine toplu yorum yapma işlemi başladı.",
-                        "warning12": "[*] {index}.yorum yapıldı.",
+                        "warning8": "[*] Bulk comment on {url} post started.",
+                        "warning9": "[*] {index}.comment added.",
+                        "warning10": "Selected Option >>> Txt dosyası olarak oluşturduğunuz yorumlar ile işlem yapma",
+                        "warning11": "[*] Bulk comment on {url} post started.",
+                        "warning12": "[*] {index}.comment added.",
                         "warning13": "[-] You didn't make a choice!.Please make a choice!",
-                        "warning14": "[*] {url}  gönderisine toplu yorum yapma işlemi tamamlandı.",
-                        "warning15": "[-] {url} gönderisine toplu yorum yapma işlemi sırasında bir hata oluştu: {hata}"
+                        "warning14": "[*] Bulk comment on {url} post completed.",
+                        "warning15": "[-] An error occurred during the bulk comment to {url} post: {hata}"
                     }
                 },
                 "urlGecerliMi": {
@@ -685,7 +686,7 @@
                 },
                 "urlGirildiMi": {
                     "warnings": {
-                        "warning1": "[-] Bir url girişi yapmasınız!"
+                        "warning1": "[-] You did not enter a url!"
                     }
                 },
                 "uygulamaDilDegistir": {
@@ -723,9 +724,9 @@
                         "      ",
                         "       <<< SEÇENEKLER >>>      ",
                         "      ",
-                        "1-)Dil Değiştir",
-                        "2-)Bir Önceki Menüye Geri Dön",
-                        "3-)Ayarlardan Çıkış Yap"
+                        "1-)  Dil Değiştir",
+                        "2-)  Bir Önceki Menüye Geri Dön",
+                        "3-)  Ayarlardan Çıkış Yap"
                     ],
                     "dil_degistir": {
                         "secenekler": [
@@ -734,11 +735,11 @@
                             "      ",
                             "       <<< SEÇENEKLER >>>      ",
                             "      ",
-                            "1-)Türkçe dili için 1",
-                            "2-)İngilizce dili için 2 giriniz.",
-                            "3-)Bir Önceki Menüye Geri Dön",
-                            "4-)Ana Menüye Geri Dön",
-                            "5-)Ayarlardan Çıkış Yap"
+                            "1-)  Türkçe dili için 1",
+                            "2-)  İngilizce dili için 2 giriniz.",
+                            "3-)  Bir Önceki Menüye Geri Dön",
+                            "4-)  Ana Menüye Geri Dön",
+                            "5-)  Ayarlardan Çıkış Yap"
                         ]
                     }
                 },
@@ -751,10 +752,10 @@
                         "      ",
                         "       <<< SEÇENEKLER >>>      ",
                         "      ",
-                        "1-)Tarayıcı Görünme Durumu Değiştir",
-                        "2-)Tarayıcı Sürücü Yolu Değiştir",
-                        "3-)Bir Önceki Menüye Geri Dön",
-                        "4-)Ayarlardan Çık."
+                        "1-)  Tarayıcı Görünme Durumu Değiştir",
+                        "2-)  Tarayıcı Sürücü Yolu Değiştir",
+                        "3-)  Bir Önceki Menüye Geri Dön",
+                        "4-)  Ayarlardan Çık."
                     ],
                     "gorunme_durumu_degistir": {
                         "secenekler": [
@@ -763,11 +764,11 @@
                             "      ",
                             "       <<< SEÇENEKLER >>>      ",
                             "      ",
-                            "1-)Tarayıcı görünme durumunu açık olarak değiştirmek için 1,",
-                            "2-)Tarayıcı görünme durumunu kapalı olarak değiştirmek için 2 giriniz.",
-                            "3-)Bir Önceki Menüye Geri Dön",
-                            "4-)Ana Menüye Geri Dön",
-                            "5-)Ayarlardan Çıkış Yap"
+                            "1-)  Tarayıcı görünme durumunu açık olarak değiştirmek için 1,",
+                            "2-)  Tarayıcı görünme durumunu kapalı olarak değiştirmek için 2 giriniz.",
+                            "3-)  Bir Önceki Menüye Geri Dön",
+                            "4-)  Ana Menüye Geri Dön",
+                            "5-)  Ayarlardan Çıkış Yap"
                         ]
                     },
                     "path_degistir": {
@@ -777,10 +778,10 @@
                             "      ",
                             "       <<< SEÇENEKLER >>>      ",
                             "      ",
-                            "1-) Yeni bir sürücü yolu tanımlamak için 1 giriniz",
-                            "2-)Bir Önceki Menüye Geri Dön",
-                            "3-)Ana Menüye Geri Dön",
-                            "4-)Ayarlardan Çıkış Yap"
+                            "1-)  Yeni bir sürücü yolu tanımlamak için 1 giriniz",
+                            "2-)  Bir Önceki Menüye Geri Dön",
+                            "3-)  Ana Menüye Geri Dön",
+                            "4-)  Ayarlardan Çıkış Yap"
                         ]
                     }
                 }
@@ -865,7 +866,7 @@
                 "dosyaIndir": {
                     "warnings": {
                         "warning1": "[+] {url} indirildi",
-                        "warning2": "[-] dosya indirme işlemi sırasında bir hata oluştu: {hata}"
+                        "warning2": "[-] Dosya indirme işlemi sırasında bir hata oluştu: {hata}"
                     }
                 },
                 "dosyaİceriginiAl": {
@@ -941,7 +942,7 @@
                 },
                 "exit": {
                     "warnings": {
-                        "warning1": "\n [*] Python uygulamasından çıkış yapılıyor..."
+                        "warning1": "\n [*] Uygulamadan çıkış yapılıyor..."
                     }
                 },
                 "girisDogrulama": {
@@ -1005,7 +1006,7 @@
                         "input3": "İşlem yapmak için bir sayı giriniz >>> "
                     },
                     "warnings": {
-                        "warning1": "[*] {url}  gönderisine yönlendiriliyor...",
+                        "warning1": "[*] {url} gönderisine yönlendiriliyor...",
                         "warning2": [
                             "       <<< SEÇENEKLER >>>      ",
                             "Tüm takipçiler listesi içerisinden işlem yapmak için 1,",
@@ -1033,7 +1034,7 @@
                         "warning2": "[*] {url} adresindeki gönderinin indirme işlemi başladı.",
                         "warning3": "[*] {url} adresindeki gönderinin indirme işlemi tamamlandı.",
                         "warning4": "[-] {url} gönderisinin sahibinin profili gizli hesap olduğundan indirme işlemi yapılamıyor!",
-                        "warning5": "[-] gönderi indirme işlemi sırasında bir hata oluştu:{hata}"
+                        "warning5": "[-] Gönderi indirme işlemi sırasında bir hata oluştu:{hata}"
                     }
                 },
                 "gonderileriBegen": {
@@ -1104,7 +1105,7 @@
                 },
                 "hikayeVarMi": {
                     "warnings": {
-                        "warning1": "[-] Hikaye olup olmadığı işleminin kontrolü sırasına bir hata oluştu: {hata}"
+                        "warning1": "[-] Hikaye olup olmadığı işleminin kontrolü sırasında bir hata oluştu: {hata}"
                     }
                 },
                 "islemSec": {
@@ -1126,14 +1127,14 @@
                 },
                 "kullaniciEngelle": {
                     "warnings": {
-                        "warning1": "[*]  {kullanici} kullanıcısını engelleme işlemi başladı.",
-                        "warning2": "[*]  {kullanici} kullanıcısının engelini kaldırma işlemi başladı.",
+                        "warning1": "[*] {kullanici} kullanıcısını engelleme işlemi başladı.",
+                        "warning2": "[*] {kullanici} kullanıcısının engelini kaldırma işlemi başladı.",
                         "warning3": "[-] {kullanici} kullanıcısı zaten engellenmiş durumda",
                         "warning4": "[-] {kullanici} kullanıcısı zaten engellenmemiş durumda.",
                         "warning5": "[-] {kullanici} kullanıcısı zaten engellenmiş durumda.",
                         "warning6": "[-] {kullanici} kullanıcısı zaten engellenmemiş durumda.",
-                        "warning7": "[*]  {kullanici} kullanıcısını engelleme işlemi tamamlandı.",
-                        "warning8": "[*]  {kullanici} kullanıcısının engelini kaldırma işlemi tamamlandı.",
+                        "warning7": "[*] {kullanici} kullanıcısını engelleme işlemi tamamlandı.",
+                        "warning8": "[*] {kullanici} kullanıcısının engelini kaldırma işlemi tamamlandı.",
                         "warning9": "[-] {kullanici} kullanıcısını engelleme işlemi sırasında hata:{hata}",
                         "warning10": "[-] {kullanici} kullanıcısının engelini kaldırma işlemi sırasında hata:{hata}"
                     }
@@ -1278,13 +1279,14 @@
                 "takipEtmeyenleriTakiptenCik": {
                     "warnings": {
                         "warning1": "[*] Takipçileri listeye ekleme işlemi başladı.",
-                        "warning2": "[*] Takipçileri listeye ekleme işlemi başladı.",
+                        "warning2": "[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.",
                         "warning3": "[-] Takip etmeyen kullanıcıları takipten çıkma işlemi sırasında bir hata oluştu: {hata}"
                     }
                 },
                 "tarayiciBaslat": {
                     "warnings": {
-                        "warning1": "[*] Tarayıcı Başlatılıyor..."
+                        "warning1": "[*] Tarayıcı Başlatılıyor...",
+                        "warning2": "[-] Tarayıcı başlatma işlemi sırasında bir hata oluştu:{hata}"
                     }
                 },
                 "tarayiciAyarlari": {
@@ -1367,13 +1369,13 @@
                         "warning6": [
                             "       <<< SEÇENEKLER >>>      ",
                             "Uygulama ile oluşturan rastgele yorumlar ile işlem yapmak için 1,",
-                            "Txt dosyasından olarak oluşturduğunuz yorumlar ile işlem yapmak için 2 giriniz.",
+                            "Txt dosyası olarak oluşturduğunuz yorumlar ile işlem yapmak için 2 giriniz.",
                             " "
                         ],
                         "warning7": "Seçilen İşlem >>> Uygulama ile oluşturan rastgele yorumlar ile işlem yapma",
                         "warning8": "[*] {url}  gönderisine toplu yorum yapma işlemi başladı.",
                         "warning9": "[*] {index}.yorum yapıldı.",
-                        "warning10": "Seçilen İşlem >>> Txt dosyasından olarak oluşturduğunuz yorumlar ile işlem yapma",
+                        "warning10": "Seçilen İşlem >>> Txt dosyası olarak oluşturduğunuz yorumlar ile işlem yapma",
                         "warning11": "[*] {url}  gönderisine toplu yorum yapma işlemi başladı.",
                         "warning12": "[*] {index}.yorum yapıldı.",
                         "warning13": "[-] Bir seçim yapmadınız!.Lütfen yapmak istediğiniz işlemin numarasını giriniz!",
@@ -1526,8 +1528,8 @@
             "sleep1": 3,
             "sleep2": 2,
             "sleep3": [
-                15,
-                5
+                5,
+                15
             ],
             "sleep4": 3
         },
