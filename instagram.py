@@ -1563,7 +1563,7 @@ class Instagram():
         base_sleep = self.BASE_SLEEP(metod=self.kullaniciTakipDurumDegistir)
 
         if self.hesapGizliMi():
-            btn_takip = self.driver.find_element_by_css_selector("button.BY3EC")
+            btn_takip = self.driver.find_element_by_css_selector("div.BY3EC >button")
             btn_text = str(btn_takip.text).lower()
             if durum:
                 if btn_text in ["follow","follow back"]:
@@ -1576,8 +1576,14 @@ class Instagram():
                     self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(
                         kullanici=kullanici), 1)
             else:
-                self.uyariOlustur(str(self.configGetir(base_warnings+"warning4")).format(
-                    kullanici=kullanici), 1)
+                if btn_text=="requested":
+                    btn_takip.click()
+                    sleep(self.configGetir("{base}sleep1".format(base=base_sleep)))
+                    self.driver.find_elements_by_css_selector("div.mt3GC >button.aOOlW")[0].click()
+                    self.uyariOlustur(str(self.configGetir(base_warnings + "warning8")).format(kullanici=kullanici), 1)
+                else:
+                    self.uyariOlustur(str(self.configGetir(base_warnings+"warning4")).format(kullanici=kullanici), 1)
+
         else:
             btn_takip = self.driver.find_element_by_css_selector('span.vBF20 > button._5f5mN')
             btn_text = str(btn_takip.text).lower()
@@ -1645,7 +1651,7 @@ class Instagram():
                 print(str(self.configGetir(base_warnings+"warning2")).format(kullanici=kullanici))
 
             if self.hesapGizliMi():
-                btnText = str(self.driver.find_element_by_css_selector('button.BY3EC').text).lower()
+                btnText = str(self.driver.find_element_by_css_selector('div.BY3EC >button').text).lower()
                 if durum:
                     if btnText!="unblock":
                         self.kullaniciEngelDurumDegistir()
@@ -1940,7 +1946,7 @@ class Instagram():
                 else:
                     print(str(self.configGetir(base_warnings+"warning3")).format(url=url))
                 btn_begen = self.driver.find_element_by_xpath(
-                    "/html/body/div[1]/section/main/div/div[1]/article/div[3]/section[1]/span[1]/button")
+                    "/html/body/div[1]/section/main/div/div[1]/article/div/div[3]/section[1]/span[1]/button")
                 begeniDurum = self.begenButonuDurumGetir(btn_begen)
                 if durum:
                     if begeniDurum == "like":
