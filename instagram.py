@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.firefox.options import Options
 from time import sleep
 from datetime import datetime
 import os
@@ -408,17 +409,25 @@ class Instagram():
         except:
             return False
 
-    def urlGirildiMi(self,url,metod):
+    def urlGirildiMi(self,url,metod,metodDeger=None):
         base_warnings = self.BASE_UYARI(metod=self.urlGirildiMi, warnings=True)
         if not url or len(url)<12:
             self.uyariOlustur(self.configGetir(base_warnings+"warning1"), 2)
-            metod
+            if metodDeger:
+                if "gonderiYorumYapma" == metod.__name__:
+                    metod(yorum=metodDeger)
+                metod(metodDeger)
+            metod()
 
-    def urlGecerliMi(self,url,metod):
+    def urlGecerliMi(self,url,metod,metodDeger=None):
         if not self.urlKontrol(url):
             base_warnings = self.BASE_UYARI(metod=self.urlGecerliMi, warnings=True)
             self.uyariOlustur(self.configGetir(base_warnings+"warning1"), 2)
-            metod
+            if metodDeger:
+                if "gonderiYorumYapma" == metod.__name__:
+                    metod(yorum=metodDeger)
+                metod(metodDeger)
+            metod()
 
     def tarayiciThreadOlustur(self):
         t1 = threading.Thread(target=self.tarayiciBaslat)
@@ -438,13 +447,25 @@ class Instagram():
             self.uyariOlustur(str(self.configGetir(base_warnings+"warning1")).format(hata=str(error)))
 
 
-    def tarayiciBaslat(self):
-        base_warnings=self.BASE_UYARI(metod=self.tarayiciBaslat,warnings=True)
+    def tarayiciPathGetir(self):
+        return self.configGetir("driver_path")
 
-        self.uyariOlustur(self.configGetir(base_warnings+"warning1"), 1)
-        self.driver = webdriver.Firefox(firefox_profile=self.tarayiciDilDegistir(),
-                                        executable_path="E:\\Python\\Uygulamalar\\Intagram-Bot\\Instagram-Bot\\geckodriver.exe")
-        self.driver.get(self.BASE_URL + 'accounts/login/')
+
+    def tarayiciBaslat(self):
+        base_warnings = self.BASE_UYARI(metod=self.tarayiciBaslat, warnings=True)
+        try:
+            self.uyariOlustur(self.configGetir(base_warnings+"warning1"), 1)
+            firefox_options = Options()
+            headless=self.configGetir("headless")
+            if headless=="false":
+                firefox_options.add_argument('--headless')
+            self.driver = webdriver.Firefox(firefox_profile=self.tarayiciDilDegistir(),options=firefox_options,executable_path=self.tarayiciPathGetir())
+            self.driver.get(self.BASE_URL + 'accounts/login/')
+        except Exception as error:
+            self.uyariOlustur(str(self.configGetir(base_warnings+"warning2")).format(hata=str(error)),2)
+            exit()
+
+
 
     def mesajSil(self,mesaj):
         mesaj.click()
@@ -560,7 +581,8 @@ class Instagram():
                 url = input(self.configGetir(base_inputs+"input1")).strip()
                 self.anaMenuyeDonsunMu(url)
 
-                self.urlGecerliMi(url,self.topluYorumYapma())
+                self.urlGirildiMi(url=url,metod=self.topluYorumYapma)
+                self.urlGecerliMi(url=url,metod=self.topluYorumYapma)
 
                 print(str(self.configGetir(base_warnings+"warning1")).format(url=url))
                 self.urlYonlendir(url)
@@ -643,14 +665,15 @@ class Instagram():
                 self.anaMenuyeDonsunMu(yorum)
 
 
-            self.urlGecerliMi(url,self.gonderiYorumYapma(url=None,yorum=yorum))
+            self.urlGirildiMi(url=url,metod=self.gonderiYorumYapma,metodDeger=yorum)
+            self.urlGecerliMi(url=url,metod=self.gonderiYorumYapma,metodDeger=yorum)
 
 
             if not self.degerVarMi(yorum):
                 self.uyariOlustur(self.configGetir(base_warnings+"warning1"), 2)
                 self.gonderiYorumYapma(url=url, yorum=None)
 
-            print(str(self.configGetir(base_warnings+"warning1")).format(url=url))
+            print(str(self.configGetir(base_warnings+"warning2")).format(url=url))
             self.urlYonlendir(url)
 
             if not self.sayfaMevcutMu():
@@ -921,8 +944,8 @@ class Instagram():
         try:
             url = input(self.configGetir(base_inputs+"input1")).strip()
             self.anaMenuyeDonsunMu(url)
-            self.urlGirildiMi(url,self.oneCikanHikayeIndir())
-            self.urlGecerliMi(url,self.oneCikanHikayeIndir())
+            self.urlGirildiMi(url=url,metod=self.oneCikanHikayeIndir)
+            self.urlGecerliMi(url=url,metod=self.oneCikanHikayeIndir)
 
             print(str(self.configGetir(base_warnings+"warning1")).format(url=url))
             self.urlYonlendir(url)
@@ -1170,8 +1193,8 @@ class Instagram():
             url = input(self.configGetir(base_inputs+"input1")).strip()
             self.anaMenuyeDonsunMu(url)
 
-            self.urlGirildiMi(url,self.gonderiBegenenleriTakipEt())
-            self.urlGecerliMi(url,self.gonderiBegenenleriTakipEt())
+            self.urlGirildiMi(url=url,metod=self.gonderiBegenenleriTakipEt)
+            self.urlGecerliMi(url=url,metod=self.gonderiBegenenleriTakipEt)
 
             print(str(self.configGetir(base_warnings+"warning1")).format(url=url))
             self.urlYonlendir(url)
@@ -1229,7 +1252,7 @@ class Instagram():
                             btn_takip = begenenKullanici.find_element_by_css_selector("div.Igw0E > button.sqdOP")
                             if btn_takip.text == "Follow":
                                 self.uyariOlustur(str(self.configGetir(base_warnings+"warning8")).format(
-                                    index=takipIstekSayisi + 1, kullaniciAdi=begenenKullaniciAdi), 1)
+                                    index=takipIstekSayisi + 1, kullanici=begenenKullaniciAdi), 1)
                                 btn_takip.click()
                                 takipIstekSayisi = takipIstekSayisi + 1
                                 if takipIstekSayisi == begenenSayisi:
@@ -1799,8 +1822,8 @@ class Instagram():
         try:
             url = input(self.configGetir(base_inputs+"input1")).strip()
             self.anaMenuyeDonsunMu(url)
-            self.urlGirildiMi(url,self.gonderiIndir())
-            self.urlGecerliMi(url,self.gonderiIndir())
+            self.urlGirildiMi(url=url,metod=self.gonderiIndir)
+            self.urlGecerliMi(url=url,metod=self.gonderiIndir)
 
             print(str(self.configGetir(base_warnings+"warning1")).format(url=url))
             self.urlYonlendir(url)
@@ -1908,9 +1931,8 @@ class Instagram():
                 url = input(self.configGetir(base_inputs+"input2")).strip()
 
             self.anaMenuyeDonsunMu(url)
-            self.urlGirildiMi(url, self.gonderiBegen(durum))
-            self.urlGecerliMi(url,self.gonderiBegen(durum))
-
+            self.urlGirildiMi(url=url, metod=self.gonderiBegen,metodDeger=durum)
+            self.urlGecerliMi(url=url,metod=self.gonderiBegen,metodDeger=durum)
             print(str(self.configGetir(base_warnings+"warning1")).format(url=url))
             self.urlYonlendir(url)
             if not self.hesapGizliMi():
