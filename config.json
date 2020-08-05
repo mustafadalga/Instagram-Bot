@@ -336,11 +336,11 @@
                 },
                 "gonderileriBegen": {
                     "warnings": {
-                        "warning1": "[*] {kullanici}  adlı kullanıcının gönderilerini beğenme işlemi başladı",
-                        "warning2": "[+] {index}-) {url} gönderisi beğenildi.",
-                        "warning3": "[*] {url} gönderisi daha önce beğenildi.",
+                        "warning1": "[*] {kullanici}  adlı kullanıcının gönderilerini beğenme işlemi başladı.",
+                        "warning2": "[+] {index}-) {url} Post liked.",
+                        "warning3": "[*] {url} Post was liked before.",
                         "warning4": "[+] {index}-) {url} gönderisi beğenilmekten vazgeçildi.",
-                        "warning5": "[*] {url} gönderisi zaten beğenilmedi.",
+                        "warning5": "[*]  {url} Post is already not liked.",
                         "warning6": "[*] {kullanici}  adlı kullanıcının gönderilerini beğenme işlemi tamamlandı.",
                         "warning7": "[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan gönderileri beğenme işlemi yapılamıyor!",
                         "warning8": "[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan gönderileri beğenmekten vazgeçme işlemi yapılamıyor!",
@@ -383,8 +383,8 @@
                 },
                 "hikayeIndir": {
                     "warnings": {
-                        "warning1": "[*] {kullanici} kullanıcısının hikayelerini indirme işlemi başladı.",
-                        "warning2": "[*] {kullanici} kullanıcısının hikayelerini indirme işlemi tamamlandı.",
+                        "warning1": "[*] Download of {kullanici} 's stories has started.",
+                        "warning2": "[*] Download of {kullanici} 's stories has completed.",
                         "warning3": "[-] No stories found!",
                         "warning4": "[-] {kullanici} 's account is a hidden account, so its followers cannot be followed!",
                         "warning5": "[-] An error occurred while downloading the story:{hata}"
@@ -486,10 +486,10 @@
                     },
                     "warnings": {
                         "warning1": "[*] Redirecting to {url} page ...",
-                        "warning2": "[-] İndirmek istediğiniz öne çıkan hikayenin url'sine ulaşılamadı!",
-                        "warning3": "[*] {url}  öne çıkan hikayesini indirme işlemi başladı",
-                        "warning4": "[*] {url}  öne çıkan hikayesini indirme işlemi tamamlandı.",
-                        "warning5": "[-] Öne çıkan hikayeyi indirme işlemi sırasında bir hata oluştu: {hata}"
+                        "warning2": "[-] The url of the highlight story you want to download could not be reached!",
+                        "warning3": "[*] Download of {url}  highlight story started:",
+                        "warning4": "[*] Download of {url} highlight story completed:",
+                        "warning5": "[-] There was an error downloading the highlight story: {hata}"
                     }
                 },
                 "profilSec": {
@@ -497,8 +497,8 @@
                         "input1": " İşlem yapmak istediğiniz profilin kullanıcı adı >> "
                     },
                     "warnings": {
-                        "warning1": "[*] Tarayıcı {kullanici} profiline yönlendiriliyor...",
-                        "warning2": "[-] {kullanici} adında bir kullanıcı bulunamadı "
+                        "warning1": "[*] Browser redirecting to {kullanici} profile ...",
+                        "warning2": "[-] No user named {kullanici} was found!"
                     }
                 },
                 "quit": {
@@ -517,7 +517,7 @@
                 },
                 "rastgeleYorumGetir": {
                     "warnings": {
-                        "warning1": "[-] Rastgele yorum getirme işlemi sırasında bir hata oluştu: {hata}"
+                        "warning1": "[-] An error occurred during fetching random commenting: {hata}"
                     }
                 },
                 "secilenIslemiGoster": {
