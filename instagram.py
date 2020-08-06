@@ -1061,6 +1061,12 @@ class Instagram():
     def dilYukle(self):
         self.dil=self.configGetir("language")
 
+    def dilGetir(self):
+        if self.dil=="tr":
+            return "Türkçe"
+        else:
+            return "English"
+
     def dilAyarlari(self,durum=True):
         base_warnings = self.BASE_UYARI(metod=self.dilAyarlari, warnings=True)
         base_inputs = self.BASE_UYARI(metod=self.dilAyarlari,inputs=True)
@@ -1068,7 +1074,10 @@ class Instagram():
             if durum:
                 ayarlar=self.configGetir("{base}dil_ayarlari.secenekler".format(base=self.BASE_AYARLAR()))
                 for secenek in ayarlar:
-                    self.uyariOlustur(secenek,3)
+                    if "{dil}" in secenek:
+                        self.uyariOlustur(str(secenek).format(dil=self.dilGetir()),3)
+                    else:
+                        self.uyariOlustur(secenek, 3)
             secilenIslem=input(self.configGetir(base_inputs+"input1"))
 
             if secilenIslem=="1":
@@ -1090,7 +1099,12 @@ class Instagram():
             if durum:
                 ayarlar=self.configGetir("{base}tarayici_ayarlari.secenekler".format(base=self.BASE_AYARLAR()))
                 for secenek in ayarlar:
-                    self.uyariOlustur(secenek,3)
+                    if "{path}" in secenek:
+                        self.uyariOlustur(str(secenek).format(path=self.tarayiciPathGetir()),3)
+                    elif "{status}" in secenek:
+                        self.uyariOlustur(str(secenek).format(status=self.tarayiciHeadlessGetir()), 3)
+                    else:
+                        self.uyariOlustur(secenek, 3)
             secilenIslem=input(self.configGetir(base_inputs+"input1"))
 
             if secilenIslem=="1":
@@ -1106,6 +1120,21 @@ class Instagram():
                 self.tarayiciAyarlari(durum=False)
         except Exception as error:
             self.uyariOlustur(str(self.configGetir(base_warnings + "warning2")).format(hata=str(error)), 2)
+
+    def tarayiciHeadlessGetir(self):
+        headless=self.configGetir("headless")
+        durum=None
+        if headless=="true":
+            if self.dil=="tr":
+                durum= "Açık"
+            elif self.dil=="en":
+                durum= "Open"
+        else:
+            if self.dil == "tr":
+                durum= "Kapalı"
+            elif self.dil == "en":
+                durum= "Close"
+        return durum
 
     def dilSec(self,durum=True):
         base_warnings = self.BASE_UYARI(metod=self.dilSec, warnings=True)
@@ -1153,6 +1182,7 @@ class Instagram():
         t1 = threading.Thread(target=self.tarayiciBaslat)
         t1.daemon = True
         t1.start()
+
 
     def tarayiciBaslat(self):
         base_warnings = self.BASE_UYARI(metod=self.tarayiciBaslat, warnings=True)

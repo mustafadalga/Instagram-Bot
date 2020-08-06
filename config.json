@@ -1,8 +1,8 @@
 {
     "driver_language": "'intl.accept_languages', 'en-US, en'",
     "driver_path": "C:\\geckodriver.exe",
-    "headless": "true",
-    "language": "tr",
+    "headless": "false",
+    "language": "en",
     "languages": {
         "en": {
             "ayarlar": {
@@ -22,7 +22,7 @@
                     "secenekler": [
                         "      ",
                         "         LANGUAGE SETTINGS",
-                        "Application Language:English",
+                        "Application Language:{dil}",
                         "      ",
                         "       <<< OPTIONS >>>      ",
                         "      ",
@@ -49,8 +49,8 @@
                     "secenekler": [
                         "      ",
                         "         BROWSER SETTINGS",
-                        "Browser Path:C:\\geckodriver.exe",
-                        "Browser Visibility Status:Open",
+                        "Browser Path:{path}",
+                        "Browser Visibility Status:{status}",
                         "      ",
                         "       <<< OPTIONS >>>      ",
                         "      ",
@@ -126,7 +126,7 @@
                         "warning1": "[-] An error occurred while fetching active username:{hata}"
                     }
                 },
-                "AlbumIcerikSayisiGetir": {
+                "albumIcerikSayisiGetir": {
                     "warnings": {
                         "warning1": "[-] {url} Error when fetching album content count:{hata}"
                     }
@@ -572,8 +572,8 @@
                 },
                 "takipEtmeyenleriTakiptenCik": {
                     "warnings": {
-                        "warning1": "[*] The process of selecting followers has begun.",
-                        "warning2": "[*] Takipçileri listeye ekleme işlemi tamamlandı.",
+                        "warning1": "[*] Adding followers to the list is started.",
+                        "warning2": "[*] Adding followers to the list is completed.",
                         "warning3": "[*] Takip etmeyen kullanıcıları takipten çıkma işlemi başladı.",
                         "warning4": "[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.",
                         "warning5": "[-] Takip etmeyen kullanıcıları takipten çıkma işlemi sırasında bir hata oluştu: {hata}"
@@ -668,10 +668,10 @@
                             "Enter 2 to write comments with comments you have created as a txt file.",
                             " "
                         ],
-                        "warning7": "Selected Option >>> Uygulama ile oluşturan rastgele yorumlar ile işlem yapma",
+                        "warning7": "Selected Option >>> Use comments auto created by app",
                         "warning8": "[*] Bulk comment on {url} post started.",
                         "warning9": "[*] {index}.comment added.",
-                        "warning10": "Selected Option >>> Txt dosyası olarak oluşturduğunuz yorumlar ile işlem yapma",
+                        "warning10": "Selected Option >>> Use comments from uploaded txt",
                         "warning11": "[*] Bulk comment on {url} post started.",
                         "warning12": "[*] {index}.comment added.",
                         "warning13": "[-] You didn't make a choice!.Please make a choice!",
@@ -720,7 +720,7 @@
                     "secenekler": [
                         "      ",
                         "         DİL AYARLARI",
-                        "Uygulama Dili:Türkçe",
+                        "Uygulama Dili:{dil}",
                         "      ",
                         "       <<< SEÇENEKLER >>>      ",
                         "      ",
@@ -747,8 +747,8 @@
                     "secenekler": [
                         "      ",
                         "         TARAYICI AYARLARI",
-                        "Tarayıcı Path:C:\\geckodriver.exe",
-                        "Tarayıcı Görünme Durumu:Açık",
+                        "Tarayıcı Path:{path}",
+                        "Tarayıcı Görünme Durumu:{status}",
                         "      ",
                         "       <<< SEÇENEKLER >>>      ",
                         "      ",
@@ -824,7 +824,7 @@
                         "warning1": "[-] Aktif kullanıcı adı getirme işlemi sırasında bir hata oluştu: {hata}"
                     }
                 },
-                "AlbumIcerikSayisiGetir": {
+                "albumIcerikSayisiGetir": {
                     "warnings": {
                         "warning1": "[-] {url} gönderisinin album içerik sayısını getirme işlemi sırasında hata:{hata}"
                     }
