@@ -318,7 +318,7 @@ class Instagram():
         base_sleep = self.BASE_SLEEP(metod=self.topluYorumYapma)
         sleep1 = self.configGetir(base_sleep + "sleep1")
         try:
-            if not url:
+            if url is None:
                 url = input(self.configGetir(base_inputs + "input1")).strip()
                 self.anaMenuyeDonsunMu(url)
 
@@ -564,16 +564,14 @@ class Instagram():
                 else:
                     self.uyariOlustur(self.configGetir(base_warnings + "warning4"), 2)
                     print("")
-                    self.kullaniciTakipcileriniTakipEt(kullanici, secim, secilenIslem=secilenIslem)
+                    self.kullaniciTakipcileriniTakipEt(kullanici=kullanici,secim= secim, secilenIslem=secilenIslem)
             else:
                 self.uyariOlustur(self.configGetir(base_warnings + "warning5"), 2)
                 print("")
-                self.kullaniciTakipcileriniTakipEt(kullanici, secim, secilenIslem=None)
-
-            print(str(self.configGetir(base_warnings + "warning6")).format(kullanici=kullanici))
+                self.kullaniciTakipcileriniTakipEt(kullanici=kullanici,secim= secim, secilenIslem=None)
 
             if not self.hesapGizliMi():
-                takipIstekSayisi = 0;
+                print(str(self.configGetir(base_warnings + "warning6")).format(kullanici=kullanici))
                 devamEtsinMi = True
                 self.indexSifirla()
 
@@ -591,7 +589,7 @@ class Instagram():
                     '//*[@id="react-root"]/section/main/div/header/section/ul/li[2]/a')
                 btn_takipciler.click()
                 sleep(self.configGetir("{base}sleep1".format(base=base_sleep)))
-
+                kontrolEdilenKullanicilar = set()
                 while devamEtsinMi:
                     dialog_popup = self.driver.find_element_by_css_selector('div._1XyCr')
                     takipciListe = dialog_popup.find_elements_by_css_selector('div.PZuss > li')
@@ -602,23 +600,22 @@ class Instagram():
                             btn_takip = takipci.find_element_by_css_selector('button.sqdOP')
                             if btn_takip.text == "Follow":
                                 self.uyariOlustur(str(self.configGetir(base_warnings + "warning7")).format(
-                                    index=takipIstekSayisi + 1, takipci=takipciKullaniciAdi), 1)
+                                    index=self.index, takipci=takipciKullaniciAdi), 1)
                                 btn_takip.click()
-                                takipIstekSayisi = takipIstekSayisi + 1
-                                if takipIstekSayisi == takipciSayisi:
+                                self.indexArtir()
+                                if self.index-1  >= takipciSayisi:
                                     devamEtsinMi = False
                                     break
                                 sleep2 = self.configGetir("{base}sleep2".format(base=base_sleep))
                                 sleep(self.beklemeSuresiGetir(sleep2[0], sleep2[1]))
                         except:
                             pass
-
-                        self.indexArtir()
+                        kontrolEdilenKullanicilar.add(takipciKullaniciAdi)
                         if hedefTakipciSayisi:
-                            if self.index - 1 >= kaynakTakipciSayisi:
+                            if len(kontrolEdilenKullanicilar) >= kaynakTakipciSayisi:
                                 devamEtsinMi = False
                         else:
-                            if self.index - 1 >= takipciSayisi:
+                            if len(kontrolEdilenKullanicilar) >= takipciSayisi:
                                 devamEtsinMi = False
 
                     if devamEtsinMi:
@@ -643,19 +640,19 @@ class Instagram():
             self.kullaniciListesiTakipEt(secim)
         self.kullaniciListesiTakipEt(secim)
 
-    def gonderiBegenenleriTakipEt(self, secilenIslem=None):
+    def gonderiBegenenleriTakipEt(self, url=None,secilenIslem=None):
         base_warnings = self.BASE_UYARI(metod=self.gonderiBegenenleriTakipEt, warnings=True)
         base_inputs = self.BASE_UYARI(metod=self.gonderiBegenenleriTakipEt, inputs=True)
         base_sleep = self.BASE_SLEEP(metod=self.gonderiBegenenleriTakipEt)
         try:
-            url = input(self.configGetir(base_inputs+"input1")).strip()
-            self.anaMenuyeDonsunMu(url)
+            if url is None:
+                url = input(self.configGetir(base_inputs+"input1")).strip()
+                self.anaMenuyeDonsunMu(url)
+                self.urlGirildiMi(url=url,metod=self.gonderiBegenenleriTakipEt)
+                self.urlGecerliMi(url=url,metod=self.gonderiBegenenleriTakipEt)
+                print(str(self.configGetir(base_warnings+"warning1")).format(url=url))
+                self.urlYonlendir(url)
 
-            self.urlGirildiMi(url=url,metod=self.gonderiBegenenleriTakipEt)
-            self.urlGecerliMi(url=url,metod=self.gonderiBegenenleriTakipEt)
-
-            print(str(self.configGetir(base_warnings+"warning1")).format(url=url))
-            self.urlYonlendir(url)
             hedefBegenenSayisi = None
 
             if secilenIslem is None:
@@ -675,17 +672,19 @@ class Instagram():
                 else:
                     self.uyariOlustur(self.configGetir(base_warnings+"warning5"), 2)
                     print("")
-                    self.gonderiBegenenleriTakipEt( secilenIslem=secilenIslem)
+                    self.gonderiBegenenleriTakipEt(url=url,secilenIslem=secilenIslem)
             else:
                 self.uyariOlustur(self.configGetir(base_warnings+"warning6"), 2)
                 print("")
-                self.gonderiBegenenleriTakipEt(secilenIslem=None)
+                self.gonderiBegenenleriTakipEt(url=url,secilenIslem=None)
 
             if not self.hesapGizliMi():
                 if not self.gonderiTipiVideoMu():
                     print(str(self.configGetir(base_warnings+"warning7")).format(url=url))
-                    takipIstekSayisi = 0
                     devamEtsinMi = True
+                    self.indexSifirla()
+
+
                     if hedefBegenenSayisi is None:
                         begenenSayisi = self.driver.find_element_by_css_selector(
                             "div.Nm9Fw > button.sqdOP > span").text
@@ -699,7 +698,7 @@ class Instagram():
                     btn_begenenler = self.driver.find_element_by_css_selector("div.Nm9Fw > button.sqdOP")
                     btn_begenenler.click()
                     sleep(self.configGetir("{base}sleep1".format(base=base_sleep)))
-
+                    kontrolEdilenKullanicilar=set()
                     while devamEtsinMi:
                         dialog_popup = self.driver.find_element_by_css_selector("div.pbNvD")
                         begenenlerKullanicilar = dialog_popup.find_elements_by_css_selector('div.HVWg4')
@@ -710,22 +709,23 @@ class Instagram():
                             btn_takip = begenenKullanici.find_element_by_css_selector("div.Igw0E > button.sqdOP")
                             if btn_takip.text == "Follow":
                                 self.uyariOlustur(str(self.configGetir(base_warnings+"warning8")).format(
-                                    index=takipIstekSayisi + 1, kullanici=begenenKullaniciAdi), 1)
+                                    index=self.index, kullanici=begenenKullaniciAdi), 1)
                                 btn_takip.click()
-                                takipIstekSayisi = takipIstekSayisi + 1
-                                if takipIstekSayisi == begenenSayisi:
+                                self.indexArtir()
+                                if self.index-1 >= begenenSayisi:
                                     devamEtsinMi = False
                                     break
                                 sleep2=self.configGetir("{base}sleep2".format(base=base_sleep))
                                 sleep(self.beklemeSuresiGetir(sleep2[0],sleep2[1]))
 
-                            self.indexArtir()
+                            kontrolEdilenKullanicilar.add(begenenKullaniciAdi)
+
                             if hedefBegenenSayisi:
-                                if self.index-1 >= kaynakBegenenSayisi:
+                                if len(kontrolEdilenKullanicilar) >= kaynakBegenenSayisi:
                                     devamEtsinMi = False
                                     break
                             else:
-                                if self.index-1 >= begenenSayisi:
+                                if len(kontrolEdilenKullanicilar) >= begenenSayisi:
                                     devamEtsinMi = False
                                     break
                         if devamEtsinMi:
@@ -761,10 +761,8 @@ class Instagram():
 
             print(str(self.configGetir(base_warnings+"warning1")).format(etiket=etiket))
             while True:
-                kullanici = self.driver.find_element_by_xpath(
-                    "/html/body/div[4]/div[2]/div/article/header/div[2]/div[1]")
-                kullaniciAdi = kullanici.find_element_by_css_selector("a.sqdOP").text
-                btn_takip = kullanici.find_element_by_css_selector("button.oW_lN")
+                kullaniciAdi =self.driver.find_element_by_xpath("/html/body/div[4]/div[2]/div/article/div/header/div[2]/div[1]/div[1]/span/a").text
+                btn_takip = self.driver.find_element_by_xpath("/html/body/div[4]/div[2]/div/article/div/header/div[2]/div[1]/div[2]/button")
                 if btn_takip.text != "Following":
                     btn_takip.click()
                     self.uyariOlustur(
@@ -885,7 +883,7 @@ class Instagram():
         base_inputs = self.BASE_UYARI(metod=self.gonderiYorumYapma, inputs=True)
         try:
 
-            if not url:
+            if url is None:
                 url = input(self.configGetir(base_inputs+"input1")).strip()
                 self.anaMenuyeDonsunMu(url)
             if not yorum:
@@ -1680,12 +1678,20 @@ class Instagram():
                         self.uyariOlustur(str(self.configGetir(base_warnings+"warning7")).format(
                             kullanici=kullanici), 1)
             else:
-                ariaLabel = btn_takip.find_element_by_tag_name("span").get_attribute("aria-label")
-                if ariaLabel == "Following":
-                    btn_takip.click()
-                    sleep(self.configGetir("{base}sleep1".format(base=base_sleep)))
-                    self.driver.find_elements_by_css_selector("div.mt3GC >button.aOOlW")[0].click()
-                    self.uyariOlustur(str(self.configGetir(base_warnings+"warning8")).format(kullanici=kullanici), 1)
+                try:
+                    ariaLabel = btn_takip.find_element_by_tag_name("span").get_attribute("aria-label")
+                    if ariaLabel == "Following":
+                        btn_takip.click()
+                        sleep(self.configGetir("{base}sleep1".format(base=base_sleep)))
+                        self.driver.find_elements_by_css_selector("div.mt3GC >button.aOOlW")[0].click()
+                        self.uyariOlustur(str(self.configGetir(base_warnings + "warning8")).format(kullanici=kullanici),
+                                          1)
+                    else:
+                        self.uyariOlustur(str(self.configGetir(base_warnings + "warning4")).format(kullanici=kullanici),
+                                          1)
+                except:
+                    self.uyariOlustur(str(self.configGetir(base_warnings + "warning4")).format(kullanici=kullanici), 1)
+
 
     def gonderiIlerlet(self):
         try:
@@ -1894,7 +1900,7 @@ class Instagram():
 
     def urlGirildiMi(self, url, metod, metodDeger=None):
         base_warnings = self.BASE_UYARI(metod=self.urlGirildiMi, warnings=True)
-        if not url or len(url) < 12:
+        if url is None or len(url) < 12:
             self.uyariOlustur(self.configGetir(base_warnings + "warning1"), 2)
             if metodDeger:
                 if "gonderiYorumYapma" == metod.__name__:
