@@ -44,7 +44,7 @@ class Instagram():
         self.uyariOlustur("# linkedin     :https://www.linkedin.com/in/mustafadalga", 1)
         self.uyariOlustur("# github       :https://github.com/mustafadalga", 1)
         self.uyariOlustur("# email        :mustafadalgaa < at > gmail[.]com", 1)
-        self.uyariOlustur("# date         :15.07.2019", 1)
+        self.uyariOlustur("# date         :08.08.2020", 1)
         self.uyariOlustur("# version      :2.0", 1)
         self.uyariOlustur("# python_version:3.8.1", 1)
         self.uyariOlustur("# ==============================================================================", 1)
