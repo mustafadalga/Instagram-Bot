@@ -1,7 +1,7 @@
 {
     "driver_language": "'intl.accept_languages', 'en-US, en'",
     "driver_path": "C:\\geckodriver.exe",
-    "headless": "true",
+    "headless": "false",
     "language": "en",
     "languages": {
         "en": {
@@ -235,11 +235,6 @@
                         "warning2": "[-] A post belonging to tag {etiket} could not be found!",
                         "warning3": "[-] You have not entered a tag!",
                         "warning4": "[-] There was an error selecting the tag: {hata}"
-                    }
-                },
-                "exit": {
-                    "warnings": {
-                        "warning1": "\n [*] Signing out from the application..."
                     }
                 },
                 "girisDogrulama": {
@@ -510,14 +505,14 @@
                 "quit": {
                     "warnings": {
                         "warning1": "[*] Signing out of application ......",
-                        "warning2": "[*] Signed out from the application... ",
+                        "warning2": "[+] Signed out from the application... ",
                         "warning3": "[-] Error during application exit process:{hata}"
                     }
                 },
                 "oturumKapat": {
                     "warnings": {
                         "warning1": "[*] Signing out of Instagram ...",
-                        "warning2": "[*] Signed out of Instagram ...",
+                        "warning2": "[+] Signed out of Instagram ...",
                         "warning3": "[-] There was an error signing out of Instagram:{hata}"
                     }
                 },
@@ -614,7 +609,7 @@
                         "input1": "Enter browser path >> "
                     },
                     "warnings": {
-                        "warning1": "[*] Browser path successfully changed.Restart the application to see the change.",
+                        "warning1": "[+] Browser path successfully changed.Restart the application to see the change.",
                         "warning2": "[-] The file you specified does not exist!",
                         "warning3": "[-] An error occurred during the browser path changed:{hata}"
                     }
@@ -633,7 +628,7 @@
                         "input1": "Enter an option number >> "
                     },
                     "warnings": {
-                        "warning1": "[*] Browser visibility status changed successfully.Restart the application to see the change.",
+                        "warning1": "[+] Browser visibility status changed successfully.Restart the application to see the change.",
                         "warning2": "[-] An error occurred while changing the browser visibility status:{hata}"
                     }
                 },
@@ -642,7 +637,7 @@
                         "warning1": "[*] Bulk message deletion process is started.",
                         "warning2": "[*] You have no messages.",
                         "warning3": "[*] {index} -) {kullanici} ile yapılan mesajlaşma silinecek.",
-                        "warning4": "[*] {index} -) {kullanici} ile yapılan mesajlaşma başarıyla silindi.",
+                        "warning4": "[+] {index} -) {kullanici} ile yapılan mesajlaşma başarıyla silindi.",
                         "warning5": "[*] Bulk message deletion process is completed.",
                         "warning6": "[-] An error occurred during bulk message deletion: {hata}"
                     }
@@ -650,8 +645,8 @@
                 "topluTakiptenCik": {
                     "warnings": {
                         "warning1": "[*] Toplu takipten çıkma işlemi başladı.",
-                        "warning2": "[-] {kullanici} kullanıcısını takipten çıkma işlemi sırasında bir hata oluştu: {hata}",
-                        "warning3": "[*] {index} -) {kullanici} adlı kullanıcı takip edilmekten vazgeçildi.",
+                        "warning2": "[-] An error occurred while trying unfollow {kullanici}: {hata}",
+                        "warning3": "[+] {index} -) {kullanici} adlı kullanıcı takip edilmekten vazgeçildi.",
                         "warning4": "[-] An error occurred while scrolling the popup down: {hata}",
                         "warning5": "[*] Toplu takipten çıkma işlemi tamamlandı.",
                         "warning6": "[-] Toplu takipten çıkma işlemi sırasında bir hata oluştu: {hata}"
@@ -698,7 +693,7 @@
                 },
                 "uygulamaDilDegistir": {
                     "warnings": {
-                        "warning1": "[*] Application language changed successfully.Restart the application to see the change.",
+                        "warning1": "[+] Application language changed successfully.Restart the application to see the change.",
                         "warning2": "[-] An error occurred during the application language change process:{hata}"
                     }
                 },
@@ -945,11 +940,6 @@
                         "warning2": "[-] {etiket} etiketine ait bir gönderi bulunamadı!",
                         "warning3": "[-] Bir etiket girişi yapmadınız!",
                         "warning4": "[-] Etiket belirleme işlemi yapma sırasında bir hata oluştu: {hata}"
-                    }
-                },
-                "exit": {
-                    "warnings": {
-                        "warning1": "\n [*] Uygulamadan çıkış yapılıyor..."
                     }
                 },
                 "girisDogrulama": {
@@ -1220,14 +1210,14 @@
                 "quit": {
                     "warnings": {
                         "warning1": "[*] Uygulamadan çıkış yapılıyor...",
-                        "warning2": "[*] Uygulamadan çıkış yapıldı...",
+                        "warning2": "[+] Uygulamadan çıkış yapıldı...",
                         "warning3": "[-] Uygulamadan çıkış sırasında hata oluştu:{hata}"
                     }
                 },
                 "oturumKapat": {
                     "warnings": {
                         "warning1": "[*] İnstagramdan çıkış yapılıyor...",
-                        "warning2": "[*] İnstagramdan çıkış yapıldı...",
+                        "warning2": "[+] İnstagramdan çıkış yapıldı...",
                         "warning3": "[-] İnstagramdan çıkış işlemi sırasında hata:{hata}"
                     }
                 },
@@ -1281,7 +1271,7 @@
                 "takipEdilenleriGetir": {
                     "warnings": {
                         "warning1": "[-] {kullanici} kullanıcısını takipten çıkma işlemi sırasında bir hata oluştu: {hata}",
-                        "warning2": "[*] {index} -) {kullanici} adlı kullanıcı takip edilmekten vazgeçildi.",
+                        "warning2": "[+] {index} -) {kullanici} adlı kullanıcı takip edilmekten vazgeçildi.",
                         "warning3": "[-] Popup aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}",
                         "warning4": "[-] Takip etmeyen kullanıcıları takipten çıkma işlemi sırasında bir hata oluştu: {hata}"
                     }
@@ -1324,7 +1314,7 @@
                         "input1": "Tarayıcı sürücü yolunu giriniz >> "
                     },
                     "warnings": {
-                        "warning1": "[*] Tarayıcı sürücü yolu başarıyla değiştirildi.Değişikliği görmek için uygulamayı yeniden başlatın.",
+                        "warning1": "[+] Tarayıcı sürücü yolu başarıyla değiştirildi.Değişikliği görmek için uygulamayı yeniden başlatın.",
                         "warning2": "[-] Belirttiğiniz dosya mevcut değil!",
                         "warning3": "[-] Tarayıcı sürücü yolu  değiştirme işlemi sırasında bir hata oluştu:{hata}"
                     }
@@ -1343,7 +1333,7 @@
                         "input1": "Yapmak istediğiniz işlemin başındaki sayıyı giriniz >> "
                     },
                     "warnings": {
-                        "warning1": "[*] Tarayıcı görünme durumu başarıyla değiştirildi.Değişikliği görmek için uygulamayı yeniden başlatın.",
+                        "warning1": "[+] Tarayıcı görünme durumu başarıyla değiştirildi.Değişikliği görmek için uygulamayı yeniden başlatın.",
                         "warning2": "[-] Tarayıcı görünme durumu değiştirme işlemi sırasında bir hata oluştu:{hata}"
                     }
                 },
@@ -1352,7 +1342,7 @@
                         "warning1": "[*] Toplu mesaj silme işlemi başladı.",
                         "warning2": "[*] Mesaj kutusunda mesaj bulunmamaktadır.",
                         "warning3": "[*] {index} -) {kullanici} ile yapılan mesajlaşma silinecek.",
-                        "warning4": "[*] {index} -) {kullanici} ile yapılan mesajlaşma başarıyla silindi.",
+                        "warning4": "[+] {index} -) {kullanici} ile yapılan mesajlaşma başarıyla silindi.",
                         "warning5": "[*] Toplu mesaj silme işlemi tamamlandı.",
                         "warning6": "[-] Toplu mesaj silme işlemi sırasında bir hata oluştu: {hata}"
                     }
@@ -1361,7 +1351,7 @@
                     "warnings": {
                         "warning1": "[*] Toplu takipten çıkma işlemi başladı.",
                         "warning2": "[-] {kullanici} kullanıcısını takipten çıkma işlemi sırasında bir hata oluştu: {hata}",
-                        "warning3": "[*] {index} -) {kullanici} adlı kullanıcı takip edilmekten vazgeçildi.",
+                        "warning3": "[+] {index} -) {kullanici} adlı kullanıcı takip edilmekten vazgeçildi.",
                         "warning4": "[-] Popup aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}",
                         "warning5": "[*] Toplu takipten çıkma işlemi tamamlandı.",
                         "warning6": "[-] Toplu takipten çıkma işlemi sırasında bir hata oluştu: {hata}"
@@ -1408,7 +1398,7 @@
                 },
                 "uygulamaDilDegistir": {
                     "warnings": {
-                        "warning1": "[*] Uygulama dili başarıyla değiştirildi.Değişikliği görmek için uygulamayı yeniden başlatın",
+                        "warning1": "[+] Uygulama dili başarıyla değiştirildi.Değişikliği görmek için uygulamayı yeniden başlatın",
                         "warning2": "[-] Uygulama dili değiştirme işlemi sırasında bir hata oluştu:{hata}"
                     }
                 },

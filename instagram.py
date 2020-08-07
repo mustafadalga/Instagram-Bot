@@ -225,7 +225,7 @@ class Instagram():
                                                                                                      url=self.driver.current_url), 1)
                             self.gonderiBegenDurumDegistir(btn_begen)
                         else:
-                            self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(url=self.driver.current_url), 1)
+                            print(str(self.configGetir(base_warnings+"warning3")).format(url=self.driver.current_url))
                             self.gonderiIlerlet()
                             sleep(self.configGetir("{base}sleep2".format(base=base_sleep)))
                     else:
@@ -235,7 +235,7 @@ class Instagram():
                                               1)
                             self.gonderiBegenDurumDegistir(btn_begen)
                         else:
-                            self.uyariOlustur(str(self.configGetir(base_warnings+"warning5")).format(url=self.driver.current_url), 1)
+                            print(str(self.configGetir(base_warnings+"warning5")).format(url=self.driver.current_url))
                             self.gonderiIlerlet()
                             sleep(self.configGetir("{base}sleep3".format(base=base_sleep)))
                 print(str(self.configGetir(base_warnings+"warning6")).format(
@@ -345,15 +345,14 @@ class Instagram():
                     yorumSayisi = int(yorumSayisi)
                     if self.yorumLimitiAsildiMi(yorumSayisi):
                         yorumSayisi = 50
-                        self.uyariOlustur(
-                            self.configGetir(base_warnings + "warning4"), 2)
+                        print(self.configGetir(base_warnings + "warning4"))
                 else:
                     self.uyariOlustur(self.configGetir(base_warnings + "warning5"), 2)
                     self.topluYorumYapma(url=url, yorumSayisi=None, secilenIslem=None)
 
             if not secilenIslem:
-                for uyari in self.configGetir(base_warnings + "warning6"):
-                    self.uyariOlustur(uyari, 1)
+                for secenek in self.configGetir(base_warnings + "warning6"):
+                    self.uyariOlustur(secenek, 3)
                 secilenIslem = str(input(self.configGetir(base_inputs + "input3")).strip())
                 self.anaMenuyeDonsunMu(secilenIslem)
 
@@ -364,7 +363,8 @@ class Instagram():
                     yorum = self.rastgeleYorumGetir()
                     yorum = self.yorumUzunlukBelirle(yorum)
                     self.yorumYap(yorum)
-                    print(str(self.configGetir(base_warnings + "warning9")).format(index=i + 1))
+                    self.uyariOlustur(str(self.configGetir(base_warnings + "warning9")).format(index=i + 1), 1)
+
                     sleep(self.beklemeSuresiGetir(sleep1[0], sleep1[1]))
             elif secilenIslem == "2":
                 self.uyariOlustur(self.configGetir(base_warnings + "warning10"), 1)
@@ -375,7 +375,7 @@ class Instagram():
                     for index, yorum in enumerate(yorumlar):
                         yorum = self.yorumUzunlukBelirle(yorum)
                         self.yorumYap(yorum)
-                        print(str(self.configGetir(base_warnings + "warning12")).format(index=index + 1))
+                        self.uyariOlustur(str(self.configGetir(base_warnings + "warning12")).format(index=i + 1), 1)
                         if (index + 1) == yorumSayisi:
                             break
                         sleep(self.beklemeSuresiGetir(sleep1[0], sleep1[1]))
@@ -426,7 +426,7 @@ class Instagram():
                     if mesaj not in silinenMesajlar:
                         silinenMesajlar.add(mesaj)
                         kullaniciAdi = mesaj.find_element_by_css_selector("._7UhW9.xLCgt.MMzan.KV-D4.fDxYl").text
-                        self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(index=self.index,kullanici=kullaniciAdi),1)
+                        print(str(self.configGetir(base_warnings+"warning3")).format(index=self.index,kullanici=kullaniciAdi))
                         self.mesajSil(mesaj)
                         self.uyariOlustur(str(self.configGetir(base_warnings+"warning4")).format(index=self.index, kullanici=kullaniciAdi), 1)
                         self.indexArtir()
@@ -548,8 +548,8 @@ class Instagram():
             hedefTakipciSayisi = None
 
             if secilenIslem is None:
-                for uyari in self.configGetir(base_warnings + "warning1"):
-                    self.uyariOlustur(uyari, 1)
+                for secenek in self.configGetir(base_warnings + "warning1"):
+                    self.uyariOlustur(secenek, 3)
                 secilenIslem = str(input(self.configGetir(base_inputs + "input1")).strip())
                 self.anaMenuyeDonsunMu(secilenIslem)
 
@@ -599,8 +599,8 @@ class Instagram():
                         try:
                             btn_takip = takipci.find_element_by_css_selector('button.sqdOP')
                             if btn_takip.text == "Follow":
-                                self.uyariOlustur(str(self.configGetir(base_warnings + "warning7")).format(
-                                    index=self.index, takipci=takipciKullaniciAdi), 1)
+                                print(str(self.configGetir(base_warnings + "warning7")).format(
+                                    index=self.index, takipci=takipciKullaniciAdi))
                                 btn_takip.click()
                                 self.indexArtir()
                                 if self.index-1  >= takipciSayisi:
@@ -656,8 +656,8 @@ class Instagram():
             hedefBegenenSayisi = None
 
             if secilenIslem is None:
-                for uyari in self.configGetir(base_warnings + "warning2"):
-                    self.uyariOlustur(uyari,1)
+                for secenek in self.configGetir(base_warnings + "warning2"):
+                    self.uyariOlustur(secenek,3)
                 secilenIslem = str(input(self.configGetir(base_inputs+"input2")).strip())
                 self.anaMenuyeDonsunMu(secilenIslem)
 
@@ -708,8 +708,8 @@ class Instagram():
                             begenenKullaniciAdi = begenenKullaniciAdi.replace(self.BASE_URL, '').replace('/', '')
                             btn_takip = begenenKullanici.find_element_by_css_selector("div.Igw0E > button.sqdOP")
                             if btn_takip.text == "Follow":
-                                self.uyariOlustur(str(self.configGetir(base_warnings+"warning8")).format(
-                                    index=self.index, kullanici=begenenKullaniciAdi), 1)
+                                print(str(self.configGetir(base_warnings+"warning8")).format(
+                                    index=self.index, kullanici=begenenKullaniciAdi))
                                 btn_takip.click()
                                 self.indexArtir()
                                 if self.index-1 >= begenenSayisi:
@@ -776,7 +776,7 @@ class Instagram():
                     sleep3=self.configGetir("{base}sleep3".format(base=base_sleep))
                     sleep(self.beklemeSuresiGetir(sleep3[0],sleep3[1]))
                 else:
-                    self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(kullanici=kullaniciAdi), 1)
+                    print(str(self.configGetir(base_warnings+"warning3")).format(kullanici=kullaniciAdi))
                     self.gonderiIlerlet()
                     sleep(self.configGetir("{base}sleep4".format(base=base_sleep)))
             print(str(self.configGetir(base_warnings+"warning4")).format(etiket=etiket))
@@ -813,7 +813,7 @@ class Instagram():
                     sleep3=self.configGetir("{base}sleep3".format(base=base_sleep))
                     sleep(self.beklemeSuresiGetir(sleep3[0],sleep3[1]))
                 else:
-                    self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(url=self.driver.current_url), 1)
+                    print(str(self.configGetir(base_warnings+"warning3")).format(url=self.driver.current_url))
                     self.gonderiIlerlet()
                     sleep(self.configGetir("{base}sleep4".format(base=base_sleep)))
             print(str(self.configGetir(base_warnings+"warning4")).format(etiket=etiket))
@@ -852,13 +852,13 @@ class Instagram():
                             self.uyariOlustur(str(self.configGetir(base_warnings+"warning4")).format(url=self.driver.current_url),
                                               1))
                     else:
-                        self.uyariOlustur(str(self.configGetir(base_warnings+"warning5")).format(url=self.driver.current_url), 1)
+                        print(str(self.configGetir(base_warnings+"warning5")).format(url=self.driver.current_url))
                 else:
                     if begeniDurum == "unlike":
                         btn_begen.click()
                         self.uyariOlustur(str(self.configGetir(base_warnings+"warning6")).format(url=self.driver.current_url), 1)
                     else:
-                        self.uyariOlustur(str(self.configGetir(base_warnings+"warning7")).format(url=self.driver.current_url), 1)
+                        print(str(self.configGetir(base_warnings + "warning7")).format(url=self.driver.current_url))
                 if durum:
                     print(str(self.configGetir(base_warnings+"warning8")).format(url=url))
                 else:
@@ -907,7 +907,7 @@ class Instagram():
                 self.gonderiYorumYapma()
 
             if not self.hesapGizliMi():
-                yorum = self.yorumUzunlukBelirle(yorum)
+                yorum = yorum[0:250]
                 print(str(self.configGetir(base_warnings+"warning4")).format(url=url))
                 self.yorumYap(yorum)
                 print(str(self.configGetir(base_warnings+"warning5")).format(url=url))
@@ -1183,7 +1183,7 @@ class Instagram():
     def tarayiciBaslat(self):
         base_warnings = self.BASE_UYARI(metod=self.tarayiciBaslat, warnings=True)
         try:
-            self.uyariOlustur(self.configGetir(base_warnings+"warning1"), 1)
+            print(self.configGetir(base_warnings+"warning1"))
             firefox_options = Options()
             headless=self.configGetir("headless")
             if headless=="false":
@@ -1309,9 +1309,7 @@ class Instagram():
                     takipciKullaniciAdi = self.metindenKarakterSil(
                         self.metindenKarakterSil(takipciKullaniciAdi, self.BASE_URL), '/')
                     if takipciKullaniciAdi not in takipciler:
-                        self.uyariOlustur(str(self.configGetir(base_warnings + "warning2")).format(index=self.index,
-                                                                                                   takipci=takipciKullaniciAdi),
-                                          1)
+                        print(str(self.configGetir(base_warnings + "warning2")).format(index=self.index,takipci=takipciKullaniciAdi))
                         takipciler.add(takipciKullaniciAdi)
                         self.indexArtir()
                         if (self.index - 1) >= takipciSayisi:
@@ -1429,7 +1427,7 @@ class Instagram():
                 self.uyariOlustur(self.configGetir(base_warnings+"warning4"), 2)
                 self.girisYap(username, False)
 
-            self.uyariOlustur(self.configGetir(base_warnings+"warning5"), 1)
+            print(self.configGetir(base_warnings+"warning5"))
             sleep(self.configGetir("{base}sleep1".format(base=base_sleep)))
             usernameInput = self.driver.find_elements_by_css_selector('form input')[0]
             passwordInput = self.driver.find_elements_by_css_selector('form input')[1]
@@ -1649,11 +1647,10 @@ class Instagram():
                     btn_takip.click()
                     self.uyariOlustur(str(self.configGetir(base_warnings+"warning1")).format(kullanici=kullanici), 1)
                 elif btn_text == "requested":
-                    self.uyariOlustur(str(self.configGetir(base_warnings+"warning2")).format(kullanici=kullanici),
-                                      1)
+                    print(str(self.configGetir(base_warnings+"warning2")).format(kullanici=kullanici))
                 elif btn_text == "unblock":
                     self.uyariOlustur(str(self.configGetir(base_warnings+"warning3")).format(
-                        kullanici=kullanici), 1)
+                        kullanici=kullanici), 2)
             else:
                 if btn_text=="requested":
                     btn_takip.click()
@@ -1661,7 +1658,7 @@ class Instagram():
                     self.driver.find_elements_by_css_selector("div.mt3GC >button.aOOlW")[0].click()
                     self.uyariOlustur(str(self.configGetir(base_warnings + "warning8")).format(kullanici=kullanici), 1)
                 else:
-                    self.uyariOlustur(str(self.configGetir(base_warnings+"warning4")).format(kullanici=kullanici), 1)
+                    print(str(self.configGetir(base_warnings+"warning4")).format(kullanici=kullanici))
 
         else:
             btn_takip = self.driver.find_element_by_css_selector('span.vBF20 > button._5f5mN')
@@ -1671,12 +1668,11 @@ class Instagram():
                     btn_takip.click()
                     self.uyariOlustur(str(self.configGetir(base_warnings+"warning5")).format(kullanici=kullanici), 1)
                 elif btn_text == "unblock":
-                    self.uyariOlustur(str(self.configGetir(base_warnings+"warning6")).format(kullanici=kullanici), 1)
+                    self.uyariOlustur(str(self.configGetir(base_warnings+"warning6")).format(kullanici=kullanici), 2)
                 else:
                     ariaLabel = btn_takip.find_element_by_tag_name("span").get_attribute("aria-label")
                     if ariaLabel == "Following":
-                        self.uyariOlustur(str(self.configGetir(base_warnings+"warning7")).format(
-                            kullanici=kullanici), 1)
+                        print(str(self.configGetir(base_warnings+"warning7")).format(kullanici=kullanici))
             else:
                 try:
                     ariaLabel = btn_takip.find_element_by_tag_name("span").get_attribute("aria-label")
@@ -1687,10 +1683,9 @@ class Instagram():
                         self.uyariOlustur(str(self.configGetir(base_warnings + "warning8")).format(kullanici=kullanici),
                                           1)
                     else:
-                        self.uyariOlustur(str(self.configGetir(base_warnings + "warning4")).format(kullanici=kullanici),
-                                          1)
+                        print(str(self.configGetir(base_warnings + "warning4")).format(kullanici=kullanici))
                 except:
-                    self.uyariOlustur(str(self.configGetir(base_warnings + "warning4")).format(kullanici=kullanici), 1)
+                    print(str(self.configGetir(base_warnings + "warning4")).format(kullanici=kullanici))
 
 
     def gonderiIlerlet(self):
