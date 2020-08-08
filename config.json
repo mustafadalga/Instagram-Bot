@@ -462,7 +462,7 @@
                         "warning5": "[+] {kullanici} started to be followed.",
                         "warning6": "[-] User {kullanici} is blocked.{kullanici} cannot be followed!",
                         "warning7": "[*] You are already following {kullanici}.",
-                        "warning8": "[+] {kullanici} kullanıcısı takip edilmekten vazgeçildi."
+                        "warning8": "[+] You unfollowed {kullanici}"
                     }
                 },
                 "kullanicilariTakipEt": {
@@ -566,7 +566,7 @@
                 "takipEdilenleriGetir": {
                     "warnings": {
                         "warning1": "[-] {kullanici} kullanıcısını takipten çıkma işlemi sırasında bir hata oluştu: {hata}",
-                        "warning2": "[*] {index} -) You unfollowed {kullanici}",
+                        "warning2": "[+] {index} -) You unfollowed {kullanici}",
                         "warning3": "[-] An error occurred while scrolling the popup down: {hata}",
                         "warning4": "[-] An error occurred while unfollowing users who do not follow: {hata}"
                     }
@@ -656,7 +656,7 @@
                     "inputs": {
                         "input1": "Enter the post url you want to comment >> ",
                         "input2": "Enter the number of comments you want to make >> ",
-                        "input3": "Do you allow the use of random comments created by the app ? >> "
+                        "input3": "Do you want use of random comments created by app ? >> "
                     },
                     "warnings": {
                         "warning1": "[*] Redirecting to {url} page ...",
@@ -843,11 +843,6 @@
                     "warnings": {
                         "warning1": "[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
                         "warning2": "[-] Ayarlar menüsünde bir hata oluştu:{hata}"
-                    }
-                },
-                "ayarlarYukle": {
-                    "warnings": {
-                        "warning1": "[-] Gönderi url'si getirme işlemi sırasında bir hata oluştu: {hata}"
                     }
                 },
                 "BASE_AYARLAR": {
