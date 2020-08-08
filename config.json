@@ -446,11 +446,11 @@
                         "warning3": "Selected Option >>> Follow specified number of users in the followers list",
                         "warning4": "[-] You did not enter a number. Please enter a number!...",
                         "warning5": "[-] You have not made a valid choice.Please make a valid choice!",
-                        "warning6": "[*] {kullanici} kullanıcısının takipçilerini takip etme işlemi başladı...",
-                        "warning7": "[*] {index} -) {takipci} takip edilme işlemi başladı.",
-                        "warning8": "[*] {kullanici} kullanıcısının takipçilerini takip etme işlemi tamamlandı.",
-                        "warning9": "[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan takipçileri takip edilemiyor!",
-                        "warning10": "[-] {kullanici} kullanıcısının takipçilerini takip etme işlemi sırasında hata:{hata}"
+                        "warning6": "[*] You have started to follow the followers of {kullanici}",
+                        "warning7": "[*] {index} -) You started following {takipci}",
+                        "warning8": "[*] You completed following the followers of {kullanici}",
+                        "warning9": "[-] You can't follow the followers of {kullanici},because their account is protected.!",
+                        "warning10": "[-] An error occurred while following the followers of {kullanici}:{hata}"
                     }
                 },
                 "kullaniciTakipDurumDegistir": {
@@ -566,7 +566,7 @@
                 "takipEdilenleriGetir": {
                     "warnings": {
                         "warning1": "[-] {kullanici} kullanıcısını takipten çıkma işlemi sırasında bir hata oluştu: {hata}",
-                        "warning2": "[*] {index} -) {kullanici} adlı kullanıcı takip edilmekten vazgeçildi.",
+                        "warning2": "[*] {index} -) You unfollowed {kullanici}",
                         "warning3": "[-] An error occurred while scrolling the popup down: {hata}",
                         "warning4": "[-] An error occurred while unfollowing users who do not follow: {hata}"
                     }
@@ -575,8 +575,8 @@
                     "warnings": {
                         "warning1": "[*] Adding followers to the list is started.",
                         "warning2": "[*] Adding followers to the list is completed.",
-                        "warning3": "[*] Takip etmeyen kullanıcıları takipten çıkma işlemi başladı.",
-                        "warning4": "[*] Takip etmeyen kullanıcıları takipten çıkma işlemi tamamlandı.",
+                        "warning3": "[*] You started unfollowing users that don't follow you.",
+                        "warning4": "[*] You completed unfollowing users that don't follow you.",
                         "warning5": "[-] An error occurred while unfollowing users who do not follow: {hata}"
                     }
                 },
@@ -636,27 +636,27 @@
                     "warnings": {
                         "warning1": "[*] Bulk message deletion process is started.",
                         "warning2": "[*] You have no messages.",
-                        "warning3": "[*] {index} -) {kullanici} ile yapılan mesajlaşma silinecek.",
-                        "warning4": "[+] {index} -) {kullanici} ile yapılan mesajlaşma başarıyla silindi.",
+                        "warning3": "[*] {index} -) The messages with {kullanici} will be deleted.",
+                        "warning4": "[+] {index} -) The messages with {kullanici} was deleted sucscssfully.",
                         "warning5": "[*] Bulk message deletion process is completed.",
                         "warning6": "[-] An error occurred during bulk message deletion: {hata}"
                     }
                 },
                 "topluTakiptenCik": {
                     "warnings": {
-                        "warning1": "[*] Toplu takipten çıkma işlemi başladı.",
+                        "warning1": "[*] Bulk unfollowing started.",
                         "warning2": "[-] An error occurred while trying unfollow {kullanici}: {hata}",
-                        "warning3": "[+] {index} -) {kullanici} adlı kullanıcı takip edilmekten vazgeçildi.",
+                        "warning3": "[+] {index} -) You unfollowed {kullanici}",
                         "warning4": "[-] An error occurred while scrolling the popup down: {hata}",
-                        "warning5": "[*] Toplu takipten çıkma işlemi tamamlandı.",
-                        "warning6": "[-] Toplu takipten çıkma işlemi sırasında bir hata oluştu: {hata}"
+                        "warning5": "[*] Bulk unfollowing was completed.",
+                        "warning6": "[-] An error occurred while bulk unfollowing: {hata}"
                     }
                 },
                 "topluYorumYapma": {
                     "inputs": {
                         "input1": "Enter the post url you want to comment >> ",
                         "input2": "Enter the number of comments you want to make >> ",
-                        "input3": "Uygulama ile oluşturan rastgele yorumlar seçilsin mi? >> "
+                        "input3": "Do you allow the use of random comments created by the app ? >> "
                     },
                     "warnings": {
                         "warning1": "[*] Redirecting to {url} page ...",
@@ -1270,7 +1270,7 @@
                 },
                 "takipEdilenleriGetir": {
                     "warnings": {
-                        "warning1": "[-] {kullanici} kullanıcısını takipten çıkma işlemi sırasında bir hata oluştu: {hata}",
+                        "warning1": "[-] An error occurred during the process of unfollowing {kullanici}: {hata}",
                         "warning2": "[+] {index} -) {kullanici} adlı kullanıcı takip edilmekten vazgeçildi.",
                         "warning3": "[-] Popup aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}",
                         "warning4": "[-] Takip etmeyen kullanıcıları takipten çıkma işlemi sırasında bir hata oluştu: {hata}"
@@ -1361,7 +1361,7 @@
                     "inputs": {
                         "input1": "Yorum yapmak istediğiniz gönderi url'sini giriniz >> ",
                         "input2": "Yapmak istediğiniz yorum sayısını giriniz >> ",
-                        "input3": "Uygulama ile oluşturulan rastgele yorumlar seçilsin mi? >> "
+                        "input3": "Uygulama tarafından oluşturulan rastgele yorumlar kullanılsın mı? >> "
                     },
                     "warnings": {
                         "warning1": "[*] {url}  gönderisine yönlendiriliyor...",
