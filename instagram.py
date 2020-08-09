@@ -363,14 +363,14 @@ class Instagram():
                     sleep(self.beklemeSuresiGetir(sleep1[0], sleep1[1]))
             elif secilenIslem == "2":
                 self.uyariOlustur(self.configGetir(base_warnings + "warning10"), 1)
-                dosya = self.dosyaSec(1)
+                dosya = self.dosyaSec()
                 yorumlar = self.dosyaİceriginiAl(dosya)
                 if self.dosyaİcerigiAlindiMi(yorumlar):
                     print(str(self.configGetir(base_warnings + "warning11")).format(url=url))
                     for index, yorum in enumerate(yorumlar):
                         yorum = self.yorumUzunlukBelirle(yorum)
                         self.yorumYap(yorum)
-                        self.uyariOlustur(str(self.configGetir(base_warnings + "warning12")).format(index=i + 1), 1)
+                        self.uyariOlustur(str(self.configGetir(base_warnings + "warning12")).format(index=index + 1), 1)
                         if (index + 1) == yorumSayisi:
                             break
                         sleep(self.beklemeSuresiGetir(sleep1[0], sleep1[1]))
