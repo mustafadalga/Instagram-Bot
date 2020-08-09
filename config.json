@@ -1,7 +1,7 @@
 {
     "driver_language": "'intl.accept_languages', 'en-US, en'",
     "driver_path": "C:\\geckodriver.exe",
-    "headless": "false",
+    "headless": "true",
     "language": "en",
     "languages": {
         "en": {
@@ -447,7 +447,7 @@
                         "warning4": "[-] You did not enter a number. Please enter a number!...",
                         "warning5": "[-] You have not made a valid choice.Please make a valid choice!",
                         "warning6": "[*] You have started to follow the followers of {kullanici}",
-                        "warning7": "[*] {index} -) You started following {takipci}",
+                        "warning7": "[*] {index} -) You started following {kullanici}",
                         "warning8": "[*] You completed following the followers of {kullanici}",
                         "warning9": "[-] You can't follow the followers of {kullanici},because their account is protected.!",
                         "warning10": "[-] An error occurred while following the followers of {kullanici}:{hata}"
@@ -478,7 +478,7 @@
                         "warning3": "[*] The process of following {kullanici} completed. ",
                         "warning4": "[*]  The process of unfollowing {kullanici} completed",
                         "warning5": "[-] An error occurred during the process of following {kullanici}:{hata}",
-                        "warning6": "[-] An error occurred during the process of unfollowing {kullanici}:{hata}"
+                        "warning6": "[-] An error occurred during the process of unfollowing {kullanici:{hata}"
                     }
                 },
                 "oneCikanHikayeIndir": {
@@ -558,14 +558,14 @@
                 "takipcileriGetir": {
                     "warnings": {
                         "warning1": "[*] Browser is redirected to your profile...",
-                        "warning2": "[*] {index} -) {takipci} added to list.",
+                        "warning2": "[*] {index} -) {kullanici} added to list.",
                         "warning3": "[-] An error occurred while scrolling the popup down: {hata}",
                         "warning4": "[-] An error occurred while selecting followers: {hata}"
                     }
                 },
                 "takipEdilenleriGetir": {
                     "warnings": {
-                        "warning1": "[-] {kullanici} kullanıcısını takipten çıkma işlemi sırasında bir hata oluştu: {hata}",
+                        "warning1": "[-] An error occurred during the process of unfollowing {kullanici}: {hata}",
                         "warning2": "[+] {index} -) You unfollowed {kullanici}",
                         "warning3": "[-] An error occurred while scrolling the popup down: {hata}",
                         "warning4": "[-] An error occurred while unfollowing users who do not follow: {hata}"
@@ -637,7 +637,7 @@
                         "warning1": "[*] Bulk message deletion process is started.",
                         "warning2": "[*] You have no messages.",
                         "warning3": "[*] {index} -) The messages with {kullanici} will be deleted.",
-                        "warning4": "[+] {index} -) The messages with {kullanici} was deleted sucscssfully.",
+                        "warning4": "[+] {index} -) The messages with {kullanici} was deleted successfully.",
                         "warning5": "[*] Bulk message deletion process is completed.",
                         "warning6": "[-] An error occurred during bulk message deletion: {hata}"
                     }
@@ -1147,7 +1147,7 @@
                         "warning4": "[-] Bir sayı girişi yapmadınız.Lütfen bir sayı giriniz!",
                         "warning5": "[-] Geçerli bir seçim yapmadınız.Lütfen geçerli bir seçim yapınız!",
                         "warning6": "[*] {kullanici} kullanıcısının takipçilerini takip etme işlemi başladı...",
-                        "warning7": "[*] {index} -) {takipci} takip edilme işlemi başladı.",
+                        "warning7": "[*] {index} -) {kullanici} takip edilme işlemi başladı.",
                         "warning8": "[*] {kullanici} kullanıcısının takipçilerini takip etme işlemi tamamlandı.",
                         "warning9": "[-] {kullanici} adlı kişinin hesabı gizli hesap olduğundan takipçileri takip edilemiyor!",
                         "warning10": "[-] {kullanici} kullanıcısının takipçilerini takip etme işlemi sırasında hata:{hata}"
@@ -1258,14 +1258,14 @@
                 "takipcileriGetir": {
                     "warnings": {
                         "warning1": "[*] Tarayıcı profilinize yönlendiriliyor.",
-                        "warning2": "[*] {index} -) {takipci} takipcisi listeye eklendi.",
+                        "warning2": "[*] {index} -) {kullanici} takipcisi listeye eklendi.",
                         "warning3": "[-] Popup aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}",
                         "warning4": "[-] Takipçileri seçme işlemi sırasında bir hata oluştu: {hata}"
                     }
                 },
                 "takipEdilenleriGetir": {
                     "warnings": {
-                        "warning1": "[-] An error occurred during the process of unfollowing {kullanici}: {hata}",
+                        "warning1": "[-] {kullanici} kullanıcısını takipten çıkma işlemi sırasında bir hata oluştu: {hata}",
                         "warning2": "[+] {index} -) {kullanici} adlı kullanıcı takip edilmekten vazgeçildi.",
                         "warning3": "[-] Popup aşağıda kaydırma işlemi sırasında bir hata oluştu: {hata}",
                         "warning4": "[-] Takip etmeyen kullanıcıları takipten çıkma işlemi sırasında bir hata oluştu: {hata}"
