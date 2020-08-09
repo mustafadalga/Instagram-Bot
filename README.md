@@ -7,7 +7,7 @@
 </p>
 
 ## :books: Documentation
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :small_blue_diamond: For [Turkish](https://github.com/mustafadalga/Instagram-Bot/Readme.tr.md) documentation  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :small_blue_diamond: For [Turkish](https://github.com/mustafadalga/Instagram-Bot/blob/master/Readme.tr.md) documentation  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :small_blue_diamond: English translation of the documentation was made by **[Can Mıhcı](https://www.linkedin.com/in/canmihci/)**.  
 
 
