@@ -1,85 +1,106 @@
-```
-  _____           _                                    ____        _   
- |_   _|         | |                                  |  _ \      | |  
-   | |  _ __  ___| |_ __ _  __ _ _ __ __ _ _ __ ___   | |_) | ___ | |_ 
-   | | | '_ \/ __| __/ _` |/ _` | '__/ _` | '_ ` _ \  |  _ < / _ \| __|
-  _| |_| | | \__ \ || (_| | (_| | | | (_| | | | | | | | |_) | (_) | |_ 
- |_____|_| |_|___/\__\__,_|\__, |_|  \__,_|_| |_| |_| |____/ \___/ \__|
-                            __/ |                                      
-                           |___/                                       
-```          
+<h1 align="center">Instagram Bot</h1>
 
-## Açıklama
-**Selenium framework'ü  kullanılarak kodlanmış bir Instagram botu**  
+<p align="center">
+  <a href="https://github.com/mustafadalga/Instagram-Bot">
+    <img src="" alt="Instagram Bot" width="300">
+  </a>
+</p>
 
-### Ayrıntı
-
-* İnstagram oturumunu açarak aşağıdaki özellikleri kullanabilirsiniz.
-* 2 adımlı doğrulama ile güvenlik sağlanmış hesaplarda da instagram girişi yapılabilmektedir.
-* Script kodlama aşamasında 2 adımlı doğrulama kodu sadece telefona gönderildiği için , doğrulama kodunun telefon numarasına gönderildiği olasılığına göre kodladım.
+## :books: Documentation
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :small_blue_diamond: For [Turkish](https://github.com/mustafadalga/Instagram-Bot/Readme.tr.md) documentation
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; English translation of the documentation was made by **[Can Mıhcı](https://www.linkedin.com/in/canmihci/)**.
 
 
+## Introduction
+**An Instagram bot developed using the Selenium Framework**
+
+## Features
+  :large_blue_circle: **Download all posts of a single user**
+  :large_blue_circle: **Like or unlike all posts of a single user**
+  :large_blue_circle: **Bulk unfollow**
+  :large_blue_circle: **Bulk comments on a single post**
+  :large_blue_circle: **Bulk unfollow all users that do not follow back**
+  :large_blue_circle: **Delete messages in bulk**
+  :large_blue_circle: **Download highlighted stories**
+  :large_blue_circle: **Download stories**
+  :large_blue_circle: **Download a single post**
+  :large_blue_circle: **Download an IG TV Video**
+  :large_blue_circle: **Follow all the followers of a single user**
+  :large_blue_circle: **Follow all listed users in a file**
+  :large_blue_circle: **Follow all users that have liked a single post**
+  :large_blue_circle: **Follow users based on tag**
+  :large_blue_circle: **Like posts based on tag**
+  :large_blue_circle: **Like or unlike a single post**
+  :large_blue_circle: **Comment on a single post**
+  :large_blue_circle: **Follow or unfollow a user**
+  :large_blue_circle: **Block or unblock a user**
 
 
-### Özellikler
+## Other Features
+  :large_blue_circle: Support for two languages: English and Turkish.
+  :large_blue_circle: Option of running browser window in normal or incognito modes has been granted.
+  :large_blue_circle: A settings menu has been included. Settings menu features language and browser settings.
 
-  :heavy_check_mark: **Bir kulllanıcının tüm paylaşımlarını indirme**  
-  :heavy_check_mark: **Bir kulllanıcının tüm paylaşımlarını beğenme**  
-  :heavy_check_mark: **Bir kulllanıcının tüm paylaşımlarını beğenmekten vazgeçme**  
-  :heavy_check_mark: **Bir fotoğrafı indirme**  
-  :heavy_check_mark: **Bir videoyu indirme**  
-  :heavy_check_mark: **Bir paylaşımı beğenme**  
-  :heavy_check_mark: **Bir paylaşımı beğenmekten vazgeçme**  
-  :heavy_check_mark: **Bir kullanıcıyı takip etme**  
-  :heavy_check_mark: **Bir kullanıcıyı takip etmekten vazgeçme**  
-  :heavy_check_mark: **Bir kullanıcıyı engelleme**  
-  :heavy_check_mark: **Bir kullanıcının engelini kaldırma**  
-  :heavy_check_mark: **İnstagram oturumunu kapatma**  
-  
-  
-### Kurulum
- * Script web driver olarak Firefox tarayıcısını kullanmaktadır.Bu yüzden Firefox kurulu olması gerekmektedir.
- * Firefox'un kullanılabilmesi için [bu linkteki](https://github.com/mozilla/geckodriver/releases)  motoru indirip yolunu script'te belirtmeniz gerekmektedir.
 
-* Windows için kurulum
+## Details
+
+:large_blue_diamond:	 You may use the features above by logging into your Instagram account.
+:large_blue_diamond:	 Instagram login for accounts with 2-factor authentication is also possible.
+:large_blue_diamond:	 As the project is currently under development, the 2-factor authentication feature has been set to assume that the 2Fa code is sent to the user's phone number.
+:large_blue_diamond:	 Default language has been set as English.
+
+## Configuration Settings
+ :gear:	 Project utilizes Firefox browser as webdriver olarak. This requires Firefox to be installed for the application to work properly.
+ :gear:	 In order to use Firefox [webdriver](https://github.com/mozilla/geckodriver/releases) needs to be downloaded and the directory path for the downloaded webdriver needs to be set within [config.json](https://github.com/mustafadalga/Instagram-Bot/config.json).
+
+
+* ### Config Options
+
+:gear: **driver_path:** Denotes the Webdriver directory path.
+:gear: **headless:** Denotes if the browser is visible or not. Default value:**true**
+:gear: **language:** Denotes the language of the application.
+:gear: **languages:** Includes the settings, menu and warning messages for all language options.
+:gear: **time:** denotes the operation waiting times for all the  operations where **time.sleep()** has been used.
+
+
+
+* ### Package installation for Windows users
 ```
 python -m pip install -r .\requirements.txt
 ```
 
-### Kullanım
+## Usage
+:small_blue_diamond:  '**menu**' commands needs to be used for returning to the main menu from any prompt that asks the user for input.
+
 ```
 python instagram.py
 ```
-* Menü'den seçilen herhangi bir işlemden tekrar ana menüye dönmek için '**menu**' komutu kullanılmalıdır.
-
-
-### Notlar
-* Sadece Windows işletim sisteminde test edilmiştir.
-* Python versiyonu:3.7.2
-* Durum beğenme , takip etme gibi bazı işlemler sırasındaki süre aralığı instagram tarafından engellenmemek için uzun ayarlandı.
-* İşlemler için belirlenen süreler kendi cihazımın ve  internetimin hızına göre ayarlanmıştır.Kendinize göre değiştirebilirsiniz.
-
-### Uyarı
-* **Beğenme , takip etme gibi işlemlerde süre aralıklarını azaltırsanız,instagram tarafından engellenebilirsiniz.**
-
-### Ekran Görüntüleri
-
-
-* **Giriş Ekranı**
-![Giriş Ekranı](https://raw.githubusercontent.com/mustafadalga/Instagram-Bot/master/goruntuler/giris.png)
-
-* **Paylaşım İndirme**
-![Paylaşım indirme](https://raw.githubusercontent.com/mustafadalga/Instagram-Bot/master/goruntuler/paylasim-indirme.png)
-
-* **Paylaşım Beğenme**
-![paylasimBegenme2](https://raw.githubusercontent.com/mustafadalga/Instagram-Bot/master/goruntuler/paylasim-begenme-2.png)
-
-* **Bir kullanıcıyı takip etme**
-![Takip etme](https://raw.githubusercontent.com/mustafadalga/Instagram-Bot/master/goruntuler/kullanici-takip-etme.png)
 
 
 
+### Notes
+:small_blue_diamond: Operation intervals has been set for a length of time that prevents your account from getting banned for bulk operations of post-likes, user-follows or commenting.
+:small_blue_diamond: The operation intervals may be changed from within [config.json](https://github.com/mustafadalga/Instagram-Bot/config.json).
+:small_blue_diamond: Has been tested only under Windows.
+:small_blue_diamond: Python version: 3.8.1
 
 
+### Technologies used:
+ * Python
+ * Selenium
+ * Javascript
 
+## Screenshots
+
+* Login Screen
+* Download posts
+* Like posts
+* Bulk unfollow
+* Bulk commenting
+* Bulk comment deletion
+* Unfollowing users that do not follow back
+
+
+## License
+ [![License](https://img.shields.io/github/license/mustafadalga/Instagram-Bot)](https://github.com/mustafadalga/Instagram-Bot/blob/master/LICENSE)
 
