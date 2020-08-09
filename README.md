@@ -50,7 +50,7 @@
 :large_blue_diamond:	 Default language has been set as English.  
 
 ## Configuration Settings
- :gear:	 Project utilizes Firefox browser as webdriver olarak. This requires Firefox to be installed for the application to work properly.  
+ :gear:	 Project utilizes Firefox browser as webdriver. This requires Firefox to be installed for the application to work properly.  
  :gear:	 In order to use Firefox [webdriver](https://github.com/mozilla/geckodriver/releases) needs to be downloaded and the directory path for the downloaded webdriver needs to be set within [config.json](https://github.com/mustafadalga/Instagram-Bot/blob/master/config.json).  
 
 
