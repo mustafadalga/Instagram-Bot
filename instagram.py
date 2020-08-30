@@ -1390,7 +1390,7 @@ class Instagram():
         return int(self.metindenKarakterSil(takipEdilenSayisi, ','))
 
     def takipciSayisiGetir(self):
-        takipciSayisi = self.driver.find_elements_by_css_selector("ul.k9GMp li.Y8-fY >a.-nal3 >span.g47SY")[0].text
+        takipciSayisi = self.driver.find_elements_by_css_selector("ul.k9GMp li.Y8-fY >a.-nal3 >span.g47SY")[0].get_attribute('title')
         return int(self.metindenKarakterSil(takipciSayisi, ','))
 
     def takipEdilenKullaniciAdiGetir(self, element):
