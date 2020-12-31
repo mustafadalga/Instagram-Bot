@@ -1,3 +1,5 @@
+from builtins import print
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.options import Options
@@ -1012,8 +1014,8 @@ class Instagram():
         print(self.configGetir(base_warnings+"warning1"))
         try:
             self.driver.find_elements_by_css_selector("div._47KiJ > div.Fifk5")[-1].click()
-            #sleep(5)
-            self.driver.find_element_by_css_selector("div._01UL2 > div.-qQT3").click()
+            sleep(0.10)
+            self.driver.find_elements_by_css_selector("div.-qQT3")[-1].click()
             self.uyariOlustur(self.configGetir(base_warnings+"warning2"), 1)
             self.driver.get(self.BASE_URL + 'accounts/login/')
             self.girisYapildimi = False
