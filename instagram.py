@@ -1436,7 +1436,6 @@ class Instagram():
             sleep(self.configGetir("{base}sleep2".format(base=base_sleep)))
             self.girisKontrol()
             if self.girisYapildimi:
-                self.aktifKullaniciGetir()
                 self.bildirimThreadOlustur()
                 self.menu()
             else:
@@ -1844,7 +1843,11 @@ class Instagram():
             for i in range(2):
                 sleep(self.configGetir("{base}sleep1".format(base=base_sleep)))
                 btn = self.driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]")
-                self.driver.execute_script("arguments[0].click();", btn)
+                if btn:
+                    self.driver.execute_script("arguments[0].click();", btn)
+                    self.aktifKullaniciGetir()
+            self.aktifKullaniciGetir()
+
         except:
             pass
 
