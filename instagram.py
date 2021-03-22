@@ -366,8 +366,8 @@ class Instagram():
             elif secilenIslem == "2":
                 self.uyariOlustur(self.configGetir(base_warnings + "warning10"), 1)
                 dosya = self.dosyaSec()
-                yorumlar = self.dosyaİceriginiAl(dosya)
-                if self.dosyaİcerigiAlindiMi(yorumlar):
+                yorumlar = self.dosyaIceriginiAl(dosya)
+                if self.dosyaIcerigiAlindiMi(yorumlar):
                     print(str(self.configGetir(base_warnings + "warning11")).format(url=url))
                     for index, yorum in enumerate(yorumlar):
                         yorum = self.yorumUzunlukBelirle(yorum)
@@ -630,8 +630,8 @@ class Instagram():
 
     def kullaniciListesiTakipEt(self,secim):
         dosya = self.dosyaSec()
-        kullanicilar = self.dosyaİceriginiAl(dosya)
-        if self.dosyaİcerigiAlindiMi(kullanicilar):
+        kullanicilar = self.dosyaIceriginiAl(dosya)
+        if self.dosyaIcerigiAlindiMi(kullanicilar):
             self.kullanicilariTakipEt(kullanicilar, secim)
         else:
             self.kullaniciListesiTakipEt(secim)
@@ -1965,7 +1965,7 @@ class Instagram():
             self.uyariOlustur(str(self.configGetir(base_warnings+"warning2")).format(hata=str(error)), 2)
             return self.dosyaSec()
 
-    def dosyaİceriginiAl(self, dosya):
+    def dosyaIceriginiAl(self, dosya):
         try:
             icerik = set()
             with open(dosya, "r", encoding="utf-8") as satirlar:
@@ -1974,11 +1974,11 @@ class Instagram():
                         icerik.add(satir.strip())
             return icerik
         except Exception as error:
-            base_warnings = self.BASE_UYARI(metod=self.dosyaİceriginiAl, warnings=True)
+            base_warnings = self.BASE_UYARI(metod=self.dosyaIceriginiAl, warnings=True)
             self.uyariOlustur(str(self.configGetir(base_warnings+"warning1")).format(hata=str(error)), 2)
             return False
 
-    def dosyaİcerigiAlindiMi(self, icerik):
+    def dosyaIcerigiAlindiMi(self, icerik):
         if icerik:
             return True
         else:
