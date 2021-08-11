@@ -22,7 +22,6 @@
   :large_blue_circle: **Bulk unfollow all users that do not follow back**  
   :large_blue_circle: **Delete messages in bulk**  
   :large_blue_circle: **Download highlighted stories**  
-  :large_blue_circle: **Download stories**  
   :large_blue_circle: **Download a single post**  
   :large_blue_circle: **Download an IG TV Video**  
   :large_blue_circle: **Follow all the followers of a single user**  
